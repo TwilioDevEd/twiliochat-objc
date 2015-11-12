@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1280D1A926807A523E8A2697 /* libPods-twiliochat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7834F26AFB8ED02DD8AF41DF /* libPods-twiliochat.a */; };
+		8750C85E1BF530330015CBE1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85D1BF530330015CBE1 /* Keys.plist */; };
+		8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85F1BF5307E0015CBE1 /* Keys.example.plist */; };
 		87B6AC241BF51D6600E55FE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC231BF51D6600E55FE2 /* main.m */; };
 		87B6AC271BF51D6600E55FE2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC261BF51D6600E55FE2 /* AppDelegate.m */; };
 		87B6AC2A1BF51D6600E55FE2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC291BF51D6600E55FE2 /* ViewController.m */; };
@@ -39,6 +41,8 @@
 		413E6B0A06E863D82FE7B36B /* Pods-twiliochat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochat.release.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochat/Pods-twiliochat.release.xcconfig"; sourceTree = "<group>"; };
 		652E063D172A0ECAD377861F /* Pods-twiliochat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochat/Pods-twiliochat.debug.xcconfig"; sourceTree = "<group>"; };
 		7834F26AFB8ED02DD8AF41DF /* libPods-twiliochat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twiliochat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8750C85D1BF530330015CBE1 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		8750C85F1BF5307E0015CBE1 /* Keys.example.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.example.plist; sourceTree = "<group>"; };
 		87B6AC1F1BF51D6600E55FE2 /* twiliochat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twiliochat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B6AC231BF51D6600E55FE2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		87B6AC251BF51D6600E55FE2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,6 +96,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8750C8611BF5315E0015CBE1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8750C85F1BF5307E0015CBE1 /* Keys.example.plist */,
+				8750C85D1BF530330015CBE1 /* Keys.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		87B6AC161BF51D6600E55FE2 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +130,7 @@
 		87B6AC211BF51D6600E55FE2 /* twiliochat */ = {
 			isa = PBXGroup;
 			children = (
+				8750C8611BF5315E0015CBE1 /* Resources */,
 				87B6AC251BF51D6600E55FE2 /* AppDelegate.h */,
 				87B6AC261BF51D6600E55FE2 /* AppDelegate.m */,
 				87B6AC281BF51D6600E55FE2 /* ViewController.h */,
@@ -270,7 +284,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8750C85E1BF530330015CBE1 /* Keys.plist in Resources */,
 				87B6AC321BF51D6600E55FE2 /* LaunchScreen.storyboard in Resources */,
+				8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */,
 				87B6AC2F1BF51D6600E55FE2 /* Assets.xcassets in Resources */,
 				87B6AC2D1BF51D6600E55FE2 /* Main.storyboard in Resources */,
 			);

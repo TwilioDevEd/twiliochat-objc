@@ -1,12 +1,6 @@
-//
-//  AppDelegate.m
-//  twiliochat
-//
-//  Created by Juan Carlos Pazmiño on 11/12/15.
-//  Copyright © 2015 Twilio. All rights reserved.
-//
-
 #import "AppDelegate.h"
+#import <Parse/Parse.h>
+
 
 @interface AppDelegate ()
 
@@ -16,7 +10,23 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [Parse enableLocalDatastore];
+    
+    NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Keys" ofType:@"plist"]];
+    NSString *parseApplicationId = [dictionary objectForKey:@"ParseApplicationId"];
+    NSString *parseClientKey = [dictionary objectForKey:@"ParseClientKey"];
+
+    [Parse setApplicationId:parseApplicationId
+                  clientKey:parseClientKey];
+    
+    [PFUser enableAutomaticUser];
+    
+    PFACL *defaultACL = [PFACL ACL];
+    
+    [defaultACL setPublicReadAccess:YES];
+    
+    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+    
     return YES;
 }
 

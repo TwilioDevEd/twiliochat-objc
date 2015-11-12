@@ -3,15 +3,16 @@ platform :ios, '8.4'
 # Uncomment this line if you're using Swift
 # use_frameworks!
 
-target 'Twilio-Mobile-App' do
+target 'twiliochat' do
+  pod 'Parse', '~> 1.9'
+  pod 'TwilioSDK', '~> 1.2'
+end
+
+target 'twiliochatTests' do
 
 end
 
-target 'Twilio-Mobile-AppTests' do
-
-end
-
-target 'Twilio-Mobile-AppUITests' do
+target 'twiliochatUITests' do
 
 end
 

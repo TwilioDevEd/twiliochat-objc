@@ -1,0 +1,16 @@
+PODS:
+  - Bolts/Tasks (1.4.0)
+  - Parse (1.9.1):
+    - Bolts/Tasks (>= 1.4.0)
+  - TwilioSDK (1.2.6)
+
+DEPENDENCIES:
+  - Parse (~> 1.9)
+  - TwilioSDK (~> 1.2)
+
+SPEC CHECKSUMS:
+  Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
+  Parse: 54a965c8c19a6dde90284ab654dbcc77ef8c001b
+  TwilioSDK: ec0221c0f819b6d3f54efb61f70013ddf4bd3974
+
+COCOAPODS: 0.39.0

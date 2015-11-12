@@ -1,11 +1,3 @@
-//
-//  twiliochatTests.m
-//  twiliochatTests
-//
-//  Created by Juan Carlos Pazmiño on 11/12/15.
-//  Copyright © 2015 Twilio. All rights reserved.
-//
-
 #import <XCTest/XCTest.h>
 
 @interface twiliochatTests : XCTestCase

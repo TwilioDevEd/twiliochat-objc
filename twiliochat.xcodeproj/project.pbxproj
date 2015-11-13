@@ -52,7 +52,7 @@
 		8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85F1BF5307E0015CBE1 /* Keys.example.plist */; };
 		87B6AC241BF51D6600E55FE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC231BF51D6600E55FE2 /* main.m */; };
 		87B6AC271BF51D6600E55FE2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC261BF51D6600E55FE2 /* AppDelegate.m */; };
-		87B6AC2A1BF51D6600E55FE2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC291BF51D6600E55FE2 /* MainViewController.m */; };
+		87B6AC2A1BF51D6600E55FE2 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC291BF51D6600E55FE2 /* LoginViewController.m */; };
 		87B6AC2D1BF51D6600E55FE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B6AC2B1BF51D6600E55FE2 /* Main.storyboard */; };
 		87B6AC2F1BF51D6600E55FE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6AC2E1BF51D6600E55FE2 /* Assets.xcassets */; };
 		87B6AC321BF51D6600E55FE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B6AC301BF51D6600E55FE2 /* LaunchScreen.storyboard */; };
@@ -128,8 +128,8 @@
 		87B6AC231BF51D6600E55FE2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		87B6AC251BF51D6600E55FE2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		87B6AC261BF51D6600E55FE2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		87B6AC281BF51D6600E55FE2 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		87B6AC291BF51D6600E55FE2 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		87B6AC281BF51D6600E55FE2 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		87B6AC291BF51D6600E55FE2 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		87B6AC2C1BF51D6600E55FE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		87B6AC2E1BF51D6600E55FE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		87B6AC311BF51D6600E55FE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -217,6 +217,8 @@
 		59B7FAE11BF542BF008824EA /* parse */ = {
 			isa = PBXGroup;
 			children = (
+				87B6AC281BF51D6600E55FE2 /* LoginViewController.h */,
+				87B6AC291BF51D6600E55FE2 /* LoginViewController.m */,
 				59B7FAE21BF54308008824EA /* SignUpViewController.h */,
 				59B7FAE31BF54308008824EA /* SignUpViewController.m */,
 			);
@@ -271,8 +273,6 @@
 				8750C8611BF5315E0015CBE1 /* Resources */,
 				87B6AC251BF51D6600E55FE2 /* AppDelegate.h */,
 				87B6AC261BF51D6600E55FE2 /* AppDelegate.m */,
-				87B6AC281BF51D6600E55FE2 /* MainViewController.h */,
-				87B6AC291BF51D6600E55FE2 /* MainViewController.m */,
 				87B6AC2B1BF51D6600E55FE2 /* Main.storyboard */,
 				87B6AC2E1BF51D6600E55FE2 /* Assets.xcassets */,
 				87B6AC301BF51D6600E55FE2 /* LaunchScreen.storyboard */,
@@ -538,7 +538,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87B6AC2A1BF51D6600E55FE2 /* MainViewController.m in Sources */,
+				87B6AC2A1BF51D6600E55FE2 /* LoginViewController.m in Sources */,
 				87B6AC271BF51D6600E55FE2 /* AppDelegate.m in Sources */,
 				59B7FAE41BF54308008824EA /* SignUpViewController.m in Sources */,
 				87B6AC241BF51D6600E55FE2 /* main.m in Sources */,

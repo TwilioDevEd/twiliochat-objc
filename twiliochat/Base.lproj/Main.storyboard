@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -22,13 +22,13 @@
                                 <rect key="frame" x="20" y="133" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fMO-nx-k4O">
                                 <rect key="frame" x="20" y="171" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="send" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kPZ-EW-vkL">
                                 <rect key="frame" x="20" y="209" width="38" height="30"/>
@@ -79,25 +79,25 @@
                                 <rect key="frame" x="20" y="101" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H6d-OE-UUt">
                                 <rect key="frame" x="20" y="139" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pI0-D3-RrR">
                                 <rect key="frame" x="20" y="177" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="confirm password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L8O-TC-2zE">
                                 <rect key="frame" x="20" y="215" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7do-K2-amI">
                                 <rect key="frame" x="274" y="285" width="52" height="30"/>
@@ -113,10 +113,9 @@
                         <constraints>
                             <constraint firstItem="H6d-OE-UUt" firstAttribute="trailing" secondItem="X2a-x5-gMM" secondAttribute="trailingMargin" id="8Br-5d-TVC"/>
                             <constraint firstItem="jAW-f2-ZaV" firstAttribute="leading" secondItem="X2a-x5-gMM" secondAttribute="leadingMargin" id="DRv-dm-uvj"/>
-                            <constraint firstItem="7do-K2-amI" firstAttribute="leading" secondItem="X2a-x5-gMM" secondAttribute="leadingMargin" constant="254" id="E5O-cJ-ecT"/>
                             <constraint firstItem="L8O-TC-2zE" firstAttribute="top" secondItem="pI0-D3-RrR" secondAttribute="bottom" constant="8" id="FLI-QO-FXH"/>
                             <constraint firstItem="jAW-f2-ZaV" firstAttribute="top" secondItem="Ng1-Nf-oec" secondAttribute="bottom" constant="81" id="Gxd-xx-Lp5"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="7do-K2-amI" secondAttribute="trailing" constant="254" id="H94-LB-smp"/>
+                            <constraint firstItem="7do-K2-amI" firstAttribute="centerX" secondItem="X2a-x5-gMM" secondAttribute="centerX" id="MhP-gI-Eqo"/>
                             <constraint firstItem="L8O-TC-2zE" firstAttribute="trailing" secondItem="X2a-x5-gMM" secondAttribute="trailingMargin" id="VOo-TH-huj"/>
                             <constraint firstItem="H6d-OE-UUt" firstAttribute="leading" secondItem="X2a-x5-gMM" secondAttribute="leadingMargin" id="fUa-tR-myq"/>
                             <constraint firstItem="pI0-D3-RrR" firstAttribute="leading" secondItem="X2a-x5-gMM" secondAttribute="leadingMargin" id="gb5-ub-aWk"/>
@@ -137,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ETb-YW-AIR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1102" y="358"/>
+            <point key="canvasLocation" x="1179" y="351"/>
         </scene>
     </scenes>
 </document>

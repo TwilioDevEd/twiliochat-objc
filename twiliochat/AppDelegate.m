@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+@import Foundation;
 
 
 @interface AppDelegate ()
@@ -26,6 +27,9 @@
     [defaultACL setPublicReadAccess:YES];
     
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+    
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName: @"Main" bundle: [NSBundle mainBundle]];
+    self.window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     
     return YES;
 }

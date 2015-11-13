@@ -85,7 +85,7 @@
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
-            // TODO: start up
+            [self performSegueWithIdentifier:@"ShowRevealController" sender:self];
         }
         else {
             [self showAlertWithMessage:@"Error while signing up"];
@@ -104,7 +104,7 @@
                                  password:self.passwordTextField.text
                                     block:^(PFUser *user, NSError *error) {
                                         if (user) {
-                                            // TODO: start up
+                                            [self performSegueWithIdentifier:@"ShowRevealController" sender:self];
                                         }
                                         else {
                                             [self showAlertWithMessage:@"Login failed, please verify your credentials"];

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -69,10 +69,13 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </navigationBar>
+                    <connections>
+                        <segue destination="Ni6-5b-9ca" kind="relationship" relationship="rootViewController" id="OHa-XC-bhS"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="baU-SN-Xa6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-496" y="-86"/>
+            <point key="canvasLocation" x="-416" y="-86"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -238,6 +241,7 @@
                         <outlet property="loginButton" destination="kPZ-EW-vkL" id="M7W-kl-FfV"/>
                         <outlet property="passwordTextField" destination="MHl-yv-ooW" id="1jL-oK-YXf"/>
                         <outlet property="usernameTextField" destination="sKu-cd-aHj" id="8f9-iL-dXY"/>
+                        <segue destination="ZZr-Ir-iUd" kind="show" identifier="ShowRevealController" id="87P-oI-o7Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -249,10 +253,10 @@
             </objects>
             <point key="canvasLocation" x="-2142" y="-671"/>
         </scene>
-        <!--View Controller-->
+        <!--Main Chat View Controller-->
         <scene sceneID="ojB-jl-Efa">
             <objects>
-                <viewController id="Ni6-5b-9ca" sceneMemberID="viewController">
+                <viewController id="Ni6-5b-9ca" customClass="MainChatViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Is4-fK-5oN"/>
                         <viewControllerLayoutGuide type="bottom" id="n5Y-Fy-itA"/>
@@ -263,13 +267,23 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="jZP-iH-ltt">
+                        <barButtonItem key="leftBarButtonItem" image="icon-list" id="B7u-3m-JYA">
+                            <color key="tintColor" red="1" green="0.39581004800000003" blue="0.35225513489999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="revealButtonItem" destination="B7u-3m-JYA" id="f4m-22-G12"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Shd-gi-UIt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="377" y="-86"/>
         </scene>
     </scenes>
     <resources>
         <image name="home-bg" width="321" height="568"/>
+        <image name="icon-list" width="23" height="13"/>
         <image name="icon-list.png" width="23" height="13"/>
         <image name="landing-logo" width="291" height="146"/>
         <image name="password-field-bg" width="26" height="41"/>

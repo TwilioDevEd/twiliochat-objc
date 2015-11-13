@@ -19,8 +19,6 @@
     [Parse setApplicationId:parseApplicationId
                   clientKey:parseClientKey];
     
-    [PFUser enableAutomaticUser];
-    
     PFACL *defaultACL = [PFACL ACL];
     
     [defaultACL setPublicReadAccess:YES];
@@ -28,7 +26,14 @@
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName: @"Main" bundle: [NSBundle mainBundle]];
-    self.window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    PFUser *currentUser = [PFUser currentUser];
+
+    if (currentUser) {
+        self.window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"RevealViewController"];
+    }
+    else {
+        self.window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    }
     
     return YES;
 }

@@ -8,6 +8,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home-bg"]];
+    [bgImage setFrame:self.tableView.frame];
+    self.tableView.backgroundView = bgImage;
 }
 
 - (void)didReceiveMemoryWarning {

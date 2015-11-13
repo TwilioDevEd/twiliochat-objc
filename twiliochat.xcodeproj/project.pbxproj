@@ -8,12 +8,51 @@
 
 /* Begin PBXBuildFile section */
 		1280D1A926807A523E8A2697 /* libPods-twiliochat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7834F26AFB8ED02DD8AF41DF /* libPods-twiliochat.a */; };
+		596CA9DA1BF58590000FDA51 /* add-channel-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9B31BF58590000FDA51 /* add-channel-button.png */; };
+		596CA9DB1BF58590000FDA51 /* add-channel-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9B41BF58590000FDA51 /* add-channel-button@2x.png */; };
+		596CA9DC1BF58590000FDA51 /* add-channel-button@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9B51BF58590000FDA51 /* add-channel-button@hdp.png */; };
+		596CA9DD1BF58590000FDA51 /* btn-login.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9B61BF58590000FDA51 /* btn-login.png */; };
+		596CA9DE1BF58590000FDA51 /* btn-login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9B71BF58590000FDA51 /* btn-login@2x.png */; };
+		596CA9DF1BF58590000FDA51 /* btn-login@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9B81BF58590000FDA51 /* btn-login@hdp.png */; };
+		596CA9E01BF58590000FDA51 /* channel-list-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9B91BF58590000FDA51 /* channel-list-bg.png */; };
+		596CA9E11BF58590000FDA51 /* channel-list-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9BA1BF58590000FDA51 /* channel-list-bg@2x.png */; };
+		596CA9E21BF58590000FDA51 /* channel-list-bg@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9BB1BF58590000FDA51 /* channel-list-bg@hdp.png */; };
+		596CA9E31BF58590000FDA51 /* chat-field-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9BC1BF58590000FDA51 /* chat-field-bg.png */; };
+		596CA9E41BF58590000FDA51 /* chat-field-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9BD1BF58590000FDA51 /* chat-field-bg@2x.png */; };
+		596CA9E51BF58590000FDA51 /* chat-field-bg@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9BE1BF58590000FDA51 /* chat-field-bg@hdp.png */; };
+		596CA9E61BF58590000FDA51 /* header-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9BF1BF58590000FDA51 /* header-bg.png */; };
+		596CA9E71BF58590000FDA51 /* header-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9C01BF58590000FDA51 /* header-bg@2x.png */; };
+		596CA9E81BF58590000FDA51 /* header-bg@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9C11BF58590000FDA51 /* header-bg@hdp.png */; };
+		596CA9E91BF58590000FDA51 /* home-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9C21BF58590000FDA51 /* home-bg.png */; };
+		596CA9EA1BF58590000FDA51 /* home-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9C31BF58590000FDA51 /* home-bg@2x.png */; };
+		596CA9EB1BF58590000FDA51 /* home-bg@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9C41BF58590000FDA51 /* home-bg@hdp.png */; };
+		596CA9EC1BF58590000FDA51 /* icon-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9C51BF58590000FDA51 /* icon-list.png */; };
+		596CA9ED1BF58590000FDA51 /* icon-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9C61BF58590000FDA51 /* icon-list@2x.png */; };
+		596CA9EE1BF58590000FDA51 /* icon-list@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9C71BF58590000FDA51 /* icon-list@hdp.png */; };
+		596CA9EF1BF58590000FDA51 /* icon-user.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9C81BF58590000FDA51 /* icon-user.png */; };
+		596CA9F01BF58590000FDA51 /* icon-user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9C91BF58590000FDA51 /* icon-user@2x.png */; };
+		596CA9F11BF58590000FDA51 /* icon-user@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9CA1BF58590000FDA51 /* icon-user@hdp.png */; };
+		596CA9F21BF58590000FDA51 /* landing-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9CB1BF58590000FDA51 /* landing-logo.png */; };
+		596CA9F31BF58590000FDA51 /* landing-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9CC1BF58590000FDA51 /* landing-logo@2x.png */; };
+		596CA9F41BF58590000FDA51 /* landing-logo@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9CD1BF58590000FDA51 /* landing-logo@hdp.png */; };
+		596CA9F51BF58590000FDA51 /* login-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9CE1BF58590000FDA51 /* login-bg.png */; };
+		596CA9F61BF58590000FDA51 /* login-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9CF1BF58590000FDA51 /* login-bg@2x.png */; };
+		596CA9F71BF58590000FDA51 /* login-bg@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9D01BF58590000FDA51 /* login-bg@hdp.png */; };
+		596CA9F81BF58590000FDA51 /* password-field-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9D11BF58590000FDA51 /* password-field-bg.png */; };
+		596CA9F91BF58590000FDA51 /* password-field-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9D21BF58590000FDA51 /* password-field-bg@2x.png */; };
+		596CA9FA1BF58590000FDA51 /* password-field-bg@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9D31BF58590000FDA51 /* password-field-bg@hdp.png */; };
+		596CA9FB1BF58590000FDA51 /* user-panel-line.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9D41BF58590000FDA51 /* user-panel-line.png */; };
+		596CA9FC1BF58590000FDA51 /* user-panel-line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9D51BF58590000FDA51 /* user-panel-line@2x.png */; };
+		596CA9FD1BF58590000FDA51 /* user-panel-line@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9D61BF58590000FDA51 /* user-panel-line@hdp.png */; };
+		596CA9FE1BF58590000FDA51 /* username-field-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9D71BF58590000FDA51 /* username-field-bg.png */; };
+		596CA9FF1BF58590000FDA51 /* username-field-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9D81BF58590000FDA51 /* username-field-bg@2x.png */; };
+		596CAA001BF58590000FDA51 /* username-field-bg@hdp.png in Resources */ = {isa = PBXBuildFile; fileRef = 596CA9D91BF58590000FDA51 /* username-field-bg@hdp.png */; };
 		59B7FAE41BF54308008824EA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B7FAE31BF54308008824EA /* SignUpViewController.m */; };
 		8750C85E1BF530330015CBE1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85D1BF530330015CBE1 /* Keys.plist */; };
 		8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85F1BF5307E0015CBE1 /* Keys.example.plist */; };
 		87B6AC241BF51D6600E55FE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC231BF51D6600E55FE2 /* main.m */; };
 		87B6AC271BF51D6600E55FE2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC261BF51D6600E55FE2 /* AppDelegate.m */; };
-		87B6AC2A1BF51D6600E55FE2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC291BF51D6600E55FE2 /* ViewController.m */; };
+		87B6AC2A1BF51D6600E55FE2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC291BF51D6600E55FE2 /* MainViewController.m */; };
 		87B6AC2D1BF51D6600E55FE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B6AC2B1BF51D6600E55FE2 /* Main.storyboard */; };
 		87B6AC2F1BF51D6600E55FE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6AC2E1BF51D6600E55FE2 /* Assets.xcassets */; };
 		87B6AC321BF51D6600E55FE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B6AC301BF51D6600E55FE2 /* LaunchScreen.storyboard */; };
@@ -40,6 +79,45 @@
 
 /* Begin PBXFileReference section */
 		413E6B0A06E863D82FE7B36B /* Pods-twiliochat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochat.release.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochat/Pods-twiliochat.release.xcconfig"; sourceTree = "<group>"; };
+		596CA9B31BF58590000FDA51 /* add-channel-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add-channel-button.png"; path = "images/add-channel-button.png"; sourceTree = "<group>"; };
+		596CA9B41BF58590000FDA51 /* add-channel-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add-channel-button@2x.png"; path = "images/add-channel-button@2x.png"; sourceTree = "<group>"; };
+		596CA9B51BF58590000FDA51 /* add-channel-button@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add-channel-button@hdp.png"; path = "images/add-channel-button@hdp.png"; sourceTree = "<group>"; };
+		596CA9B61BF58590000FDA51 /* btn-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-login.png"; path = "images/btn-login.png"; sourceTree = "<group>"; };
+		596CA9B71BF58590000FDA51 /* btn-login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-login@2x.png"; path = "images/btn-login@2x.png"; sourceTree = "<group>"; };
+		596CA9B81BF58590000FDA51 /* btn-login@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-login@hdp.png"; path = "images/btn-login@hdp.png"; sourceTree = "<group>"; };
+		596CA9B91BF58590000FDA51 /* channel-list-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "channel-list-bg.png"; path = "images/channel-list-bg.png"; sourceTree = "<group>"; };
+		596CA9BA1BF58590000FDA51 /* channel-list-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "channel-list-bg@2x.png"; path = "images/channel-list-bg@2x.png"; sourceTree = "<group>"; };
+		596CA9BB1BF58590000FDA51 /* channel-list-bg@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "channel-list-bg@hdp.png"; path = "images/channel-list-bg@hdp.png"; sourceTree = "<group>"; };
+		596CA9BC1BF58590000FDA51 /* chat-field-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-field-bg.png"; path = "images/chat-field-bg.png"; sourceTree = "<group>"; };
+		596CA9BD1BF58590000FDA51 /* chat-field-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-field-bg@2x.png"; path = "images/chat-field-bg@2x.png"; sourceTree = "<group>"; };
+		596CA9BE1BF58590000FDA51 /* chat-field-bg@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-field-bg@hdp.png"; path = "images/chat-field-bg@hdp.png"; sourceTree = "<group>"; };
+		596CA9BF1BF58590000FDA51 /* header-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "header-bg.png"; path = "images/header-bg.png"; sourceTree = "<group>"; };
+		596CA9C01BF58590000FDA51 /* header-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "header-bg@2x.png"; path = "images/header-bg@2x.png"; sourceTree = "<group>"; };
+		596CA9C11BF58590000FDA51 /* header-bg@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "header-bg@hdp.png"; path = "images/header-bg@hdp.png"; sourceTree = "<group>"; };
+		596CA9C21BF58590000FDA51 /* home-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home-bg.png"; path = "images/home-bg.png"; sourceTree = "<group>"; };
+		596CA9C31BF58590000FDA51 /* home-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home-bg@2x.png"; path = "images/home-bg@2x.png"; sourceTree = "<group>"; };
+		596CA9C41BF58590000FDA51 /* home-bg@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home-bg@hdp.png"; path = "images/home-bg@hdp.png"; sourceTree = "<group>"; };
+		596CA9C51BF58590000FDA51 /* icon-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-list.png"; path = "images/icon-list.png"; sourceTree = "<group>"; };
+		596CA9C61BF58590000FDA51 /* icon-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-list@2x.png"; path = "images/icon-list@2x.png"; sourceTree = "<group>"; };
+		596CA9C71BF58590000FDA51 /* icon-list@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-list@hdp.png"; path = "images/icon-list@hdp.png"; sourceTree = "<group>"; };
+		596CA9C81BF58590000FDA51 /* icon-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-user.png"; path = "images/icon-user.png"; sourceTree = "<group>"; };
+		596CA9C91BF58590000FDA51 /* icon-user@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-user@2x.png"; path = "images/icon-user@2x.png"; sourceTree = "<group>"; };
+		596CA9CA1BF58590000FDA51 /* icon-user@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-user@hdp.png"; path = "images/icon-user@hdp.png"; sourceTree = "<group>"; };
+		596CA9CB1BF58590000FDA51 /* landing-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "landing-logo.png"; path = "images/landing-logo.png"; sourceTree = "<group>"; };
+		596CA9CC1BF58590000FDA51 /* landing-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "landing-logo@2x.png"; path = "images/landing-logo@2x.png"; sourceTree = "<group>"; };
+		596CA9CD1BF58590000FDA51 /* landing-logo@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "landing-logo@hdp.png"; path = "images/landing-logo@hdp.png"; sourceTree = "<group>"; };
+		596CA9CE1BF58590000FDA51 /* login-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-bg.png"; path = "images/login-bg.png"; sourceTree = "<group>"; };
+		596CA9CF1BF58590000FDA51 /* login-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-bg@2x.png"; path = "images/login-bg@2x.png"; sourceTree = "<group>"; };
+		596CA9D01BF58590000FDA51 /* login-bg@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-bg@hdp.png"; path = "images/login-bg@hdp.png"; sourceTree = "<group>"; };
+		596CA9D11BF58590000FDA51 /* password-field-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "password-field-bg.png"; path = "images/password-field-bg.png"; sourceTree = "<group>"; };
+		596CA9D21BF58590000FDA51 /* password-field-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "password-field-bg@2x.png"; path = "images/password-field-bg@2x.png"; sourceTree = "<group>"; };
+		596CA9D31BF58590000FDA51 /* password-field-bg@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "password-field-bg@hdp.png"; path = "images/password-field-bg@hdp.png"; sourceTree = "<group>"; };
+		596CA9D41BF58590000FDA51 /* user-panel-line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user-panel-line.png"; path = "images/user-panel-line.png"; sourceTree = "<group>"; };
+		596CA9D51BF58590000FDA51 /* user-panel-line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user-panel-line@2x.png"; path = "images/user-panel-line@2x.png"; sourceTree = "<group>"; };
+		596CA9D61BF58590000FDA51 /* user-panel-line@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user-panel-line@hdp.png"; path = "images/user-panel-line@hdp.png"; sourceTree = "<group>"; };
+		596CA9D71BF58590000FDA51 /* username-field-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "username-field-bg.png"; path = "images/username-field-bg.png"; sourceTree = "<group>"; };
+		596CA9D81BF58590000FDA51 /* username-field-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "username-field-bg@2x.png"; path = "images/username-field-bg@2x.png"; sourceTree = "<group>"; };
+		596CA9D91BF58590000FDA51 /* username-field-bg@hdp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "username-field-bg@hdp.png"; path = "images/username-field-bg@hdp.png"; sourceTree = "<group>"; };
 		59B7FAE21BF54308008824EA /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		59B7FAE31BF54308008824EA /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		652E063D172A0ECAD377861F /* Pods-twiliochat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochat/Pods-twiliochat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -50,8 +128,8 @@
 		87B6AC231BF51D6600E55FE2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		87B6AC251BF51D6600E55FE2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		87B6AC261BF51D6600E55FE2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		87B6AC281BF51D6600E55FE2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		87B6AC291BF51D6600E55FE2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		87B6AC281BF51D6600E55FE2 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		87B6AC291BF51D6600E55FE2 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		87B6AC2C1BF51D6600E55FE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		87B6AC2E1BF51D6600E55FE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		87B6AC311BF51D6600E55FE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -90,6 +168,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		596CA8C81BF5842B000FDA51 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				596CA9B31BF58590000FDA51 /* add-channel-button.png */,
+				596CA9B41BF58590000FDA51 /* add-channel-button@2x.png */,
+				596CA9B51BF58590000FDA51 /* add-channel-button@hdp.png */,
+				596CA9B61BF58590000FDA51 /* btn-login.png */,
+				596CA9B71BF58590000FDA51 /* btn-login@2x.png */,
+				596CA9B81BF58590000FDA51 /* btn-login@hdp.png */,
+				596CA9B91BF58590000FDA51 /* channel-list-bg.png */,
+				596CA9BA1BF58590000FDA51 /* channel-list-bg@2x.png */,
+				596CA9BB1BF58590000FDA51 /* channel-list-bg@hdp.png */,
+				596CA9BC1BF58590000FDA51 /* chat-field-bg.png */,
+				596CA9BD1BF58590000FDA51 /* chat-field-bg@2x.png */,
+				596CA9BE1BF58590000FDA51 /* chat-field-bg@hdp.png */,
+				596CA9BF1BF58590000FDA51 /* header-bg.png */,
+				596CA9C01BF58590000FDA51 /* header-bg@2x.png */,
+				596CA9C11BF58590000FDA51 /* header-bg@hdp.png */,
+				596CA9C21BF58590000FDA51 /* home-bg.png */,
+				596CA9C31BF58590000FDA51 /* home-bg@2x.png */,
+				596CA9C41BF58590000FDA51 /* home-bg@hdp.png */,
+				596CA9C51BF58590000FDA51 /* icon-list.png */,
+				596CA9C61BF58590000FDA51 /* icon-list@2x.png */,
+				596CA9C71BF58590000FDA51 /* icon-list@hdp.png */,
+				596CA9C81BF58590000FDA51 /* icon-user.png */,
+				596CA9C91BF58590000FDA51 /* icon-user@2x.png */,
+				596CA9CA1BF58590000FDA51 /* icon-user@hdp.png */,
+				596CA9CB1BF58590000FDA51 /* landing-logo.png */,
+				596CA9CC1BF58590000FDA51 /* landing-logo@2x.png */,
+				596CA9CD1BF58590000FDA51 /* landing-logo@hdp.png */,
+				596CA9CE1BF58590000FDA51 /* login-bg.png */,
+				596CA9CF1BF58590000FDA51 /* login-bg@2x.png */,
+				596CA9D01BF58590000FDA51 /* login-bg@hdp.png */,
+				596CA9D11BF58590000FDA51 /* password-field-bg.png */,
+				596CA9D21BF58590000FDA51 /* password-field-bg@2x.png */,
+				596CA9D31BF58590000FDA51 /* password-field-bg@hdp.png */,
+				596CA9D41BF58590000FDA51 /* user-panel-line.png */,
+				596CA9D51BF58590000FDA51 /* user-panel-line@2x.png */,
+				596CA9D61BF58590000FDA51 /* user-panel-line@hdp.png */,
+				596CA9D71BF58590000FDA51 /* username-field-bg.png */,
+				596CA9D81BF58590000FDA51 /* username-field-bg@2x.png */,
+				596CA9D91BF58590000FDA51 /* username-field-bg@hdp.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		59B7FAE11BF542BF008824EA /* parse */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +235,7 @@
 		8750C8611BF5315E0015CBE1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				596CA8C81BF5842B000FDA51 /* Images */,
 				8750C85F1BF5307E0015CBE1 /* Keys.example.plist */,
 				8750C85D1BF530330015CBE1 /* Keys.plist */,
 			);
@@ -146,8 +271,8 @@
 				8750C8611BF5315E0015CBE1 /* Resources */,
 				87B6AC251BF51D6600E55FE2 /* AppDelegate.h */,
 				87B6AC261BF51D6600E55FE2 /* AppDelegate.m */,
-				87B6AC281BF51D6600E55FE2 /* ViewController.h */,
-				87B6AC291BF51D6600E55FE2 /* ViewController.m */,
+				87B6AC281BF51D6600E55FE2 /* MainViewController.h */,
+				87B6AC291BF51D6600E55FE2 /* MainViewController.m */,
 				87B6AC2B1BF51D6600E55FE2 /* Main.storyboard */,
 				87B6AC2E1BF51D6600E55FE2 /* Assets.xcassets */,
 				87B6AC301BF51D6600E55FE2 /* LaunchScreen.storyboard */,
@@ -297,11 +422,50 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				596CA9E91BF58590000FDA51 /* home-bg.png in Resources */,
+				596CA9F11BF58590000FDA51 /* icon-user@hdp.png in Resources */,
+				596CA9F71BF58590000FDA51 /* login-bg@hdp.png in Resources */,
+				596CA9ED1BF58590000FDA51 /* icon-list@2x.png in Resources */,
+				596CA9EB1BF58590000FDA51 /* home-bg@hdp.png in Resources */,
 				8750C85E1BF530330015CBE1 /* Keys.plist in Resources */,
+				596CA9DE1BF58590000FDA51 /* btn-login@2x.png in Resources */,
+				596CAA001BF58590000FDA51 /* username-field-bg@hdp.png in Resources */,
+				596CA9DC1BF58590000FDA51 /* add-channel-button@hdp.png in Resources */,
+				596CA9E61BF58590000FDA51 /* header-bg.png in Resources */,
+				596CA9FE1BF58590000FDA51 /* username-field-bg.png in Resources */,
+				596CA9F31BF58590000FDA51 /* landing-logo@2x.png in Resources */,
+				596CA9E31BF58590000FDA51 /* chat-field-bg.png in Resources */,
+				596CA9DA1BF58590000FDA51 /* add-channel-button.png in Resources */,
+				596CA9F21BF58590000FDA51 /* landing-logo.png in Resources */,
 				87B6AC321BF51D6600E55FE2 /* LaunchScreen.storyboard in Resources */,
+				596CA9EA1BF58590000FDA51 /* home-bg@2x.png in Resources */,
 				8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */,
+				596CA9E01BF58590000FDA51 /* channel-list-bg.png in Resources */,
+				596CA9E51BF58590000FDA51 /* chat-field-bg@hdp.png in Resources */,
+				596CA9EF1BF58590000FDA51 /* icon-user.png in Resources */,
+				596CA9FB1BF58590000FDA51 /* user-panel-line.png in Resources */,
+				596CA9E41BF58590000FDA51 /* chat-field-bg@2x.png in Resources */,
+				596CA9F61BF58590000FDA51 /* login-bg@2x.png in Resources */,
+				596CA9DD1BF58590000FDA51 /* btn-login.png in Resources */,
+				596CA9EE1BF58590000FDA51 /* icon-list@hdp.png in Resources */,
+				596CA9E11BF58590000FDA51 /* channel-list-bg@2x.png in Resources */,
+				596CA9FA1BF58590000FDA51 /* password-field-bg@hdp.png in Resources */,
+				596CA9DB1BF58590000FDA51 /* add-channel-button@2x.png in Resources */,
+				596CA9E21BF58590000FDA51 /* channel-list-bg@hdp.png in Resources */,
+				596CA9F91BF58590000FDA51 /* password-field-bg@2x.png in Resources */,
+				596CA9F81BF58590000FDA51 /* password-field-bg.png in Resources */,
+				596CA9EC1BF58590000FDA51 /* icon-list.png in Resources */,
+				596CA9E71BF58590000FDA51 /* header-bg@2x.png in Resources */,
 				87B6AC2F1BF51D6600E55FE2 /* Assets.xcassets in Resources */,
+				596CA9FD1BF58590000FDA51 /* user-panel-line@hdp.png in Resources */,
+				596CA9DF1BF58590000FDA51 /* btn-login@hdp.png in Resources */,
 				87B6AC2D1BF51D6600E55FE2 /* Main.storyboard in Resources */,
+				596CA9F01BF58590000FDA51 /* icon-user@2x.png in Resources */,
+				596CA9FC1BF58590000FDA51 /* user-panel-line@2x.png in Resources */,
+				596CA9F41BF58590000FDA51 /* landing-logo@hdp.png in Resources */,
+				596CA9E81BF58590000FDA51 /* header-bg@hdp.png in Resources */,
+				596CA9F51BF58590000FDA51 /* login-bg.png in Resources */,
+				596CA9FF1BF58590000FDA51 /* username-field-bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,7 +538,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87B6AC2A1BF51D6600E55FE2 /* ViewController.m in Sources */,
+				87B6AC2A1BF51D6600E55FE2 /* MainViewController.m in Sources */,
 				87B6AC271BF51D6600E55FE2 /* AppDelegate.m in Sources */,
 				59B7FAE41BF54308008824EA /* SignUpViewController.m in Sources */,
 				87B6AC241BF51D6600E55FE2 /* main.m in Sources */,

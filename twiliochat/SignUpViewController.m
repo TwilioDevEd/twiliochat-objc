@@ -1,18 +1,10 @@
 #import "SignUpViewController.h"
 
 @interface SignUpViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
 
 @end
 
 @implementation SignUpViewController
-- (IBAction)signUpClicked:(id)sender {
-    NSLog(@"Clicked");
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 }

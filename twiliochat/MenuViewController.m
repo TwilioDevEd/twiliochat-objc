@@ -1,17 +1,30 @@
 #import "MenuViewController.h"
 
 @interface MenuViewController ()
+@property (weak, nonatomic) IBOutlet UIView *menuHeader;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 
 @end
 
 @implementation MenuViewController
+- (IBAction)logoutButtonTouched:(UIButton *)sender {
+    [PFUser logOut];
+    
+    [ViewControllerFlowManager showSessionBasedViewController];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    CGRect tableFrame = self.tableView.frame;
 
     UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home-bg"]];
-    [bgImage setFrame:self.tableView.frame];
+    [bgImage setFrame:tableFrame];
     self.tableView.backgroundView = bgImage;
+    
+    tableFrame.size.height = self.menuHeader.frame.size.height;
+    [self.menuHeader setFrame:tableFrame];
+    self.tableView.tableHeaderView = self.menuHeader;
 }
 
 - (void)didReceiveMemoryWarning {

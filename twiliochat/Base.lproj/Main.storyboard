@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -17,10 +17,10 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="gXq-CR-avA">
-                                <rect key="frame" x="0.0" y="50" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gXq-CR-avA" id="hLG-8N-ZO8">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </tableViewCellContentView>
@@ -32,8 +32,69 @@
                             <outlet property="delegate" destination="YP8-ak-pkT" id="5FB-fx-mPH"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="menuHeader" destination="IIV-zd-cYc" id="JYw-Gy-LRS"/>
+                        <outlet property="usernameLabel" destination="5Wn-6n-kgu" id="MMr-6A-c0W"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tC5-T8-Jgp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="IIV-zd-cYc">
+                    <rect key="frame" x="0.0" y="0.0" width="438" height="80"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-user" translatesAutoresizingMaskIntoConstraints="NO" id="dfv-iz-6D1">
+                            <rect key="frame" x="35" y="30" width="15" height="19"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="19" id="Hsy-XH-xpY"/>
+                                <constraint firstAttribute="width" constant="15" id="zwZ-DD-HwL"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Wn-6n-kgu">
+                            <rect key="frame" x="65" y="30" width="237" height="19.5"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                            <color key="textColor" red="0.21960784310000001" green="0.023529411760000001" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PY8-Qj-TBu">
+                            <rect key="frame" x="310" y="24" width="48" height="32"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="48" id="fNB-mv-tEt"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                            <state key="normal" title="Logout">
+                                <color key="titleColor" red="0.97254901960784312" green="0.55686274509803924" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="logoutButtonTouched:" destination="YP8-ak-pkT" eventType="touchUpInside" id="ekj-Jd-2v4"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yz9-Ve-zof">
+                            <rect key="frame" x="0.0" y="79" width="438" height="1"/>
+                            <animations/>
+                            <color key="backgroundColor" red="0.35686274509803922" green="0.098039215686274508" blue="0.062745098039215685" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="8qN-xU-LmR"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="5Wn-6n-kgu" firstAttribute="leading" secondItem="dfv-iz-6D1" secondAttribute="trailing" constant="15" id="66C-ZE-D4j"/>
+                        <constraint firstAttribute="trailing" secondItem="PY8-Qj-TBu" secondAttribute="trailing" constant="80" id="7fg-33-WMS"/>
+                        <constraint firstItem="yz9-Ve-zof" firstAttribute="leading" secondItem="IIV-zd-cYc" secondAttribute="leading" id="8d0-bH-oF3"/>
+                        <constraint firstAttribute="bottom" secondItem="yz9-Ve-zof" secondAttribute="bottom" id="Ct9-Yf-PRS"/>
+                        <constraint firstItem="dfv-iz-6D1" firstAttribute="leading" secondItem="IIV-zd-cYc" secondAttribute="leading" constant="35" id="IQ2-5z-yP1"/>
+                        <constraint firstItem="PY8-Qj-TBu" firstAttribute="centerY" secondItem="IIV-zd-cYc" secondAttribute="centerY" id="Nts-U5-P9W"/>
+                        <constraint firstItem="5Wn-6n-kgu" firstAttribute="centerY" secondItem="IIV-zd-cYc" secondAttribute="centerY" id="YUl-TH-Atp"/>
+                        <constraint firstAttribute="trailing" secondItem="yz9-Ve-zof" secondAttribute="trailing" id="efN-pJ-POS"/>
+                        <constraint firstItem="PY8-Qj-TBu" firstAttribute="leading" secondItem="5Wn-6n-kgu" secondAttribute="trailing" constant="8" id="g4q-uP-344"/>
+                        <constraint firstItem="dfv-iz-6D1" firstAttribute="centerY" secondItem="IIV-zd-cYc" secondAttribute="centerY" id="koi-7B-Wwn"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="-496" y="-1281"/>
         </scene>
@@ -277,6 +338,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dj-EU-xcn">
                                 <rect key="frame" x="43" y="215" width="46" height="30"/>
+                                <animations/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="ttt:" destination="Ni6-5b-9ca" eventType="touchUpInside" id="Gsl-rh-MGt"/>
@@ -309,6 +371,7 @@
         <image name="home-bg" width="321" height="568"/>
         <image name="icon-list" width="23" height="13"/>
         <image name="icon-list.png" width="23" height="13"/>
+        <image name="icon-user" width="15" height="19"/>
         <image name="landing-logo" width="291" height="146"/>
         <image name="password-field-bg" width="26" height="41"/>
         <image name="username-field-bg" width="25" height="41"/>

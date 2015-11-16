@@ -25,15 +25,7 @@
     
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName: @"Main" bundle: [NSBundle mainBundle]];
-    PFUser *currentUser = [PFUser currentUser];
-
-    if (currentUser) {
-        self.window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"RevealViewController"];
-    }
-    else {
-        self.window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    }
+    [ViewControllerFlowManager showSessionBasedViewController];
     
     return YES;
 }

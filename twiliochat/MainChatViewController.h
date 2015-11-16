@@ -1,15 +1,7 @@
-//
-//  MainChatViewController.h
-//  twiliochat
-//
-//  Created by Mario Celi on 11/13/15.
-//  Copyright © 2015 Twilio. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "SWRevealViewController.h"
 
-@interface MainChatViewController : UIViewController
-
+@interface MainChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@property (strong, nonatomic) NSString *channel;
 @end

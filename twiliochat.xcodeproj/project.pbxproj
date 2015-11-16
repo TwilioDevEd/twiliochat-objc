@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1280D1A926807A523E8A2697 /* libPods-twiliochat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7834F26AFB8ED02DD8AF41DF /* libPods-twiliochat.a */; };
+		593F44771BFA5E2900B57504 /* MenuTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 593F44761BFA5E2900B57504 /* MenuTableCell.m */; };
+		593F447B1BFA7D6A00B57504 /* InputDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 593F447A1BFA7D6A00B57504 /* InputDialogController.m */; };
 		59BD03161BF68C1E00A4AA88 /* MainChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD03151BF68C1E00A4AA88 /* MainChatViewController.m */; };
 		59BD031D1BF6936000A4AA88 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD031C1BF6936000A4AA88 /* MenuViewController.m */; };
 		59BD03211BFA296900A4AA88 /* ViewControllerFlowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD03201BFA296900A4AA88 /* ViewControllerFlowManager.m */; };
@@ -42,6 +44,10 @@
 
 /* Begin PBXFileReference section */
 		413E6B0A06E863D82FE7B36B /* Pods-twiliochat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochat.release.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochat/Pods-twiliochat.release.xcconfig"; sourceTree = "<group>"; };
+		593F44751BFA5E2900B57504 /* MenuTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableCell.h; sourceTree = "<group>"; };
+		593F44761BFA5E2900B57504 /* MenuTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableCell.m; sourceTree = "<group>"; };
+		593F44791BFA7D6A00B57504 /* InputDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputDialogController.h; sourceTree = "<group>"; };
+		593F447A1BFA7D6A00B57504 /* InputDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputDialogController.m; sourceTree = "<group>"; };
 		59BD03141BF68C1E00A4AA88 /* MainChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainChatViewController.h; sourceTree = "<group>"; };
 		59BD03151BF68C1E00A4AA88 /* MainChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainChatViewController.m; sourceTree = "<group>"; };
 		59BD031B1BF6936000A4AA88 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
@@ -96,6 +102,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		593F44781BFA7D3400B57504 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				593F44791BFA7D6A00B57504 /* InputDialogController.h */,
+				593F447A1BFA7D6A00B57504 /* InputDialogController.m */,
+			);
+			name = util;
+			sourceTree = "<group>";
+		};
 		59B7FAE11BF542BF008824EA /* parse */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +134,8 @@
 			children = (
 				59BD031B1BF6936000A4AA88 /* MenuViewController.h */,
 				59BD031C1BF6936000A4AA88 /* MenuViewController.m */,
+				593F44751BFA5E2900B57504 /* MenuTableCell.h */,
+				593F44761BFA5E2900B57504 /* MenuTableCell.m */,
 			);
 			name = menu;
 			sourceTree = "<group>";
@@ -175,6 +192,7 @@
 		87B6AC211BF51D6600E55FE2 /* twiliochat */ = {
 			isa = PBXGroup;
 			children = (
+				593F44781BFA7D3400B57504 /* util */,
 				59BD031E1BFA28DF00A4AA88 /* flow */,
 				59BD03171BF6930700A4AA88 /* menu */,
 				59BD03131BF68C0000A4AA88 /* chat */,
@@ -414,6 +432,8 @@
 				59BD03161BF68C1E00A4AA88 /* MainChatViewController.m in Sources */,
 				59BD03211BFA296900A4AA88 /* ViewControllerFlowManager.m in Sources */,
 				59BD031D1BF6936000A4AA88 /* MenuViewController.m in Sources */,
+				593F447B1BFA7D6A00B57504 /* InputDialogController.m in Sources */,
+				593F44771BFA5E2900B57504 /* MenuTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

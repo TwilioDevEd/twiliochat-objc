@@ -1,12 +1,9 @@
 #import "MenuViewController.h"
 
 @interface MenuViewController ()
-@property (strong, nonatomic) IBOutlet UIView *menuHeader;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (strong, nonatomic) IBOutlet UIView *menuFooter;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (strong, nonatomic) NSArray *channels;
+@property (strong, nonatomic) NSMutableArray *channels;
 @end
 
 @implementation MenuViewController
@@ -14,6 +11,9 @@
     [PFUser logOut];
     
     [ViewControllerFlowManager showSessionBasedViewController];
+}
+- (IBAction)newChannelButtonTouched:(UIButton *)sender {
+    [self createNewChannel];
 }
 
 - (void)viewDidLoad {
@@ -24,17 +24,11 @@
     UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home-bg"]];
     [bgImage setFrame:tableFrame];
     self.tableView.backgroundView = bgImage;
+
+    self.usernameLabel.text = [PFUser currentUser].username;
+    self.channels = [NSMutableArray arrayWithArray:@[@"TNG-fans",@"San Diego Brewers",@"General chat"]];
     
-    self.tableView.delegate = self;
-    
-    /*tableFrame.size.height = self.menuHeader.frame.size.height;
-    [self.menuHeader setFrame:tableFrame];
-    self.tableView.tableHeaderView = self.menuHeader;
-    
-    self.tableView.tableFooterView = self.menuFooter;
-    
-    self.usernameLabel.text = [PFUser currentUser].username;*/
-    self.channels = @[@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,11 +47,25 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
+    MenuTableCell *cell = (MenuTableCell *)[tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    NSString *channel = [self.channels objectAtIndex:indexPath.row];
+    cell.channelName = channel;
     
     return cell;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+- (void)createNewChannel {
+    [InputDialogController showWithTitle:@"New Channel"
+                                 message:@"Enter a name for this channel."
+                               presenter:self handler:^(NSString *text) {
+                                   [self.channels addObject:text];
+                                   [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow: self.channels.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
+                               }];
 }
 
 /*
@@ -80,21 +88,6 @@
 }
 */
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -102,6 +95,5 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
 
 @end

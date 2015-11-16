@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -17,10 +17,10 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="gXq-CR-avA">
-                                <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="50" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gXq-CR-avA" id="hLG-8N-ZO8">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </tableViewCellContentView>
@@ -179,14 +179,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A simple chat app built using the" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tFk-7c-2zB">
-                                <rect key="frame" x="204" y="230" width="191.5" height="18"/>
+                                <rect key="frame" x="204" y="230" width="192" height="18"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="13"/>
                                 <color key="textColor" red="0.96862745100000003" green="0.90196078430000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Twilio IP Messaging API" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDd-IQ-cnc">
-                                <rect key="frame" x="230" y="253" width="139.5" height="18"/>
+                                <rect key="frame" x="230" y="253" width="140" height="18"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
                                 <color key="textColor" red="0.96862745100000003" green="0.90196078430000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -208,22 +208,32 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="LR8-QW-RbZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="67" id="36I-Yb-o6c"/>
+                            <constraint firstItem="LR8-QW-RbZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="67" id="36I-Yb-o6c">
+                                <variation key="heightClass=compact" constant="10"/>
+                            </constraint>
                             <constraint firstItem="LR8-QW-RbZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5Lk-ke-lao"/>
                             <constraint firstItem="kPZ-EW-vkL" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="ABG-02-zZs"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="kPZ-EW-vkL" secondAttribute="bottom" constant="100" id="AE7-Je-7kZ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="kPZ-EW-vkL" secondAttribute="bottom" constant="100" id="AE7-Je-7kZ">
+                                <variation key="heightClass=compact" constant="10"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="H6C-KH-wYe" secondAttribute="trailing" id="G7G-0g-Qrh"/>
                             <constraint firstItem="kPZ-EW-vkL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="KlM-Aw-cgj"/>
                             <constraint firstItem="dDd-IQ-cnc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TRy-TP-qNs"/>
                             <constraint firstItem="tFk-7c-2zB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Tkh-4i-IQl"/>
                             <constraint firstItem="muS-F2-Dv2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XNC-0D-xcU"/>
-                            <constraint firstItem="dDd-IQ-cnc" firstAttribute="top" secondItem="tFk-7c-2zB" secondAttribute="bottom" constant="5" id="Xjc-y4-fjh"/>
+                            <constraint firstItem="dDd-IQ-cnc" firstAttribute="top" secondItem="tFk-7c-2zB" secondAttribute="bottom" constant="5" id="Xjc-y4-fjh">
+                                <variation key="heightClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="pJY-Zs-s5b" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="XzD-In-D8p"/>
-                            <constraint firstItem="pJY-Zs-s5b" firstAttribute="top" secondItem="muS-F2-Dv2" secondAttribute="bottom" constant="17" id="ab5-CV-TS9"/>
+                            <constraint firstItem="pJY-Zs-s5b" firstAttribute="top" secondItem="muS-F2-Dv2" secondAttribute="bottom" constant="17" id="ab5-CV-TS9">
+                                <variation key="heightClass=compact" constant="10"/>
+                            </constraint>
                             <constraint firstItem="H6C-KH-wYe" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="grZ-c3-Mc4"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="H6C-KH-wYe" secondAttribute="bottom" id="hWC-CN-thu"/>
                             <constraint firstItem="pJY-Zs-s5b" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="kX8-hs-J1m"/>
-                            <constraint firstItem="tFk-7c-2zB" firstAttribute="top" secondItem="LR8-QW-RbZ" secondAttribute="bottom" constant="17" id="qny-dI-k8C"/>
+                            <constraint firstItem="tFk-7c-2zB" firstAttribute="top" secondItem="LR8-QW-RbZ" secondAttribute="bottom" constant="17" id="qny-dI-k8C">
+                                <variation key="heightClass=compact" constant="-18"/>
+                            </constraint>
                             <constraint firstItem="H6C-KH-wYe" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="uQE-Wn-O9V"/>
                             <constraint firstItem="kPZ-EW-vkL" firstAttribute="top" secondItem="pJY-Zs-s5b" secondAttribute="bottom" id="uRY-eJ-ViI"/>
                         </constraints>

@@ -1,9 +1,12 @@
 #import "MenuViewController.h"
 
 @interface MenuViewController ()
-@property (weak, nonatomic) IBOutlet UIView *menuHeader;
+@property (strong, nonatomic) IBOutlet UIView *menuHeader;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (strong, nonatomic) IBOutlet UIView *menuFooter;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (strong, nonatomic) NSArray *channels;
 @end
 
 @implementation MenuViewController
@@ -22,9 +25,16 @@
     [bgImage setFrame:tableFrame];
     self.tableView.backgroundView = bgImage;
     
-    tableFrame.size.height = self.menuHeader.frame.size.height;
+    self.tableView.delegate = self;
+    
+    /*tableFrame.size.height = self.menuHeader.frame.size.height;
     [self.menuHeader setFrame:tableFrame];
     self.tableView.tableHeaderView = self.menuHeader;
+    
+    self.tableView.tableFooterView = self.menuFooter;
+    
+    self.usernameLabel.text = [PFUser currentUser].username;*/
+    self.channels = @[@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",@"hello",];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,24 +45,20 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return self.channels.count;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
     
     // Configure the cell...
     
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.

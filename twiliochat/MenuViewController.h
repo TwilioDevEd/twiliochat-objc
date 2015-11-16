@@ -2,6 +2,6 @@
 #import <Parse/Parse.h>
 #import "ViewControllerFlowManager.h"
 
-@interface MenuViewController : UITableViewController
+@interface MenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end

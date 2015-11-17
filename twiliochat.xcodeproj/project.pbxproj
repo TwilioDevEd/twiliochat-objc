@@ -15,6 +15,7 @@
 		59BD03211BFA296900A4AA88 /* ViewControllerFlowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD03201BFA296900A4AA88 /* ViewControllerFlowManager.m */; };
 		8750C85E1BF530330015CBE1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85D1BF530330015CBE1 /* Keys.plist */; };
 		8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85F1BF5307E0015CBE1 /* Keys.example.plist */; };
+		87A486021BFB5E9500E4BE8F /* ChatTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A486011BFB5E9500E4BE8F /* ChatTableCell.m */; };
 		87B6AC241BF51D6600E55FE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC231BF51D6600E55FE2 /* main.m */; };
 		87B6AC271BF51D6600E55FE2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC261BF51D6600E55FE2 /* AppDelegate.m */; };
 		87B6AC2A1BF51D6600E55FE2 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC291BF51D6600E55FE2 /* LoginViewController.m */; };
@@ -58,6 +59,8 @@
 		7834F26AFB8ED02DD8AF41DF /* libPods-twiliochat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twiliochat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8750C85D1BF530330015CBE1 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		8750C85F1BF5307E0015CBE1 /* Keys.example.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.example.plist; sourceTree = "<group>"; };
+		87A486001BFB5E9500E4BE8F /* ChatTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableCell.h; sourceTree = "<group>"; };
+		87A486011BFB5E9500E4BE8F /* ChatTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableCell.m; sourceTree = "<group>"; };
 		87B6AC1F1BF51D6600E55FE2 /* twiliochat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twiliochat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B6AC231BF51D6600E55FE2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		87B6AC251BF51D6600E55FE2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -125,6 +128,8 @@
 			children = (
 				59BD03141BF68C1E00A4AA88 /* MainChatViewController.h */,
 				59BD03151BF68C1E00A4AA88 /* MainChatViewController.m */,
+				87A486001BFB5E9500E4BE8F /* ChatTableCell.h */,
+				87A486011BFB5E9500E4BE8F /* ChatTableCell.m */,
 			);
 			name = chat;
 			sourceTree = "<group>";
@@ -434,6 +439,7 @@
 				59BD031D1BF6936000A4AA88 /* MenuViewController.m in Sources */,
 				593F447B1BFA7D6A00B57504 /* InputDialogController.m in Sources */,
 				593F44771BFA5E2900B57504 /* MenuTableCell.m in Sources */,
+				87A486021BFB5E9500E4BE8F /* ChatTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

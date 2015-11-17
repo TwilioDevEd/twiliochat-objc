@@ -12,7 +12,7 @@
 
 @implementation LoginViewController
 
-#pragma mark Initialization
+#pragma mark - Initialization
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,7 +40,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark Actions
+#pragma mark - Actions
 
 - (IBAction)loginButtonTouched:(UIButton *)sender {
     [self signUpOrLoginUser];
@@ -50,7 +50,7 @@
     [self toggleSignUpMode];
 }
 
-#pragma mark Login
+#pragma mark - Login
 
 - (void)toggleSignUpMode {
     self.isSigningUp = !self.isSigningUp;
@@ -116,24 +116,28 @@
 
 - (BOOL)validateUserData {
     if ([self.usernameTextField.text isEqualToString: @""] || [self.passwordTextField.text isEqualToString: @""] ) {
-        [self showAlertWithMessage:@"Username name and Password are required"];
+        [self showAlertWithMessage:@"Username and Password are required"];
         return NO;
     }
     return YES;
 }
 
-#pragma mark Alerts
+#pragma mark - Alerts
 
 - (void)showAlertWithMessage: (NSString *)message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                    message:message
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:nil];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
-#pragma mark Animation
+#pragma mark - Animation
 
 - (void)moveScreenUp
 {
@@ -157,7 +161,7 @@
     [UIView commitAnimations];
 }
 
-#pragma mark UITextFieldDelegate
+#pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -179,7 +183,7 @@
     [self moveScreenUp];
 }
 
-#pragma mark Screen Options
+#pragma mark - Style
 
 - (IBAction)backgroundTap:(id)sender {
     [self.view endEditing:YES];

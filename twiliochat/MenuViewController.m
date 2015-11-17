@@ -7,14 +7,8 @@
 @end
 
 @implementation MenuViewController
-- (IBAction)logoutButtonTouched:(UIButton *)sender {
-    [PFUser logOut];
-    
-    [ViewControllerFlowManager showSessionBasedViewController];
-}
-- (IBAction)newChannelButtonTouched:(UIButton *)sender {
-    [self createNewChannel];
-}
+
+#pragma mark Initialization
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,11 +23,6 @@
     self.channels = [NSMutableArray arrayWithArray:@[@"TNG-fans",@"San Diego Brewers",@"General chat"]];
     
     [self.tableView reloadData];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -55,38 +44,25 @@
     return cell;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
-- (void)createNewChannel {
-    [InputDialogController showWithTitle:@"New Channel"
-                                 message:@"Enter a name for this channel."
-                               presenter:self handler:^(NSString *text) {
-                                   [self.channels addObject:text];
-                                   [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow: self.channels.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
-                               }];
-}
+/*
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *channel = [self.channels objectAtIndex:indexPath.row];
@@ -96,12 +72,64 @@
     [self.revealViewController revealToggleAnimated:YES];
 }
 
+#pragma mark - Channel
+
+- (void)createNewChannel {
+    [InputDialogController showWithTitle:@"New Channel"
+                                 message:@"Enter a name for this channel."
+                             placeholder:@"Name"
+                               presenter:self handler:^(NSString *text) {
+                                   [self.channels addObject:text];
+                                   [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow: self.channels.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
+                               }];
+}
+
+#pragma mark - Logout
+
+- (void)promtpLogout {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:@"You are about to Logout."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:nil];
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self logOut];
+                                                       }];
+    
+    [alert addAction:defaultAction];
+    [alert addAction:confirmAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void) logOut {
+    [PFUser logOut];
+    [ViewControllerFlowManager showSessionBasedViewController];
+}
+
+#pragma mark Actions
+
+- (IBAction)logoutButtonTouched:(UIButton *)sender {
+    [self promtpLogout];
+}
+
+- (IBAction)newChannelButtonTouched:(UIButton *)sender {
+    [self createNewChannel];
+}
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+}
+
+#pragma mark Style
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end

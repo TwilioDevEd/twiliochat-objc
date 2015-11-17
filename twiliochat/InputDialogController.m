@@ -6,11 +6,22 @@
 
 @implementation InputDialogController
 
-+ (void)showWithTitle:(NSString *)title message:(NSString *)message presenter:(UIViewController *)presenter handler:(void (^)(NSString *))handler {
-    [[[InputDialogController alloc] init] showWithTitle:title message:message presenter:presenter handler:handler];
++ (void)showWithTitle:(NSString *)title
+              message:(NSString *)message
+          placeholder:(NSString *)placeholder
+            presenter:(UIViewController *)presenter
+              handler:(void (^)(NSString *))handler {
+    [[[InputDialogController alloc] init] showWithTitle:title
+                                                message:message
+                                            placeholder:placeholder
+                                              presenter:presenter handler:handler];
 }
 
--(void)showWithTitle:(NSString *)title message:(NSString *)message presenter:(UIViewController *)presenter handler:(void (^)(NSString *))handler {
+-(void)showWithTitle:(NSString *)title
+             message:(NSString *)message
+         placeholder:(NSString *)placeholder
+           presenter:(UIViewController *)presenter
+             handler:(void (^)(NSString *))handler {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -28,6 +39,7 @@
     self.saveAction.enabled = NO;
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = placeholder;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleTextFieldTextDidChangeNotification:)
                                                      name:UITextFieldTextDidChangeNotification

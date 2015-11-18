@@ -1,8 +1,6 @@
 #import <UIKit/UIKit.h>
-#import <Parse/Parse.h>
-#import "SWRevealViewController.h"
-#import "ChatTableCell.h"
+#import <SLKTextViewController.h>
 
-@interface MainChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface MainChatViewController : SLKTextViewController <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) NSString *channel;
 @end

@@ -25,6 +25,8 @@
 		87B6AC321BF51D6600E55FE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B6AC301BF51D6600E55FE2 /* LaunchScreen.storyboard */; };
 		87B6AC3D1BF51D6600E55FE2 /* twiliochatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC3C1BF51D6600E55FE2 /* twiliochatTests.m */; };
 		87B6AC481BF51D6600E55FE2 /* twiliochatUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC471BF51D6600E55FE2 /* twiliochatUITests.m */; };
+		87F2CE6F1BFD2C390064D863 /* ChatTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */; };
+		87F2CE731BFD356F0064D863 /* ChatStatusTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */; };
 		A6791A025DDCD04B5D1F443F /* libPods-twiliochatUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE6C21A5FA4BAC2BD3FFCDA /* libPods-twiliochatUITests.a */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +86,8 @@
 		87B6AC431BF51D6600E55FE2 /* twiliochatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = twiliochatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B6AC471BF51D6600E55FE2 /* twiliochatUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = twiliochatUITests.m; sourceTree = "<group>"; };
 		87B6AC491BF51D6600E55FE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableCell.xib; sourceTree = "<group>"; };
+		87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatStatusTableCell.xib; path = ../ChatStatusTableCell.xib; sourceTree = "<group>"; };
 		8CEDAD3D5DA10C223B280F8B /* Pods-twiliochatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochatUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochatUITests/Pods-twiliochatUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -222,6 +226,8 @@
 				87B6AC2B1BF51D6600E55FE2 /* Main.storyboard */,
 				87B6AC2E1BF51D6600E55FE2 /* Assets.xcassets */,
 				87B6AC301BF51D6600E55FE2 /* LaunchScreen.storyboard */,
+				87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */,
+				87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */,
 				87B6AC331BF51D6600E55FE2 /* Info.plist */,
 				87B6AC221BF51D6600E55FE2 /* Supporting Files */,
 			);
@@ -379,6 +385,8 @@
 				87B6AC321BF51D6600E55FE2 /* LaunchScreen.storyboard in Resources */,
 				8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */,
 				87B6AC2F1BF51D6600E55FE2 /* Assets.xcassets in Resources */,
+				87F2CE6F1BFD2C390064D863 /* ChatTableCell.xib in Resources */,
+				87F2CE731BFD356F0064D863 /* ChatStatusTableCell.xib in Resources */,
 				87B6AC2D1BF51D6600E55FE2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

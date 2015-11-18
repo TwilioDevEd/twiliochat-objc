@@ -1,13 +1,18 @@
+#import <Parse/Parse.h>
 #import "MainChatViewController.h"
+#import "SWRevealViewController.h"
+#import "ChatTableCell.h"
 
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 
 @property (strong, nonatomic) NSMutableArray *chatEntries;
 
 @end
+
+static NSString *ChatCellIdentifier = @"ChatTableCell";
+static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 @implementation MainChatViewController
 
@@ -24,11 +29,23 @@
         [self.navigationController.navigationBar addGestureRecognizer: self.revealViewController.panGestureRecognizer];
     }
 
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+    self.bounces = YES;
+    self.shakeToClearEnabled = YES;
+    self.keyboardPanningEnabled = YES;
+    self.shouldScrollToBottomAfterKeyboardShows = NO;
+    self.inverted = NO;
+    
+    UINib *cellNib = [UINib nibWithNibName:ChatCellIdentifier bundle:nil];
+    [self.tableView registerNib:cellNib
+         forCellReuseIdentifier:ChatCellIdentifier];
+    
+    UINib *cellStatusNib = [UINib nibWithNibName:ChatStatusCellIdentifier bundle:nil];
+    [self.tableView registerNib:cellStatusNib
+         forCellReuseIdentifier:ChatStatusCellIdentifier];
     
     self.tableView.estimatedRowHeight = 70;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 -(void)setChannel:(NSString *)channel {
@@ -50,12 +67,12 @@
     UITableViewCell *cell = nil;
     
     if ([entry hasPrefix:@"*"]) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"chatStatusCell" forIndexPath:indexPath];
+        cell = [tableView dequeueReusableCellWithIdentifier:ChatStatusCellIdentifier forIndexPath:indexPath];
         UILabel *label = (UILabel *)[cell.contentView viewWithTag:200];
         label.text = entry;
     }
     else {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"chatEntryCell" forIndexPath:indexPath];
+        cell = [tableView dequeueReusableCellWithIdentifier:ChatCellIdentifier forIndexPath:indexPath];
         
         ChatTableCell *chatCell = (ChatTableCell *)cell;
         chatCell.user = [PFUser currentUser].username;

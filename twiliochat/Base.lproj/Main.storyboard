@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -418,6 +418,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kch-lJ-0FF">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="553"/>
+                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatEntryCell" rowHeight="63" id="Er0-yL-VhJ" customClass="ChatTableCell">
@@ -429,23 +430,27 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="201" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5e-ub-lFM">
                                                     <rect key="frame" x="96" y="8" width="26" height="16.5"/>
+                                                    <animations/>
                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
                                                     <color key="textColor" red="0.72941176470588232" green="0.61960784313725492" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="202" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6yt-eC-J2h">
                                                     <rect key="frame" x="8" y="31" width="584" height="19.5"/>
+                                                    <animations/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                                     <color key="textColor" red="0.35686274509999999" green="0.30980392159999998" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cY-MI-rWG">
                                                     <rect key="frame" x="8" y="8" width="66" height="19.5"/>
+                                                    <animations/>
                                                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
                                                     <color key="textColor" red="0.35686274509803922" green="0.30980392156862746" blue="0.31764705882352939" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="6yt-eC-J2h" secondAttribute="trailing" id="05H-Uz-P8y"/>
                                                 <constraint firstItem="6yt-eC-J2h" firstAttribute="leading" secondItem="Bdu-d7-CjY" secondAttribute="leadingMargin" id="0bR-XM-EAr"/>
@@ -457,6 +462,7 @@
                                                 <constraint firstItem="5cY-MI-rWG" firstAttribute="leading" secondItem="Bdu-d7-CjY" secondAttribute="leadingMargin" id="wXc-95-xiC"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <animations/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatStatusCell" rowHeight="44" id="jmE-xW-yjN" userLabel="chatStatusCell">
                                         <rect key="frame" x="0.0" y="155" width="600" height="44"/>
@@ -467,12 +473,14 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drB-Z5-RW8">
                                                     <rect key="frame" x="8" y="13" width="584" height="19"/>
+                                                    <animations/>
                                                     <fontDescription key="fontDescription" name="Avenir-BookOblique" family="Avenir" pointSize="12"/>
                                                     <color key="textColor" red="0.57647058823529407" green="0.58431372549019611" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I9h-BZ-CYW">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
+                                                    <animations/>
                                                     <color key="backgroundColor" red="0.57647058819999997" green="0.58431372550000005" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="bT1-en-YGr"/>
@@ -480,12 +488,14 @@
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QVS-GD-ogf">
                                                     <rect key="frame" x="0.0" y="42" width="600" height="1"/>
+                                                    <animations/>
                                                     <color key="backgroundColor" red="0.57647058819999997" green="0.58431372550000005" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="PbJ-wc-nVR"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="QVS-GD-ogf" secondAttribute="bottom" constant="1" id="7js-Qs-nFe"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="drB-Z5-RW8" secondAttribute="bottom" constant="4" id="DE6-xl-ajz"/>
@@ -499,6 +509,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="drB-Z5-RW8" secondAttribute="trailing" id="t9K-yC-Cy1"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <animations/>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -507,11 +518,13 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oFH-hT-ZCa">
                                         <rect key="frame" x="8" y="8" width="530" height="30"/>
+                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVQ-EN-TUm">
                                         <rect key="frame" x="546" y="8" width="46" height="34"/>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="Q1s-gS-7IB"/>
                                         </constraints>
@@ -521,6 +534,7 @@
                                         </state>
                                     </button>
                                 </subviews>
+                                <animations/>
                                 <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="sVQ-EN-TUm" firstAttribute="top" secondItem="0ft-KX-eIa" secondAttribute="topMargin" id="5op-EN-yR8"/>

@@ -10,10 +10,10 @@ target 'twiliochat' do
 end
 
 target 'twiliochatTests' do
-
+  pod 'OCMock', '~> 3.2'
 end
 
 target 'twiliochatUITests' do
-
+  pod 'OCMock', '~> 3.2'
 end
 

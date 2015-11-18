@@ -3,6 +3,7 @@
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 
 @property (strong, nonatomic) NSMutableArray *chatEntries;
 
@@ -63,6 +64,23 @@
     }
     
     return cell;
+}
+
+#pragma mark Chat Service
+-(void)addMessage:(NSString *)message {
+    self.messageTextField.text = [NSString string];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.chatEntries.count
+                                                inSection:0];
+    [self.chatEntries addObject:message];
+    
+    [self.tableView insertRowsAtIndexPaths:@[indexPath]
+                          withRowAnimation:UITableViewRowAnimationRight];
+}
+
+#pragma mark Actions
+
+- (IBAction)sendButtonTapped:(UIButton *)sender {
+    [self addMessage:self.messageTextField.text];
 }
 
 @end

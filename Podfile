@@ -5,7 +5,6 @@ platform :ios, '8.4'
 
 target 'twiliochat' do
   pod 'Parse', '~> 1.9'
-  pod 'TwilioSDK', '~> 1.2'
   pod 'SWRevealViewController', '~> 2.3'
 end
 
@@ -16,4 +15,3 @@ end
 target 'twiliochatUITests' do
   pod 'OCMock', '~> 3.2'
 end
-

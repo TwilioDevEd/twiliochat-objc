@@ -4,19 +4,16 @@ PODS:
   - Parse (1.9.1):
     - Bolts/Tasks (>= 1.4.0)
   - SWRevealViewController (2.3.0)
-  - TwilioSDK (1.2.6)
 
 DEPENDENCIES:
   - OCMock (~> 3.2)
   - Parse (~> 1.9)
   - SWRevealViewController (~> 2.3)
-  - TwilioSDK (~> 1.2)
 
 SPEC CHECKSUMS:
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   OCMock: 28def049ef47f996b515a8eeea958be7ccab2dbb
   Parse: 54a965c8c19a6dde90284ab654dbcc77ef8c001b
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
-  TwilioSDK: ec0221c0f819b6d3f54efb61f70013ddf4bd3974
 
 COCOAPODS: 0.39.0

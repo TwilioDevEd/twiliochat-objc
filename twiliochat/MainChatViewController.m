@@ -47,6 +47,16 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     self.textInputbar.counterStyle = SLKCounterStyleSplit;
     self.textInputbar.counterPosition = SLKCounterPositionTop;
     
+    UIFont *font = [UIFont fontWithName:@"Avenir-Light" size:14];
+    [self.textView setFont:font];
+    
+    [self.rightButton setTitleColor:[UIColor colorWithRed:0.973 green:0.557 blue:0.502 alpha:1]
+                           forState:UIControlStateNormal];
+    
+    font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSFontAttributeName:font}];
+    
     self.tableView.estimatedRowHeight = 70;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

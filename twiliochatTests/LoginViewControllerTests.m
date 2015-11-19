@@ -48,6 +48,8 @@
 
 - (void)tearDown {
     [super tearDown];
+    [self.pfUserMock stopMocking];
+    [self.pfCloudMock stopMocking];
 }
 
 - (void)testRegisterUser {

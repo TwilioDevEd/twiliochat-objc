@@ -1,4 +1,6 @@
 #import "MenuTableCell.h"
+#import "InputDialogController.h"
+#import "MainChatViewController.h"
 
 @interface MenuTableCell ()
 @property (weak, nonatomic) UILabel *label;

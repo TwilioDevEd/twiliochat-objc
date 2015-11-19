@@ -1,4 +1,10 @@
+#import <Parse/Parse.h>
+#import <SWRevealViewController/SWRevealViewController.h>
 #import "MenuViewController.h"
+#import "MenuTableCell.h"
+#import "InputDialogController.h"
+#import "MainChatViewController.h"
+#import "IPMessagingManager.h"
 
 @interface MenuViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
@@ -107,7 +113,7 @@
 
 -(void) logOut {
     [PFUser logOut];
-    [ViewControllerFlowManager showSessionBasedViewController];
+    [[IPMessagingManager sharedManager] presentRootViewController];
 }
 
 #pragma mark Actions

@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 #import <Parse/Parse.h>
 #import <OCMock/OCMock.h>
-#import "ViewControllerFlowManager.h"
+#import "IPMessagingManager.h"
 #import "AppDelegate.h"
 
 @interface ViewControllerFlowManagerTests : XCTestCase
@@ -33,6 +33,9 @@
 
 - (void)tearDown {
     [super tearDown];
+    [self.pfUserMock stopMocking];
+    [self.windowMock stopMocking];
+    [self.storyboardMock stopMocking];
 }
 
 - (void)testLoggedInFlow {
@@ -45,7 +48,7 @@
 
 - (void)performFlowWithUser:(id)user expectingIdentifier:(NSString *)identifier {
     OCMStub([self.pfUserMock currentUser]).andReturn(user);
-    [ViewControllerFlowManager showSessionBasedViewController];
+    [[IPMessagingManager sharedManager] presentRootViewController];
     OCMVerify([self.storyboardMock instantiateViewControllerWithIdentifier:identifier]);
     OCMVerify([self.windowMock setRootViewController:self.viewControllerMock]);
 }

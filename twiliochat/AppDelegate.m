@@ -1,4 +1,6 @@
+#import <Parse/Parse.h>
 #import "AppDelegate.h"
+#import "IPMessagingManager.h"
 @import Foundation;
 
 
@@ -24,7 +26,7 @@
     [defaultACL setPublicReadAccess:YES];
     
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
-    [ViewControllerFlowManager showSessionBasedViewController];
+    [[IPMessagingManager sharedManager] presentRootViewController];
     
     return YES;
 }

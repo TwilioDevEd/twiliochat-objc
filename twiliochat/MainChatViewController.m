@@ -32,7 +32,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     self.shakeToClearEnabled = YES;
     self.keyboardPanningEnabled = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
-    self.inverted = NO;
+    self.inverted = YES;
     
     UINib *cellNib = [UINib nibWithNibName:ChatCellIdentifier bundle:nil];
     [self.tableView registerNib:cellNib
@@ -54,7 +54,11 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 -(void)setChannel:(NSString *)channel {
     self.title = channel;
-    self.chatEntries = [NSMutableArray arrayWithArray:@[@"One d f asdf as df asd fa sdf a sdf ads f sadf a sdf a sdf asd f asdf asd f asdf as df", @"Two", @"*Mario Celli", @"*Hello"]];
+    NSArray *array = [NSMutableArray arrayWithArray:@[@"One d f asdf as df asd fa sdf a sdf ads f sadf a sdf a sdf asd f asdf asd f asdf as df", @"Two", @"*Mario Celli", @"*Hello"]];
+    
+    NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
+    self.chatEntries = [[NSMutableArray alloc] initWithArray:reversed];
+    
     [self.tableView reloadData];
 }
 
@@ -84,6 +88,8 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
         chatCell.message = entry;
     }
     
+    cell.transform = self.tableView.transform;
+    
     return cell;
 }
 
@@ -95,11 +101,11 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 #pragma mark Chat Service
 -(void)addMessage:(NSString *)message {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.chatEntries.count
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0
                                                 inSection:0];
     UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
 
-    [self.chatEntries addObject:message];
+    [self.chatEntries insertObject:message atIndex:0];
     
     [self.tableView insertRowsAtIndexPaths:@[indexPath]
                           withRowAnimation:UITableViewRowAnimationRight];

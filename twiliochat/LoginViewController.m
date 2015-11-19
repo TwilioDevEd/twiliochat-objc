@@ -1,6 +1,7 @@
 #import <Parse/Parse.h>
-#import "LoginViewController.h"
 #import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
+#import "LoginViewController.h"
+#import "IPMessagingManager.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
@@ -81,47 +82,31 @@
 }
 
 - (void)registerUser {
-    PFUser *user = [PFUser user];
-    user.username = self.usernameTextField.text;
-    user.password = self.passwordTextField.text;
-    
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            [self initTwilioSession];
-        }
-        else {
-            [self showError:@"Error while signing up"];
-        }
-    }];
+    IPMessagingManager *manager = [IPMessagingManager sharedManager];
+    [manager registerWithUsername:self.usernameTextField.text
+                         password:self.passwordTextField.text
+                          handler:^(BOOL succeeded, NSError *error) {
+                              if (succeeded) {
+                                  [manager presentRootViewController];
+                              }
+                              else {
+                                  [self showError:@"Error while signing up"];
+                              }
+                          }];
 }
 
 - (void)loginUser {
-    [PFUser logInWithUsernameInBackground:self.usernameTextField.text
-                                 password:self.passwordTextField.text
-                                    block:^(PFUser *user, NSError *error) {
-                                        if (user) {
-                                            [self initTwilioSession];
-                                        }
-                                        else {
-                                            [self showError:@"Login failed, please verify your credentials"];
-                                       }
-                                    }];
-}
-
-- (void)initTwilioSession {
-    [PFCloud callFunctionInBackground:@"token"
-                       withParameters:@{@"device": [[UIDevice currentDevice] identifierForVendor].UUIDString}
-                                block:^(NSArray *results, NSError *error) {
-                                    if (!error) {
-                                        NSLog(@"%@",results);
-                                        [self performSegueWithIdentifier:@"ShowRevealController" sender:self];
-                                        /*TCDevice *client = [[TCDevice alloc] initWithCapabilityToken:results[0] delegate:self];
-                                        [client ]*/
-                                    }
-                                    else {
-                                        [self showError:@"Connection error"];
-                                    }
-                                }];
+    IPMessagingManager *manager = [IPMessagingManager sharedManager];
+    [manager loginWithUsername:self.usernameTextField.text
+                      password:self.passwordTextField.text
+                       handler:^(BOOL succeeded, NSError *error) {
+                           if (succeeded) {
+                               [manager presentRootViewController];
+                           }
+                           else {
+                               [self showError:@"Login failed, please verify your credentials"];
+                           }
+                       }];
 }
 
 - (void)showError:(NSString *)message {

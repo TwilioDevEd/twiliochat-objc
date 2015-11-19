@@ -5,7 +5,6 @@
 
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
-@property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 
 @property (strong, nonatomic) NSMutableArray *chatEntries;
 
@@ -42,6 +41,11 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     UINib *cellStatusNib = [UINib nibWithNibName:ChatStatusCellIdentifier bundle:nil];
     [self.tableView registerNib:cellStatusNib
          forCellReuseIdentifier:ChatStatusCellIdentifier];
+    
+    self.textInputbar.autoHideRightButton = YES;
+    self.textInputbar.maxCharCount = 256;
+    self.textInputbar.counterStyle = SLKCounterStyleSplit;
+    self.textInputbar.counterPosition = SLKCounterPositionTop;
     
     self.tableView.estimatedRowHeight = 70;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -83,21 +87,23 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     return cell;
 }
 
+- (void)didPressRightButton:(id)sender {
+    [self.textView refreshFirstResponder];
+    [self addMessage: [self.textView.text copy]];
+    [super didPressRightButton:sender];
+}
+
 #pragma mark Chat Service
 -(void)addMessage:(NSString *)message {
-    self.messageTextField.text = [NSString string];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.chatEntries.count
                                                 inSection:0];
+    UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
+
     [self.chatEntries addObject:message];
     
     [self.tableView insertRowsAtIndexPaths:@[indexPath]
                           withRowAnimation:UITableViewRowAnimationRight];
-}
-
-#pragma mark Actions
-
-- (IBAction)sendButtonTapped:(UIButton *)sender {
-    [self addMessage:self.messageTextField.text];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];
 }
 
 @end

@@ -6,6 +6,7 @@ platform :ios, '8.4'
 target 'twiliochat' do
   pod 'Parse', '~> 1.9'
   pod 'SWRevealViewController', '~> 2.3'
+  pod 'SlackTextViewController', '~> 1.7'
 end
 
 target 'twiliochatTests' do

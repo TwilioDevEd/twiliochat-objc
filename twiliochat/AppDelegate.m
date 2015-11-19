@@ -24,7 +24,6 @@
     [defaultACL setPublicReadAccess:YES];
     
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
-    
     [ViewControllerFlowManager showSessionBasedViewController];
     
     return YES;

@@ -5,12 +5,18 @@ PODS:
     - Bolts/Tasks (>= 1.4.0)
   - SlackTextViewController (1.7.2)
   - SWRevealViewController (2.3.0)
+  - TwilioIPMessagingClient (0.11.3)
 
 DEPENDENCIES:
   - OCMock (~> 3.2)
   - Parse (~> 1.9)
   - SlackTextViewController (~> 1.7)
   - SWRevealViewController (~> 2.3)
+  - TwilioIPMessagingClient (from `https://media.twiliocdn.com/sdk/rtc/ios/ip-messaging/releases/0.11.3.b157-5097b8e/TwilioIPMessagingClient.podspec`)
+
+EXTERNAL SOURCES:
+  TwilioIPMessagingClient:
+    :podspec: https://media.twiliocdn.com/sdk/rtc/ios/ip-messaging/releases/0.11.3.b157-5097b8e/TwilioIPMessagingClient.podspec
 
 SPEC CHECKSUMS:
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
@@ -18,5 +24,6 @@ SPEC CHECKSUMS:
   Parse: 54a965c8c19a6dde90284ab654dbcc77ef8c001b
   SlackTextViewController: 1f4e8f68c156ef93de73fd422db2b8d5d5b0f4e7
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
+  TwilioIPMessagingClient: fa6613c213d2f319201e14b48849c02f2e643de3
 
 COCOAPODS: 0.39.0

@@ -1,4 +1,5 @@
 #import "LoginViewController.h"
+#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
@@ -84,34 +85,48 @@
     user.password = self.passwordTextField.text;
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            [self performSegueWithIdentifier:@"ShowRevealController" sender:self];
+        if (succeeded) {
+            [self initTwilioSession];
         }
         else {
-            [self showAlertWithMessage:@"Error while signing up"];
-            self.loginButton.enabled = YES;
-            self.createAccountButton.enabled = YES;
+            [self showError:@"Error while signing up"];
         }
     }];
 }
 
 - (void)loginUser {
-    PFUser *user = [PFUser user];
-    user.username = self.usernameTextField.text;
-    user.password = self.passwordTextField.text;
-    
     [PFUser logInWithUsernameInBackground:self.usernameTextField.text
                                  password:self.passwordTextField.text
                                     block:^(PFUser *user, NSError *error) {
                                         if (user) {
-                                            [self performSegueWithIdentifier:@"ShowRevealController" sender:self];
+                                            [self initTwilioSession];
                                         }
                                         else {
-                                            [self showAlertWithMessage:@"Login failed, please verify your credentials"];
-                                            self.loginButton.enabled = YES;
-                                            self.createAccountButton.enabled = YES;
-                                        }
+                                            [self showError:@"Login failed, please verify your credentials"];
+                                       }
                                     }];
+}
+
+- (void)initTwilioSession {
+    [PFCloud callFunctionInBackground:@"token"
+                       withParameters:@{@"device": [[UIDevice currentDevice] identifierForVendor].UUIDString}
+                                block:^(NSArray *results, NSError *error) {
+                                    if (!error) {
+                                        NSLog(@"%@",results);
+                                        [self performSegueWithIdentifier:@"ShowRevealController" sender:self];
+                                        /*TCDevice *client = [[TCDevice alloc] initWithCapabilityToken:results[0] delegate:self];
+                                        [client ]*/
+                                    }
+                                    else {
+                                        [self showError:@"Connection error"];
+                                    }
+                                }];
+}
+
+- (void)showError:(NSString *)message {
+    [self showAlertWithMessage:message];
+    self.loginButton.enabled = YES;
+    self.createAccountButton.enabled = YES;
 }
 
 - (BOOL)validateUserData {

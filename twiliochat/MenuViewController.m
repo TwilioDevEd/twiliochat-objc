@@ -11,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) TMChannels *channelsList;
 @property (strong, nonatomic) NSMutableOrderedSet *channels;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 @end
 
 @implementation MenuViewController
@@ -27,7 +28,17 @@
     self.tableView.backgroundView = bgImage;
 
     self.usernameLabel.text = [PFUser currentUser].username;
-    //self.channels = [NSMutableArray arrayWithArray:@[@"TNG-fans",@"San Diego Brewers",@"General chat"]];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.tableView addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshChannels)
+                  forControlEvents:UIControlEventValueChanged];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    
+    CGRect frame = self.refreshControl.frame;
+    frame.origin.x -= 120;
+    self.refreshControl.frame = frame;
     
     TwilioIPMessagingClient *client = [[IPMessagingManager sharedManager] client];
     if (client) {
@@ -92,6 +103,7 @@
                             
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self.tableView reloadData];
+                                [self.refreshControl endRefreshing];
                             });
                         }
                         else {
@@ -122,6 +134,11 @@
     [self.channels sortUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"friendlyName"
                                                                       ascending:YES
                                                                        selector:@selector(localizedCaseInsensitiveCompare:)]]];
+}
+
+- (void)refreshChannels {
+    [self.refreshControl beginRefreshing];
+    [self populateChannels];
 }
 
 /*
@@ -186,7 +203,7 @@
 }
 
 -(void) logOut {
-    [PFUser logOut];
+    [[IPMessagingManager sharedManager] logout];
     [[IPMessagingManager sharedManager] presentRootViewController];
 }
 
@@ -211,5 +228,6 @@
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
+
 
 @end

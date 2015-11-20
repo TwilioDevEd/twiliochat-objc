@@ -6,10 +6,21 @@
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *fullNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (nonatomic) BOOL isSigningUp;
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 @property (nonatomic) NSInteger animationOffset;
+@property (strong, nonatomic) NSArray *textFields;
+
+// Constraints
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fullNameHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fullNameTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *emailHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *emailTopConstraint;
+@property (strong, nonatomic) NSArray *constraints;
+@property (strong, nonatomic) NSArray *constraintValues;
 
 @end
 
@@ -27,6 +38,49 @@
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
+    
+    self.constraints = @[self.fullNameHeightConstraint,
+                         self.fullNameTopConstraint,
+                         self.emailHeightConstraint,
+                         self.emailTopConstraint];
+    [self storeConstraintValues];
+    
+    self.textFields = @[self.usernameTextField,
+                        self.passwordTextField,
+                        self.fullNameTextField,
+                        self.emailTextField];
+}
+
+- (void)storeConstraintValues {
+    NSMutableArray *values = [NSMutableArray array];
+    [self.constraints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
+        [values addObject:[NSNumber numberWithFloat:constraint.constant]];
+        constraint.constant = 0.f;
+    }];
+    self.constraintValues = [NSArray arrayWithArray:values];
+}
+
+- (void)hideSignInControls {
+    [self.createAccountButton setTitle:@"Create account" forState:UIControlStateNormal];
+    [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
+    self.passwordTextField.returnKeyType = UIReturnKeyDone;
+    
+    [self.constraints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
+        constraint.constant = 0.f;
+    }];
+}
+
+- (void)showSignInControls {
+    [self.createAccountButton setTitle:@"Back to login" forState:UIControlStateNormal];
+    [self.loginButton setTitle:@"Register" forState:UIControlStateNormal];
+    self.passwordTextField.returnKeyType = UIReturnKeyNext;
+    
+    [self.constraints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
+        constraint.constant = [(NSNumber *)[self.constraintValues objectAtIndex:idx] floatValue];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,12 +112,10 @@
 - (void)toggleSignUpMode {
     self.isSigningUp = !self.isSigningUp;
     if (self.isSigningUp) {
-        [self.createAccountButton setTitle:@"Back to login" forState:UIControlStateNormal];
-        [self.loginButton setTitle:@"Register" forState:UIControlStateNormal];
+        [self showSignInControls];
     }
     else {
-        [self.createAccountButton setTitle:@"Create account" forState:UIControlStateNormal];
-        [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
+        [self hideSignInControls];
     }
 }
 
@@ -116,11 +168,20 @@
 }
 
 - (BOOL)validateUserData {
-    if ([self.usernameTextField.text isEqualToString: @""] || [self.passwordTextField.text isEqualToString: @""] ) {
-        [self showAlertWithMessage:@"Username and Password are required"];
-        return NO;
+    if (![self.usernameTextField.text isEqualToString: @""] &&
+        ![self.passwordTextField.text isEqualToString: @""]) {
+        if (self.isSigningUp) {
+            if (![self.fullNameTextField.text isEqualToString:@""] &&
+                ![self.emailTextField.text isEqualToString:@""]) {
+                return YES;
+            }
+        }
+        else {
+            return YES;
+        }
     }
-    return YES;
+    [self showAlertWithMessage:@"All fields are required"];
+    return NO;
 }
 
 #pragma mark - Alerts
@@ -193,6 +254,26 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        return UIInterfaceOrientationMaskAll;
+    }
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        return UIInterfaceOrientationUnknown;
+    }
+    return UIInterfaceOrientationPortrait;
 }
 
 @end

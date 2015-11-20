@@ -3,8 +3,6 @@
 #import <OCMock/OCMock.h>
 #import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 #import "IPMessagingManager.h"
-#import "AppDelegate.h"
-#import "LoginViewController.h"
 
 @interface IPMessagingManager (Test)
 - (void)connectClient:(void(^)(BOOL succeeded, NSError *error))handler;

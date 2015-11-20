@@ -1,5 +1,4 @@
 #import <Parse/Parse.h>
-#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 #import "IPMessagingManager.h"
 
 @interface IPMessagingManager ()
@@ -20,7 +19,6 @@
 }
 
 - (void)presentRootViewController {
-    
     if ([self hasIdentity]) {
         if (self.connecting) {
             [self presentViewController:@"RevealViewController"];
@@ -41,10 +39,16 @@
     }
 }
 
--(void)presentViewController:(NSString *)viewController {
+- (void)presentViewController:(NSString *)viewController {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName: @"Main" bundle: [NSBundle mainBundle]];
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
     window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:viewController];
+}
+
+- (void)presentLaunchScreen {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName: @"LaunchScreen" bundle: [NSBundle mainBundle]];
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    window.rootViewController = [storyBoard instantiateInitialViewController];
 }
 
 - (BOOL)hasIdentity {
@@ -101,10 +105,9 @@
     
     [PFCloud callFunctionInBackground:@"token"
                        withParameters:@{@"device": [[UIDevice currentDevice] identifierForVendor].UUIDString}
-                                block:^(NSArray *results, NSError *error) {
-                                    NSDictionary *data = results[0];
-                                    NSString *token = [data objectForKey:@"token"];
-                                    BOOL errorCondition = error || !data || !token;
+                                block:^(NSDictionary *results, NSError *error) {
+                                    NSString *token = [results objectForKey:@"token"];
+                                    BOOL errorCondition = error || !token;
                                     
                                     if (!errorCondition) {
                                         self.connecting = YES;

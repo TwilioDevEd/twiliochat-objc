@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
+#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 
-@interface MenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface MenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, TwilioIPMessagingClientDelegate>
 
 @end

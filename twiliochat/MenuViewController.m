@@ -9,7 +9,8 @@
 @interface MenuViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray *channels;
+@property (strong, nonatomic) TMChannels *channelsList;
+@property (strong, nonatomic) NSMutableOrderedSet *channels;
 @end
 
 @implementation MenuViewController
@@ -26,28 +27,101 @@
     self.tableView.backgroundView = bgImage;
 
     self.usernameLabel.text = [PFUser currentUser].username;
-    self.channels = [NSMutableArray arrayWithArray:@[@"TNG-fans",@"San Diego Brewers",@"General chat"]];
+    //self.channels = [NSMutableArray arrayWithArray:@[@"TNG-fans",@"San Diego Brewers",@"General chat"]];
     
-    [self.tableView reloadData];
+    TwilioIPMessagingClient *client = [[IPMessagingManager sharedManager] client];
+    if (client) {
+        client.delegate = self;
+        [self populateChannels];
+    }
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (!self.channels) {
+        return 1;
+    }
+    
     return self.channels.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MenuTableCell *cell = (MenuTableCell *)[tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
+    UITableViewCell *cell = nil;
     
-    NSString *channel = [self.channels objectAtIndex:indexPath.row];
-    cell.channelName = channel;
+    if (!self.channels) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"loadingCell"];
+    }
+    else {
+        MenuTableCell *menuCell = (MenuTableCell *)[tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
+        cell = menuCell;
+        
+        TMChannel *channel = [self.channels objectAtIndex:indexPath.row];
+        NSString *nameLabel = channel.friendlyName;
+        if (channel.friendlyName.length == 0) {
+            nameLabel = @"(no friendly name)";
+        }
+        if (channel.type == TMChannelTypePrivate) {
+            nameLabel = [nameLabel stringByAppendingString:@" (private)"];
+        }
+        menuCell.channelName = nameLabel;
+    }
     
+    [cell layoutIfNeeded];
+
     return cell;
+}
+
+- (void)populateChannels {
+    self.channelsList = nil;
+    self.channels = nil;
+    [self.tableView reloadData];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[[IPMessagingManager sharedManager] client] channelsListWithCompletion:^(TMResultEnum result, TMChannels *channelsList) {
+            if (result == TMResultSuccess) {
+                self.channelsList = channelsList;
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [self.channelsList loadChannelsWithCompletion:^(TMResultEnum result) {
+                        if (result == TMResultSuccess) {
+                            self.channels = [[NSMutableOrderedSet alloc] init];
+                            [self.channels addObjectsFromArray:[self.channelsList allObjects]];
+                            [self sortChannels];
+                            [NSThread sleepForTimeInterval:1.0f];
+                            
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.tableView reloadData];
+                            });
+                        }
+                        else {
+                            //[DemoHelpers displayToastWithMessage:@"Channel list load failed." inView:self.view];
+                        }
+                    }];
+                });
+            }
+            else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"IP Messaging Demo" message:@"Failed to load channels." preferredStyle:UIAlertControllerStyleAlert];
+                    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                    [self presentViewController:alert animated:YES completion:nil];
+                    
+                    self.channelsList = nil;
+                    [self.channels removeAllObjects];
+                    
+                    [self.tableView reloadData];
+                });
+            }
+        }];
+    });
+}
+
+#pragma mark - Internal methods
+
+- (void)sortChannels {
+    [self.channels sortUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"friendlyName"
+                                                                      ascending:YES
+                                                                       selector:@selector(localizedCaseInsensitiveCompare:)]]];
 }
 
 /*

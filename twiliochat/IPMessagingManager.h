@@ -1,6 +1,9 @@
 #import <Foundation/Foundation.h>
+#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 
 @interface IPMessagingManager : NSObject
+@property (nonatomic, strong, readonly) TwilioIPMessagingClient *client;
+
 + (instancetype)sharedManager;
 - (void)presentRootViewController;
 - (NSString *)userIdentity;
@@ -19,6 +22,7 @@
 
 - (void)logout;
 
+- (void)presentLaunchScreen;
 - (void)updatePushToken:(NSData *)token;
 - (void)receivedNotification:(NSDictionary *)notification;
 @end

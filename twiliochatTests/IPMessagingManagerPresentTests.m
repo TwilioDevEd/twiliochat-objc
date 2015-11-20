@@ -5,10 +5,7 @@
 #import "AppDelegate.h"
 
 @interface IPMessagingManager (Test)
-@property (weak, nonatomic) UITextField *usernameTextField;
-@property (weak, nonatomic) UITextField *passwordTextField;
-@property (weak, nonatomic) UIButton *loginButton;
-@property (weak, nonatomic) UIButton *createAccountButton;
+- (void)connectClient:(void(^)(BOOL succeeded, NSError *error))handler;
 @end
 
 @interface IPMessagingManagerPresentTests : XCTestCase
@@ -41,8 +38,6 @@
     OCMStub([self.appMock delegate]).andReturn(self.appDelegateMock);
     OCMStub([self.appDelegateMock window]).andReturn(self.windowMock);
     OCMStub([self.storyboardMock storyboardWithName:[OCMArg any] bundle:[OCMArg any]]).andReturn(self.storyboardMock);
-    OCMStub([self.storyboardMock instantiateViewControllerWithIdentifier:[OCMArg any]]).andReturn(self.viewControllerMock);
-    OCMStub([self.pfUserMock isAuthenticated]).andReturn(YES);
 }
 
 - (void)tearDown {
@@ -75,7 +70,7 @@
 }
 
 - (void)presentWithUser:(id)user expectingIdentifier:(NSString *)identifier connectStatus:(BOOL)status {
-    /*OCMStub([self.pfUserMock currentUser]).andReturn(user);
+    OCMStub([self.pfUserMock currentUser]).andReturn(user);
     
     id connectBlock = nil;
     
@@ -87,10 +82,18 @@
         connectBlock = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){NO}), error, nil];
     }
 
-    OCMStub([self.messagingManagerMock connectClient:connectBlock]);
+    if (user) {
+        OCMExpect([self.messagingManagerMock connectClient:connectBlock]);
+        OCMExpect([self.pfUserMock isAuthenticated]).andReturn(YES);
+    }
+    
+    OCMExpect([self.storyboardMock instantiateViewControllerWithIdentifier:[OCMArg any]]).andReturn(self.viewControllerMock);
+    OCMExpect([self.windowMock setRootViewController:self.viewControllerMock]);
+    
     [self.messagingManagerMock presentRootViewController];
-    OCMVerify([self.storyboardMock instantiateViewControllerWithIdentifier:identifier]);
-    OCMVerify([self.windowMock setRootViewController:self.viewControllerMock]);*/
+    OCMVerifyAll(self.storyboardMock);
+    OCMVerifyAll(self.windowMock);
+    OCMVerifyAll(self.messagingManagerMock);
 }
 
 @end

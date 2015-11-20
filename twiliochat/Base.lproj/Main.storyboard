@@ -143,6 +143,37 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="loadingCell" id="EgP-Yc-H71" customClass="MenuTableCell">
+                                        <rect key="frame" x="0.0" y="72" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EgP-Yc-H71" id="xtZ-Pu-sYQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Channel List ..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N3D-ot-SfR">
+                                                    <rect key="frame" x="60" y="10.5" width="180" height="23.5"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                                                    <color key="textColor" red="0.97254901959999995" green="0.5568627451" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="727-hz-HGh">
+                                                    <rect key="frame" x="30" y="13" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="P8M-HI-Zsy"/>
+                                                        <constraint firstAttribute="width" constant="20" id="hj3-j9-l1G"/>
+                                                    </constraints>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="N3D-ot-SfR" firstAttribute="leading" secondItem="727-hz-HGh" secondAttribute="trailing" constant="10" id="0xH-7C-e4M"/>
+                                                <constraint firstItem="727-hz-HGh" firstAttribute="top" secondItem="xtZ-Pu-sYQ" secondAttribute="topMargin" constant="5" id="EJZ-dk-Qo7"/>
+                                                <constraint firstItem="727-hz-HGh" firstAttribute="leading" secondItem="xtZ-Pu-sYQ" secondAttribute="leadingMargin" constant="22" id="Mlp-dg-IrI"/>
+                                                <constraint firstItem="N3D-ot-SfR" firstAttribute="centerY" secondItem="xtZ-Pu-sYQ" secondAttribute="centerY" id="hRM-Iy-IDp"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="K27-MU-Rb1" id="7bZ-kt-LZE"/>

@@ -6,7 +6,7 @@
 @property (nonatomic, strong) TwilioIPMessagingClient *client;
 @property (nonatomic, strong) NSData *lastToken;
 @property (nonatomic, strong) NSDictionary *lastNotification;
-@property (nonatomic) BOOL justLoggedIn;
+@property (nonatomic) BOOL connecting;
 @end
 
 @implementation IPMessagingManager
@@ -24,11 +24,11 @@
     
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
     if ([self hasIdentity]) {
-        if (self.justLoggedIn) {
+        if (self.connecting) {
             window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"RevealViewController"];
         }
         else {
-            [self initializeClient:^(BOOL success, NSError *error) {
+            [self connectClient:^(BOOL success, NSError *error) {
                 [self presentRootViewController];
             }];
         }
@@ -52,35 +52,15 @@
     user.password = password;
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        self.justLoggedIn = YES;
         if (succeeded) {
-            [self initializeClient:^(BOOL succeeded, NSError *error) {
-                handler(succeeded, error);
+            [self connectClient:^(BOOL succeeded, NSError *error) {
+                if (handler) handler(succeeded, error);
             }];
         }
         else {
-            handler(succeeded, error);
+            if (handler) handler(succeeded, error);
         }
-        self.justLoggedIn = NO;
     }];
-}
-
-- (void)loginWithUsername:(NSString *)username password:(NSString *)password
-                  handler:(void(^)(BOOL succeeded, NSError *error))handler {
-    [PFUser logInWithUsernameInBackground:username
-                                 password:password
-                                    block:^(PFUser *user, NSError *error) {
-                                        self.justLoggedIn = YES;
-                                        if (!error) {
-                                            [self initializeClient:^(BOOL success, NSError *error) {
-                                                handler(success, error);
-                                            }];
-                                        }
-                                        else {
-                                            handler(!error, error);
-                                        }
-                                        self.justLoggedIn = NO;
-                                    }];
 }
 
 - (void)registerWithUsername:(NSString *)username
@@ -89,7 +69,23 @@
     [self registerWithUsername:username password:password fullName:@"" email:@"" handler:handler];
 }
 
-- (void)initializeClient:(void(^)(BOOL succeeded, NSError *error))handler {
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password
+                  handler:(void(^)(BOOL succeeded, NSError *error))handler {
+    [PFUser logInWithUsernameInBackground:username
+                                 password:password
+                                    block:^(PFUser *user, NSError *error) {
+                                        if (!error) {
+                                            [self connectClient:^(BOOL succeeded, NSError *error) {
+                                                if (handler) handler(succeeded, error);
+                                            }];
+                                        }
+                                        else {
+                                            if (handler) handler(!error, error);
+                                        }
+                                    }];
+}
+
+- (void)connectClient:(void(^)(BOOL succeeded, NSError *error))handler {
     if (self.client) {
         [self logout];
     }
@@ -97,12 +93,19 @@
     [PFCloud callFunctionInBackground:@"token"
                        withParameters:@{@"device": [[UIDevice currentDevice] identifierForVendor].UUIDString}
                                 block:^(NSArray *results, NSError *error) {
-                                    if (!error) {
+                                    self.connecting = YES;
+                                    
+                                    NSDictionary *data = results[0];
+                                    NSString *token = [data objectForKey:@"token"];
+                                    BOOL errorCondition = error || !data || !token;
+                                    
+                                    if (!errorCondition) {
                                         NSLog(@"%@",results);
-                                        self.client = [TwilioIPMessagingClient ipMessagingClientWithToken:results[0][@"token"]
+                                        self.client = [TwilioIPMessagingClient ipMessagingClientWithToken:token
                                                                                                  delegate:nil];
                                     }
-                                    handler(!error, error);
+                                    if (handler) handler(!error, error);
+                                    self.connecting = YES;
                                 }];
 }
 

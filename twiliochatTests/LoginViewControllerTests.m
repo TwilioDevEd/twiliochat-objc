@@ -2,6 +2,7 @@
 #import <Parse/Parse.h>
 #import <OCMock/OCMock.h>
 #import "LoginViewController.h"
+#import "IPMessagingManager.h"
 
 @interface LoginViewController (Test)
 @property (weak, nonatomic) UITextField *usernameTextField;
@@ -10,40 +11,41 @@
 @property (weak, nonatomic) UIButton *createAccountButton;
 @end
 
-@interface twiliochatTests : XCTestCase
+@interface LoginViewControllerTests : XCTestCase
 @property (strong, nonatomic) id pfUserMock;
 @property (strong, nonatomic) id pfCloudMock;
 @property (strong, nonatomic) id viewControllerMock;
+@property (strong, nonatomic) id messagingManagerMock;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *password;
-@property (strong, nonatomic) NSString *nextScreen;
 @end
 
-@implementation twiliochatTests
+@implementation LoginViewControllerTests
 
 - (void)setUp {
     [super setUp];
     
     self.pfUserMock = OCMClassMock([PFUser class]);
     self.pfCloudMock = OCMClassMock([PFCloud class]);
-    
+    self.messagingManagerMock = OCMClassMock([IPMessagingManager class]);
+    OCMStub([self.messagingManagerMock presentRootViewController]);
+   
     self.username = @"hello";
     self.password = @"123";
     
+    // Create LoginViewController mock
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     LoginViewController *viewController = (LoginViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     [viewController loadView];
     
     self.viewControllerMock = OCMPartialMock(viewController);
-    OCMStub([self.viewControllerMock self]);
     
     id cloudBlock = [OCMArg invokeBlockWithArgs:[OCMArg any], [OCMArg defaultValue], nil];
+    OCMStub([self.pfCloudMock callFunctionInBackground:[OCMArg any] withParameters:[OCMArg any] block:cloudBlock]);
     OCMStub([self.pfCloudMock callFunctionInBackground:[OCMArg any] withParameters:[OCMArg any] block:cloudBlock]);
     
     [self.viewControllerMock usernameTextField].text = self.username;
     [self.viewControllerMock passwordTextField].text = self.password;
-    
-    self.nextScreen = @"ShowRevealController";
 }
 
 - (void)tearDown {
@@ -66,7 +68,7 @@
     
     OCMVerify([self.pfUserMock setUsername:self.username]);
     OCMVerify([self.pfUserMock setPassword:self.password]);
-    OCMVerify([self.viewControllerMock performSegueWithIdentifier:self.nextScreen sender:[OCMArg any]]);
+    OCMVerify([self.messagingManagerMock presentRootViewController]);
 }
 
 - (void)testLoginUser {
@@ -75,7 +77,7 @@
     
     [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
     
-    OCMVerify([self.viewControllerMock performSegueWithIdentifier:self.nextScreen sender:[OCMArg any]]);
+    OCMVerify([self.messagingManagerMock presentRootViewController]);
 }
 
 @end

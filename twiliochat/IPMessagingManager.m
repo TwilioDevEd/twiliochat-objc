@@ -20,22 +20,31 @@
 }
 
 - (void)presentRootViewController {
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName: @"Main" bundle: [NSBundle mainBundle]];
     
-    UIWindow *window = [[UIApplication sharedApplication].delegate window];
     if ([self hasIdentity]) {
         if (self.connecting) {
-            window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"RevealViewController"];
+            [self presentViewController:@"RevealViewController"];
         }
         else {
             [self connectClient:^(BOOL success, NSError *error) {
-                [self presentRootViewController];
+                if (success) {
+                    [self presentViewController:@"RevealViewController"];
+                }
+                else {
+                    [self presentViewController:@"LoginViewController"];
+                }
             }];
         }
     }
     else {
-        window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self presentViewController:@"LoginViewController"];
     }
+}
+
+-(void)presentViewController:(NSString *)viewController {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName: @"Main" bundle: [NSBundle mainBundle]];
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:viewController];
 }
 
 - (BOOL)hasIdentity {
@@ -93,19 +102,18 @@
     [PFCloud callFunctionInBackground:@"token"
                        withParameters:@{@"device": [[UIDevice currentDevice] identifierForVendor].UUIDString}
                                 block:^(NSArray *results, NSError *error) {
-                                    self.connecting = YES;
-                                    
                                     NSDictionary *data = results[0];
                                     NSString *token = [data objectForKey:@"token"];
                                     BOOL errorCondition = error || !data || !token;
                                     
                                     if (!errorCondition) {
+                                        self.connecting = YES;
                                         NSLog(@"%@",results);
                                         self.client = [TwilioIPMessagingClient ipMessagingClientWithToken:token
                                                                                                  delegate:nil];
+                                        self.connecting = YES;
                                     }
                                     if (handler) handler(!error, error);
-                                    self.connecting = YES;
                                 }];
 }
 

@@ -37,7 +37,7 @@
 }
 
 - (void)testConnectClient {
-    NSArray *serviceData = @[@{@"token": self.token}];
+    NSDictionary *serviceData = @{@"token": self.token};
     id cloudBlock = [OCMArg invokeBlockWithArgs:serviceData, [OCMArg defaultValue], nil];
     OCMExpect([self.pfCloudMock callFunctionInBackground:@"token" withParameters:[OCMArg any] block:cloudBlock]);
     

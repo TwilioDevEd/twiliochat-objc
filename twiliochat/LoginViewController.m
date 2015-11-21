@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 @property (nonatomic) NSInteger animationOffset;
 @property (strong, nonatomic) NSArray *textFields;
+@property (weak, nonatomic) UITextField *currentTextField;
 
 // Constraints
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fullNameHeightConstraint;
@@ -31,8 +32,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isSigningUp = NO;
-    self.usernameTextField.delegate = self;
-    self.passwordTextField.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -44,11 +43,19 @@
                          self.emailHeightConstraint,
                          self.emailTopConstraint];
     [self storeConstraintValues];
-    
+    [self initializeTextFields];
+}
+
+- (void)initializeTextFields {
     self.textFields = @[self.usernameTextField,
                         self.passwordTextField,
                         self.fullNameTextField,
                         self.emailTextField];
+    
+    [self.textFields enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        UITextField *textField = (UITextField *)obj;
+        textField.delegate = self;
+    }];
 }
 
 - (void)storeConstraintValues {
@@ -64,7 +71,8 @@
 - (void)hideSignInControls {
     [self.createAccountButton setTitle:@"Create account" forState:UIControlStateNormal];
     [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
-    self.passwordTextField.returnKeyType = UIReturnKeyDone;
+    
+    [self setTextField:self.passwordTextField returnKeyType:UIReturnKeyDone];
     
     [self.constraints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
@@ -75,12 +83,24 @@
 - (void)showSignInControls {
     [self.createAccountButton setTitle:@"Back to login" forState:UIControlStateNormal];
     [self.loginButton setTitle:@"Register" forState:UIControlStateNormal];
-    self.passwordTextField.returnKeyType = UIReturnKeyNext;
+    
+    [self setTextField:self.passwordTextField returnKeyType:UIReturnKeyNext];
     
     [self.constraints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
         constraint.constant = [(NSNumber *)[self.constraintValues objectAtIndex:idx] floatValue];
     }];
+}
+
+- (void)setTextField:(UITextField *)textField returnKeyType:(UIReturnKeyType)type {
+    if ([self.passwordTextField isFirstResponder]) {
+        [self.passwordTextField resignFirstResponder];
+        self.passwordTextField.returnKeyType = type;
+        [self.passwordTextField becomeFirstResponder];
+    }
+    else {
+        self.passwordTextField.returnKeyType = type;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -137,6 +157,8 @@
     IPMessagingManager *manager = [IPMessagingManager sharedManager];
     [manager registerWithUsername:self.usernameTextField.text
                          password:self.passwordTextField.text
+                         fullName:self.fullNameTextField.text
+                            email:self.emailTextField.text
                           handler:^(BOOL succeeded, NSError *error) {
                               if (succeeded) {
                                   [manager presentRootViewController];
@@ -227,16 +249,33 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == self.usernameTextField) {
-        [self.passwordTextField becomeFirstResponder];
+    NSInteger index = [self.textFields indexOfObject:textField];
+    
+    if (self.isSigningUp)
+    {
+        if (index == self.textFields.count - 1) {
+            [self doneEnteringDataWithTextField:textField];
+            return YES;
+        }
     }
     else {
-        [textField resignFirstResponder];
-        [self signUpOrLoginUser];
-        [self moveScreenDown];
+        if (index == 1) {
+            [self doneEnteringDataWithTextField:textField];
+            return YES;
+        }
     }
     
+    UITextField *nextTextField = (UITextField *)[self.textFields objectAtIndex:index + 1];
+    [nextTextField becomeFirstResponder];
+    
     return YES;
+}
+
+- (void)doneEnteringDataWithTextField:(UITextField *)lastTextField {
+    [lastTextField resignFirstResponder];
+    [self signUpOrLoginUser];
+    [self moveScreenDown];
+ 
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {

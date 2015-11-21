@@ -12,11 +12,11 @@
             <rect key="frame" x="0.0" y="0.0" width="411" height="45"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jSO-rj-hBS" id="5r3-PQ-tnG">
-                <rect key="frame" x="0.0" y="0.0" width="411" height="44.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="411" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goG-ga-qbY">
-                        <rect key="frame" x="8" y="8" width="395" height="28.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goG-ga-qbY">
+                        <rect key="frame" x="8" y="8" width="395" height="29"/>
                         <fontDescription key="fontDescription" name="Avenir-BookOblique" family="Avenir" pointSize="12"/>
                         <color key="textColor" red="0.57647058819999997" green="0.58431372550000005" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -28,8 +28,8 @@
                             <constraint firstAttribute="height" constant="1" id="DxT-Nm-3Dd"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rFV-dC-oNl">
-                        <rect key="frame" x="0.0" y="41.5" width="411" height="1"/>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rFV-dC-oNl">
+                        <rect key="frame" x="0.0" y="42" width="411" height="1"/>
                         <color key="backgroundColor" red="0.57647058819999997" green="0.58431372550000005" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="31r-xL-y24"/>

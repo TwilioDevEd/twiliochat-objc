@@ -63,6 +63,8 @@
     PFUser *user = [PFUser user];
     user.username = username;
     user.password = password;
+    user.email = email;
+    user[@"fullName"] = fullName;
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {

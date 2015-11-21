@@ -12,6 +12,8 @@
 @property (strong, nonatomic) id messagingManagerMock;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *password;
+@property (strong, nonatomic) NSString *fullName;
+@property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *token;
 @property (strong, nonatomic) NSError *error;
 @end
@@ -26,6 +28,8 @@
     
     self.username = @"hello";
     self.password = @"123";
+    self.fullName = @"Name";
+    self.email = @"email@domain.com";
     
     self.error = [NSError errorWithDomain:@"" code:-1000 userInfo:nil];
     
@@ -42,6 +46,8 @@
     [self prepareRegistrationWithSuccessStatus:YES clientStatus:YES];
     [self.messagingManagerMock registerWithUsername:self.username
                                            password:self.password
+                                           fullName:self.fullName
+                                              email:self.email
                                             handler:^(BOOL succeeded, NSError *error) {
                                                 XCTAssertTrue(succeeded, @"Registration should be successful");
                                             }];
@@ -53,6 +59,8 @@
     [self prepareRegistrationWithSuccessStatus:NO clientStatus:YES];
     [self.messagingManagerMock registerWithUsername:self.username
                                            password:self.password
+                                           fullName:self.fullName
+                                              email:self.email
                                             handler:^(BOOL succeeded, NSError *error) {
                                                 XCTAssertFalse(succeeded, @"Registration should fail");
                                             }];
@@ -63,6 +71,8 @@
     [self prepareRegistrationWithSuccessStatus:YES clientStatus:NO];
     [self.messagingManagerMock registerWithUsername:self.username
                                            password:self.password
+                                           fullName:self.fullName
+                                              email:self.email
                                             handler:^(BOOL succeeded, NSError *error) {
                                                 XCTAssertFalse(succeeded, @"Registration should fail");
                                             }];
@@ -77,6 +87,8 @@
     OCMExpect([self.pfUserMock signUpInBackgroundWithBlock:arg]);
     OCMExpect([self.pfUserMock setUsername:self.username]);
     OCMExpect([self.pfUserMock setPassword:self.password]);
+    OCMExpect([self.pfUserMock setObject:self.fullName forKeyedSubscript:@"fullName"]);
+    OCMExpect([self.pfUserMock setEmail:self.email]);
     
     if(status) {
         [self prepareClientConnectStatus:clientStatus];

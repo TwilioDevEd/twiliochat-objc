@@ -2,11 +2,12 @@
 #import "MainChatViewController.h"
 #import "SWRevealViewController.h"
 #import "ChatTableCell.h"
+#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
 
-@property (strong, nonatomic) NSMutableArray *chatEntries;
+@property (strong, nonatomic) NSMutableOrderedSet *messages;
 
 @end
 
@@ -63,14 +64,18 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
--(void)setChannel:(NSString *)channel {
-    self.title = channel;
+-(void)setChannel:(TMChannel *)channel {
+    self.title = channel.friendlyName;
+    channel.delegate = self;
+    
+    /*
     NSArray *array = [NSMutableArray arrayWithArray:@[@"One d f asdf as df asd fa sdf a sdf ads f sadf a sdf a sdf asd f asdf asd f asdf as df", @"Two", @"*Mario Celli", @"*Hello"]];
     
     NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
     self.chatEntries = [[NSMutableArray alloc] initWithArray:reversed];
     
     [self.tableView reloadData];
+     */
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -78,11 +83,11 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.chatEntries.count;
+    return self.messages.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *entry = [self.chatEntries objectAtIndex:indexPath.row];
+    NSString *entry = [self.messages objectAtIndex:indexPath.row];
     UITableViewCell *cell = nil;
     
     if ([entry hasPrefix:@"*"]) {
@@ -106,21 +111,63 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 - (void)didPressRightButton:(id)sender {
     [self.textView refreshFirstResponder];
-    [self addMessage: [self.textView.text copy]];
+    [self addMessages: @[[self.textView.text copy]]];
     [super didPressRightButton:sender];
 }
 
 #pragma mark Chat Service
--(void)addMessage:(NSString *)message {
+- (void)sendMessage: (NSString *)inputMessage {
+    TMMessage *message = [self.channel.messages createMessageWithBody:inputMessage];
+    [self.channel.messages sendMessage:message
+                            completion:^(TMResultEnum result) {
+                                if (result == TMResultFailure) {
+                                    NSLog(@"send message error");
+                                }
+                            }];
+}
+
+
+
+- (void)addMessages:(NSArray<TMMessage *> *)messages {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0
                                                 inSection:0];
     UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
 
-    [self.chatEntries insertObject:message atIndex:0];
-    
-    [self.tableView insertRowsAtIndexPaths:@[indexPath]
+    [self.messages addObjectsFromArray:messages];
+    [self sortMessages];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        if (self.messages.count > 0) {
+            [self scrollToBottomMessage];
+        }
+    });
+    /*[self.tableView insertRowsAtIndexPaths:@[indexPath]
                           withRowAnimation:UITableViewRowAnimationRight];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];*/
 }
 
+- (void)sortMessages {
+    [self.messages sortUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"timestamp"
+                                                                      ascending:NO]]];
+}
+
+- (void)scrollToBottomMessage {
+    if (self.messages.count == 0) {
+        return;
+    }
+    
+    NSIndexPath *bottomMessageIndex = [NSIndexPath indexPathForRow:[self.tableView numberOfRowsInSection:0] - 1
+                                                         inSection:0];
+    [self.tableView scrollToRowAtIndexPath:bottomMessageIndex
+                          atScrollPosition:UITableViewScrollPositionBottom
+                                  animated:NO];
+}
+
+#pragma mark - TMMessage delegate
+
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client
+                  channel:(TMChannel *)channel
+             messageAdded:(TMMessage *)message {
+    [self addMessages:@[message]];
+}
 @end

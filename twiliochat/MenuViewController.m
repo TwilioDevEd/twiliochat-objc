@@ -166,11 +166,11 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    /*NSString *channel = [self.channels objectAtIndex:indexPath.row];
+    NSString *channel = [self.channels objectAtIndex:indexPath.row];
     UINavigationController *navigationController = (UINavigationController *) self.revealViewController.frontViewController;
     MainChatViewController *chatViewController = (MainChatViewController *) [navigationController visibleViewController];
     chatViewController.channel = channel;
-    [self.revealViewController revealToggleAnimated:YES];*/
+    [self.revealViewController revealToggleAnimated:YES];
 }
 
 #pragma mark - Channel

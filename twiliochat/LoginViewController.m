@@ -11,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (nonatomic) BOOL isSigningUp;
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
+@property (nonatomic) NSInteger keyboardSize;
 @property (nonatomic) NSInteger animationOffset;
 @property (strong, nonatomic) NSArray *textFields;
 @property (weak, nonatomic) UITextField *currentTextField;
@@ -225,12 +226,12 @@
 
 - (void)moveScreenUp
 {
-    [self shiftScreenYPosition:-self.animationOffset withDuration:0.30 curve: UIViewAnimationCurveLinear];
+    [self shiftScreenYPosition:-self.keyboardSize - self.animationOffset withDuration:0.30 curve: UIViewAnimationCurveEaseInOut];
 }
 
 - (void)moveScreenDown
 {
-    [self shiftScreenYPosition:0 withDuration:0.20 curve: UIViewAnimationCurveLinear];
+    [self shiftScreenYPosition:0 withDuration:0.20 curve: UIViewAnimationCurveEaseInOut];
 }
 
 - (void)shiftScreenYPosition: (NSInteger)position withDuration: (CGFloat) duration curve: (UIViewAnimationCurve) curve {
@@ -271,17 +272,28 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    CGFloat textFieldHeight = textField.superview.frame.size.height;
+    CGFloat textFieldY = [textField.superview.superview convertPoint:textField.superview.frame.origin toView:self.view].y;
+    self.animationOffset = -screenHeight + textFieldY + textFieldHeight;
+    if (self.keyboardSize != 0) {
+        [self moveScreenUp];
+    }
+    return YES;
+}
+
 - (void)doneEnteringDataWithTextField:(UITextField *)lastTextField {
     [lastTextField resignFirstResponder];
     [self signUpOrLoginUser];
     [self moveScreenDown];
- 
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    self.animationOffset = MIN(keyboardSize.height, keyboardSize.width);
+    self.keyboardSize = MIN(keyboardSize.height, keyboardSize.width);
     [self moveScreenUp];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Style

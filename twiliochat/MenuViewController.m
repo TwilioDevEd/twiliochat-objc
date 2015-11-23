@@ -166,7 +166,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *channel = [self.channels objectAtIndex:indexPath.row];
+    TMChannel *channel = [self.channels objectAtIndex:indexPath.row];
     UINavigationController *navigationController = (UINavigationController *) self.revealViewController.frontViewController;
     MainChatViewController *chatViewController = (MainChatViewController *) [navigationController visibleViewController];
     chatViewController.channel = channel;

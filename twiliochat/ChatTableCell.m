@@ -1,9 +1,6 @@
 #import "ChatTableCell.h"
 
 @interface ChatTableCell ()
-{
-    NSDate *_date;
-}
 @property (weak, nonatomic) UILabel *userLabel;
 @property (weak, nonatomic) UILabel *messageLabel;
 @property (weak, nonatomic) UILabel *dateLabel;

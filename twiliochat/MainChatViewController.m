@@ -1,8 +1,9 @@
 #import <Parse/Parse.h>
+#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 #import "MainChatViewController.h"
 #import "SWRevealViewController.h"
 #import "ChatTableCell.h"
-#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
+#import "NSDate+ISO8601Parser.h"
 
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
@@ -64,9 +65,18 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
--(void)setChannel:(TMChannel *)channel {
-    self.title = channel.friendlyName;
-    channel.delegate = self;
+- (NSMutableOrderedSet *)messages {
+    if (!_messages) {
+        _messages = [[NSMutableOrderedSet alloc] init];
+    }
+    return _messages;
+}
+
+- (void)setChannel:(TMChannel *)channel {
+    _channel = channel;
+    self.title = self.channel.friendlyName;
+    self.channel.delegate = self;
+    [self loadMessages];
     
     /*
     NSArray *array = [NSMutableArray arrayWithArray:@[@"One d f asdf as df asd fa sdf a sdf ads f sadf a sdf a sdf asd f asdf asd f asdf as df", @"Two", @"*Mario Celli", @"*Hello"]];
@@ -87,22 +97,15 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *entry = [self.messages objectAtIndex:indexPath.row];
+    TMMessage *message = [self.messages objectAtIndex:indexPath.row];
     UITableViewCell *cell = nil;
     
-    if ([entry hasPrefix:@"*"]) {
-        cell = [tableView dequeueReusableCellWithIdentifier:ChatStatusCellIdentifier forIndexPath:indexPath];
-        UILabel *label = (UILabel *)[cell.contentView viewWithTag:200];
-        label.text = entry;
-    }
-    else {
-        cell = [tableView dequeueReusableCellWithIdentifier:ChatCellIdentifier forIndexPath:indexPath];
-        
-        ChatTableCell *chatCell = (ChatTableCell *)cell;
-        chatCell.user = [PFUser currentUser].username;
-        chatCell.date = [NSDate date];
-        chatCell.message = entry;
-    }
+    cell = [tableView dequeueReusableCellWithIdentifier:ChatCellIdentifier forIndexPath:indexPath];
+    
+    ChatTableCell *chatCell = (ChatTableCell *)cell;
+    chatCell.user = message.author;
+    chatCell.date = [NSDate dateWithISO8601String:message.timestamp];
+    chatCell.message = message.body;
     
     cell.transform = self.tableView.transform;
     
@@ -111,7 +114,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 - (void)didPressRightButton:(id)sender {
     [self.textView refreshFirstResponder];
-    [self addMessages: @[[self.textView.text copy]]];
+    [self sendMessage: [self.textView.text copy]];
     [super didPressRightButton:sender];
 }
 
@@ -161,6 +164,11 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     [self.tableView scrollToRowAtIndexPath:bottomMessageIndex
                           atScrollPosition:UITableViewScrollPositionBottom
                                   animated:NO];
+}
+
+- (void)loadMessages {
+    [self.messages removeAllObjects];
+    [self addMessages:self.channel.messages.allObjects];
 }
 
 #pragma mark - TMMessage delegate

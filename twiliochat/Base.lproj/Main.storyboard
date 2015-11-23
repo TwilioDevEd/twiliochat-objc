@@ -36,14 +36,14 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Wn-6n-kgu">
-                                        <rect key="frame" x="65" y="30" width="399" height="20"/>
+                                        <rect key="frame" x="65" y="30.5" width="471" height="19.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                         <color key="textColor" red="0.21960784310000001" green="0.023529411760000001" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PY8-Qj-TBu">
-                                        <rect key="frame" x="472" y="24" width="48" height="32"/>
+                                        <rect key="frame" x="544" y="24" width="48" height="32"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="BNL-1a-Pnr"/>
@@ -83,7 +83,7 @@
                                     <constraint firstItem="5Wn-6n-kgu" firstAttribute="centerY" secondItem="IIV-zd-cYc" secondAttribute="centerY" id="WtY-aF-yna"/>
                                     <constraint firstItem="5Wn-6n-kgu" firstAttribute="leading" secondItem="dfv-iz-6D1" secondAttribute="trailing" constant="15" id="YwW-mh-JQT"/>
                                     <constraint firstAttribute="height" constant="80" id="Zrf-L9-nXc"/>
-                                    <constraint firstAttribute="trailing" secondItem="PY8-Qj-TBu" secondAttribute="trailing" constant="80" id="miD-Cy-r6H"/>
+                                    <constraint firstAttribute="trailing" secondItem="PY8-Qj-TBu" secondAttribute="trailing" constant="8" id="miD-Cy-r6H"/>
                                     <constraint firstItem="PY8-Qj-TBu" firstAttribute="leading" secondItem="5Wn-6n-kgu" secondAttribute="trailing" constant="8" id="omW-v5-GhQ"/>
                                     <constraint firstItem="dfv-iz-6D1" firstAttribute="centerY" secondItem="IIV-zd-cYc" secondAttribute="centerY" id="prD-qJ-4tp"/>
                                 </constraints>
@@ -126,7 +126,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Channel Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bj7-qL-BGQ">
-                                                    <rect key="frame" x="30" y="10" width="114" height="24"/>
+                                                    <rect key="frame" x="30" y="10.5" width="562" height="23.5"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                                                     <color key="textColor" red="0.97254901959999995" green="0.5568627451" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -137,6 +137,7 @@
                                             <constraints>
                                                 <constraint firstItem="bj7-qL-BGQ" firstAttribute="leading" secondItem="hLG-8N-ZO8" secondAttribute="leading" constant="30" id="6Mu-0A-8VY"/>
                                                 <constraint firstItem="bj7-qL-BGQ" firstAttribute="centerY" secondItem="hLG-8N-ZO8" secondAttribute="centerY" id="W2c-vm-0C3"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="bj7-qL-BGQ" secondAttribute="trailing" id="jyt-mT-m5s"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>

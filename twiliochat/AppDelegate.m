@@ -25,7 +25,6 @@
     [defaultACL setPublicReadAccess:YES];
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
-    [[IPMessagingManager sharedManager] logout];
     [[IPMessagingManager sharedManager] presentLaunchScreen];
     [[IPMessagingManager sharedManager] presentRootViewController];
     

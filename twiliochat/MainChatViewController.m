@@ -20,6 +20,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     SWRevealViewController *revealViewController = self.revealViewController;
+    self.revealViewController.rearViewRevealOverdraw = 0.f;
     
     if ( revealViewController )
     {

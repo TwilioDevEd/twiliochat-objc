@@ -141,45 +141,69 @@
     [self populateChannels];
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
 
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
+}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *channel = [self.channels objectAtIndex:indexPath.row];
+    /*NSString *channel = [self.channels objectAtIndex:indexPath.row];
     UINavigationController *navigationController = (UINavigationController *) self.revealViewController.frontViewController;
     MainChatViewController *chatViewController = (MainChatViewController *) [navigationController visibleViewController];
     chatViewController.channel = channel;
-    [self.revealViewController revealToggleAnimated:YES];
+    [self.revealViewController revealToggleAnimated:YES];*/
 }
 
 #pragma mark - Channel
 
-- (void)createNewChannel {
+- (void)createNewChannelDialog {
     [InputDialogController showWithTitle:@"New Channel"
                                  message:@"Enter a name for this channel."
                              placeholder:@"Name"
                                presenter:self handler:^(NSString *text) {
-                                   [self.channels addObject:text];
-                                   [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow: self.channels.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
+                                   [self createChannelWithName:text];
                                }];
 }
+
+- (void)createChannelWithName:(NSString *)name {
+    [self.channelsList createChannelWithFriendlyName:name
+                                                type:TMChannelTypePublic
+                                          completion:^(TMResultEnum result, TMChannel *channel) {
+                                              if (result == TMResultSuccess) {
+                                                  [channel joinWithCompletion:^(TMResultEnum result) {
+                                                      [channel setAttributes:@{@"topic": @""}
+                                                                  completion:^(TMResultEnum result) {
+                                                                      
+                                                                  }];
+                                                  }];
+                                              }
+                                              else {
+                                                  NSLog(@"Error creating channel");
+                                              }
+                                          }];
+}
+
+#pragma mark - TwilioIPMessagingClientDelegate delegate
+
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelAdded:(TMChannel *)channel {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.channels addObject:channel];
+        [self sortChannels];
+        [self.tableView reloadData];
+    });
+}
+
+
 
 #pragma mark - Logout
 
@@ -214,7 +238,7 @@
 }
 
 - (IBAction)newChannelButtonTouched:(UIButton *)sender {
-    [self createNewChannel];
+    [self createNewChannelDialog];
 }
 
 #pragma mark - Navigation

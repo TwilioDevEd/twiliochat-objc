@@ -14,6 +14,7 @@
 		59BD03161BF68C1E00A4AA88 /* MainChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD03151BF68C1E00A4AA88 /* MainChatViewController.m */; };
 		59BD031D1BF6936000A4AA88 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD031C1BF6936000A4AA88 /* MenuViewController.m */; };
 		59BD03211BFA296900A4AA88 /* IPMessagingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD03201BFA296900A4AA88 /* IPMessagingManager.m */; };
+		59F208F01C03920800CC2392 /* AlerDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F208EF1C03920800CC2392 /* AlerDialogController.m */; };
 		7D8DCB141BFED14F009B1B6D /* IPMessagingManagerLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */; };
 		7D8DCB161BFF467A009B1B6D /* IPMessagingManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DCB151BFF467A009B1B6D /* IPMessagingManagerTests.m */; };
 		8750C85E1BF530330015CBE1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85D1BF530330015CBE1 /* Keys.plist */; };
@@ -67,6 +68,8 @@
 		59BD031C1BF6936000A4AA88 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		59BD031F1BFA296900A4AA88 /* IPMessagingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPMessagingManager.h; sourceTree = "<group>"; };
 		59BD03201BFA296900A4AA88 /* IPMessagingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMessagingManager.m; sourceTree = "<group>"; };
+		59F208EE1C03920800CC2392 /* AlerDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerDialogController.h; sourceTree = "<group>"; };
+		59F208EF1C03920800CC2392 /* AlerDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlerDialogController.m; sourceTree = "<group>"; };
 		652E063D172A0ECAD377861F /* Pods-twiliochat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochat/Pods-twiliochat.debug.xcconfig"; sourceTree = "<group>"; };
 		7834F26AFB8ED02DD8AF41DF /* libPods-twiliochat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twiliochat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMessagingManagerLoginTests.m; sourceTree = "<group>"; };
@@ -133,6 +136,8 @@
 			children = (
 				593F44791BFA7D6A00B57504 /* InputDialogController.h */,
 				593F447A1BFA7D6A00B57504 /* InputDialogController.m */,
+				59F208EE1C03920800CC2392 /* AlerDialogController.h */,
+				59F208EF1C03920800CC2392 /* AlerDialogController.m */,
 			);
 			name = util;
 			sourceTree = "<group>";
@@ -555,6 +560,7 @@
 				59BD03211BFA296900A4AA88 /* IPMessagingManager.m in Sources */,
 				59BD031D1BF6936000A4AA88 /* MenuViewController.m in Sources */,
 				593F447B1BFA7D6A00B57504 /* InputDialogController.m in Sources */,
+				59F208F01C03920800CC2392 /* AlerDialogController.m in Sources */,
 				593F44771BFA5E2900B57504 /* MenuTableCell.m in Sources */,
 				87A486021BFB5E9500E4BE8F /* ChatTableCell.m in Sources */,
 			);

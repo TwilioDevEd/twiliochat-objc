@@ -1,9 +1,9 @@
 #import <Parse/Parse.h>
 #import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 #import "MainChatViewController.h"
-#import "SWRevealViewController.h"
 #import "ChatTableCell.h"
 #import "NSDate+ISO8601Parser.h"
+#import "SWRevealViewController.h"
 
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
@@ -21,10 +21,8 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    SWRevealViewController *revealViewController = self.revealViewController;
-    self.revealViewController.rearViewRevealOverdraw = 0.f;
     
-    if ( revealViewController )
+    if (self.revealViewController)
     {
         [self.revealButtonItem setTarget: self.revealViewController];
         [self.revealButtonItem setAction: @selector( revealToggle: )];
@@ -159,7 +157,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
         return;
     }
     
-    NSIndexPath *bottomMessageIndex = [NSIndexPath indexPathForRow:[self.tableView numberOfRowsInSection:0] - 1
+    NSIndexPath *bottomMessageIndex = [NSIndexPath indexPathForRow:0
                                                          inSection:0];
     [self.tableView scrollToRowAtIndexPath:bottomMessageIndex
                           atScrollPosition:UITableViewScrollPositionBottom
@@ -171,6 +169,17 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     [self addMessages:self.channel.messages.allObjects];
 }
 
+- (void)leaveChannel {
+    [self.channel leaveWithCompletion:^(TMResultEnum result) {
+        if (result == TMResultSuccess) {
+            [self.revealViewController.rearViewController performSegueWithIdentifier:@"StartScreen" sender:nil];
+        }
+        else {
+            NSLog(@"Error leaving channel");
+        }
+    }];
+}
+
 #pragma mark - TMMessage delegate
 
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client
@@ -178,4 +187,11 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
              messageAdded:(TMMessage *)message {
     [self addMessages:@[message]];
 }
+
+#pragma mark - Actions
+
+- (IBAction)actionButtonTouched:(UIBarButtonItem *)sender {
+    [self leaveChannel];
+}
+
 @end

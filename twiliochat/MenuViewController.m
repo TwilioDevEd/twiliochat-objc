@@ -166,11 +166,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TMChannel *channel = [self.channels objectAtIndex:indexPath.row];
-    UINavigationController *navigationController = (UINavigationController *) self.revealViewController.frontViewController;
-    MainChatViewController *chatViewController = (MainChatViewController *) [navigationController visibleViewController];
-    chatViewController.channel = channel;
-    [self.revealViewController revealToggleAnimated:YES];
+    [self performSegueWithIdentifier:@"OpenChat" sender:indexPath];
 }
 
 #pragma mark - Channel
@@ -265,7 +261,17 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
+    if ([segue.identifier isEqualToString:@"OpenChat"]) {
+        NSIndexPath *indexPath = (NSIndexPath *)sender;
+        
+        TMChannel *channel = [self.channels objectAtIndex:indexPath.row];
+        
+        [channel joinWithCompletion:^(TMResultEnum result) {
+            UINavigationController *navigationController = (UINavigationController *) self.revealViewController.frontViewController;
+            MainChatViewController *chatViewController = (MainChatViewController *) [navigationController visibleViewController];
+            chatViewController.channel = channel;
+        }];
+    }
 }
 
 #pragma mark Style

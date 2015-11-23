@@ -12,6 +12,8 @@
 @property (strong, nonatomic) TMChannels *channelsList;
 @property (strong, nonatomic) NSMutableOrderedSet *channels;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+
+@property (strong, nonatomic) TMChannel *recentlyAddedChannel;
 @end
 
 @implementation MenuViewController
@@ -152,11 +154,13 @@
         // Delete the row from the data source
         TMChannel *channel = [self.channels objectAtIndex:indexPath.row];
         [channel destroyWithCompletion:^(TMResultEnum result) {
-            [self.channels removeObject:channel];
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if (result == TMResultSuccess) {
+                [tableView reloadData];
+            }
+            else {
+                NSLog(@"You cannot delete this channel");
+            }
         }];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
 }
 
@@ -185,9 +189,9 @@
                                           completion:^(TMResultEnum result, TMChannel *channel) {
                                               if (result == TMResultSuccess) {
                                                   [channel joinWithCompletion:^(TMResultEnum result) {
-                                                      [channel setAttributes:@{@"topic": @""}
+                                                      [channel setAttributes:@{@"owner": [[IPMessagingManager sharedManager] userIdentity]}
                                                                   completion:^(TMResultEnum result) {
-                                                                      
+
                                                                   }];
                                                   }];
                                               }
@@ -202,12 +206,24 @@
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelAdded:(TMChannel *)channel {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.channels addObject:channel];
+        NSLog(@"IPAttr: %@", channel.attributes);
         [self sortChannels];
         [self.tableView reloadData];
     });
 }
 
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelChanged:(TMChannel *)channel {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
 
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelDeleted:(TMChannel *)channel {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.channels removeObject:channel];
+        [self.tableView reloadData];
+    });
+}
 
 #pragma mark - Logout
 

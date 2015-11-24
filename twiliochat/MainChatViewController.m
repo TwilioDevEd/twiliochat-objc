@@ -75,15 +75,6 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     self.title = self.channel.friendlyName;
     self.channel.delegate = self;
     [self loadMessages];
-    
-    /*
-    NSArray *array = [NSMutableArray arrayWithArray:@[@"One d f asdf as df asd fa sdf a sdf ads f sadf a sdf a sdf asd f asdf asd f asdf as df", @"Two", @"*Mario Celli", @"*Hello"]];
-    
-    NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
-    self.chatEntries = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    [self.tableView reloadData];
-     */
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -95,19 +86,22 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [self getChatCellForTableView:tableView forIndexPath:indexPath];
+    cell.transform = tableView.transform;
+    return cell;
+}
+
+- (ChatTableCell *)getChatCellForTableView:(UITableView *)tableView
+                              forIndexPath:(NSIndexPath *)indexPath {
     TMMessage *message = [self.messages objectAtIndex:indexPath.row];
-    UITableViewCell *cell = nil;
-    
-    cell = [tableView dequeueReusableCellWithIdentifier:ChatCellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ChatCellIdentifier forIndexPath:indexPath];
     
     ChatTableCell *chatCell = (ChatTableCell *)cell;
     chatCell.user = message.author;
     chatCell.date = [NSDate dateWithISO8601String:message.timestamp];
     chatCell.message = message.body;
     
-    cell.transform = self.tableView.transform;
-    
-    return cell;
+    return chatCell;
 }
 
 - (void)didPressRightButton:(id)sender {
@@ -131,10 +125,6 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 
 - (void)addMessages:(NSArray<TMMessage *> *)messages {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0
-                                                inSection:0];
-    UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
-
     [self.messages addObjectsFromArray:messages];
     [self sortMessages];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -143,9 +133,6 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
             [self scrollToBottomMessage];
         }
     });
-    /*[self.tableView insertRowsAtIndexPaths:@[indexPath]
-                          withRowAnimation:UITableViewRowAnimationRight];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];*/
 }
 
 - (void)sortMessages {
@@ -181,13 +168,23 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     }];
 }
 
-#pragma mark - TMMessage delegate
+#pragma mark - TMMessageDelegate
 
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client
                   channel:(TMChannel *)channel
              messageAdded:(TMMessage *)message {
     [self addMessages:@[message]];
 }
+
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client
+           channelDeleted:(TMChannel *)channel {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (channel == self.channel) {
+            [self.revealViewController.rearViewController performSegueWithIdentifier:@"StartScreen" sender:nil];
+        }
+    });
+}
+
 
 #pragma mark - Actions
 

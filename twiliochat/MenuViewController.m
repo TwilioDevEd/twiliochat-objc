@@ -5,7 +5,7 @@
 #import "InputDialogController.h"
 #import "MainChatViewController.h"
 #import "IPMessagingManager.h"
-#import "AlerDialogController.h"
+#import "AlertDialogController.h"
 
 @interface MenuViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
@@ -159,7 +159,7 @@
                 [tableView reloadData];
             }
             else {
-                [AlerDialogController showAlertWithMessage:@"You can not delete this channel" title:nil presenter:self];
+                [AlertDialogController showAlertWithMessage:@"You can not delete this channel" title:nil presenter:self];
             }
         }];
     }

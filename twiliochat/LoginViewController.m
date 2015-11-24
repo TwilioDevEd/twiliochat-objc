@@ -2,6 +2,7 @@
 #import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 #import "LoginViewController.h"
 #import "IPMessagingManager.h"
+#import "AlertDialogController.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
@@ -185,7 +186,9 @@
 }
 
 - (void)showError:(NSString *)message {
-    [self showAlertWithMessage:message];
+    [AlertDialogController showAlertWithMessage:message
+                                              title:nil
+                                          presenter:self];
     self.loginButton.enabled = YES;
     self.createAccountButton.enabled = YES;
 }
@@ -203,23 +206,10 @@
             return YES;
         }
     }
-    [self showAlertWithMessage:@"All fields are required"];
+    [AlertDialogController showAlertWithMessage:@"Your email is required"
+                                         title:nil
+                                     presenter:self];
     return NO;
-}
-
-#pragma mark - Alerts
-
-- (void)showAlertWithMessage: (NSString *)message {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
-                                                                   message:message
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
-                                                            style:UIAlertActionStyleCancel
-                                                          handler:nil];
-    
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Animation

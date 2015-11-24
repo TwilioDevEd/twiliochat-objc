@@ -119,6 +119,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 #pragma mark Chat Service
 - (void)sendMessage: (NSString *)inputMessage {
     TMMessage *message = [self.channel.messages createMessageWithBody:inputMessage];
+    [self addMessages:@[message]];
     [self.channel.messages sendMessage:message
                             completion:^(TMResultEnum result) {
                                 if (result == TMResultFailure) {

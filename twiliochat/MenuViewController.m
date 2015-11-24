@@ -267,8 +267,8 @@
         TMChannel *channel = [self.channels objectAtIndex:indexPath.row];
         
         [channel joinWithCompletion:^(TMResultEnum result) {
-            UINavigationController *navigationController = (UINavigationController *) self.revealViewController.frontViewController;
-            MainChatViewController *chatViewController = (MainChatViewController *) [navigationController visibleViewController];
+            UINavigationController *navigationController = [segue destinationViewController];
+            MainChatViewController *chatViewController = (MainChatViewController *)[navigationController visibleViewController] ;
             chatViewController.channel = channel;
         }];
     }

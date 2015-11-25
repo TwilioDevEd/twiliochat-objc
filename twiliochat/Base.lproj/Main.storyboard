@@ -35,7 +35,7 @@
                                             <constraint firstAttribute="width" constant="15" id="zwZ-DD-HwL"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Wn-6n-kgu">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Wn-6n-kgu">
                                         <rect key="frame" x="65" y="31" width="471" height="20"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
@@ -125,7 +125,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Channel Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bj7-qL-BGQ">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Channel Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bj7-qL-BGQ">
                                                     <rect key="frame" x="30" y="11" width="562" height="24"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
@@ -591,7 +591,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No channel selected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Vq-aG-Iig">
                                 <rect key="frame" x="222" y="289" width="157" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -678,14 +678,25 @@
                                     <action selector="sendButtonTouched:" destination="mRN-bp-ag8" eventType="touchUpInside" id="Vmc-ez-n4e"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A simple chat app built using the" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMO-jv-mi5">
-                                <rect key="frame" x="204.5" y="212" width="191.5" height="18"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkV-j3-rWy">
+                                <rect key="frame" x="265" y="491" width="71" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="&lt; Go back">
+                                    <color key="titleColor" red="0.97254901959999995" green="0.5568627451" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendButtonTouched:" destination="mRN-bp-ag8" eventType="touchUpInside" id="1kd-AC-vcf"/>
+                                    <segue destination="BYZ-38-t0r" kind="showDetail" identifier="ReturnToLogin" action="showViewController:sender:" id="99d-iK-xyI"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="A simple chat app built using the" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMO-jv-mi5">
+                                <rect key="frame" x="205" y="212" width="192" height="18"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="13"/>
                                 <color key="textColor" red="0.96862745100000003" green="0.90196078430000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Twilio IP Messaging API" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N71-WX-e6L">
-                                <rect key="frame" x="230.5" y="234" width="139.5" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Twilio IP Messaging API" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N71-WX-e6L">
+                                <rect key="frame" x="231" y="234" width="140" height="18"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
                                 <color key="textColor" red="0.96862745100000003" green="0.90196078430000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -732,12 +743,12 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="That's okay. Just enter your email and we'll send you a link to reset your password." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ugq-rU-zbh">
-                                <rect key="frame" x="60" y="421" width="480" height="38.5"/>
+                                <rect key="frame" x="100" y="429" width="400" height="39"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VxI-D6-jha">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VxI-D6-jha">
                                 <rect key="frame" x="265" y="469" width="71" height="30"/>
                                 <state key="normal" title="&lt; Go back">
                                     <color key="titleColor" red="0.97254901959999995" green="0.5568627451" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -753,7 +764,8 @@
                             <constraint firstAttribute="bottomMargin" secondItem="nKd-Bj-ODU" secondAttribute="bottom" constant="189" id="17q-NM-A9i"/>
                             <constraint firstItem="wU8-Ra-5C7" firstAttribute="leading" secondItem="aau-NY-Bvn" secondAttribute="leadingMargin" id="3ki-bo-Qe5"/>
                             <constraint firstItem="nKd-Bj-ODU" firstAttribute="trailing" secondItem="aau-NY-Bvn" secondAttribute="trailingMargin" id="927-qZ-lAb"/>
-                            <constraint firstItem="Ugq-rU-zbh" firstAttribute="top" secondItem="nKd-Bj-ODU" secondAttribute="bottom" constant="10" id="9ar-cT-ca6"/>
+                            <constraint firstItem="dkV-j3-rWy" firstAttribute="top" secondItem="Ugq-rU-zbh" secondAttribute="bottom" constant="23" id="9Hp-Rc-ebZ"/>
+                            <constraint firstItem="Ugq-rU-zbh" firstAttribute="top" secondItem="nKd-Bj-ODU" secondAttribute="bottom" constant="18" id="9ar-cT-ca6"/>
                             <constraint firstItem="nKd-Bj-ODU" firstAttribute="top" secondItem="wU8-Ra-5C7" secondAttribute="bottom" id="ALK-AM-w3U"/>
                             <constraint firstItem="Ugq-rU-zbh" firstAttribute="leading" secondItem="aau-NY-Bvn" secondAttribute="leadingMargin" constant="40" id="IbZ-XK-nBI"/>
                             <constraint firstItem="mZw-Ml-Bgp" firstAttribute="top" secondItem="aau-NY-Bvn" secondAttribute="top" id="MZe-ld-V1Q"/>
@@ -767,8 +779,11 @@
                             <constraint firstItem="VxI-D6-jha" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="epS-s3-v4u"/>
                             <constraint firstItem="EMO-jv-mi5" firstAttribute="top" secondItem="ErP-6c-8KG" secondAttribute="bottom" constant="9" id="gHR-aw-BH4"/>
                             <constraint firstItem="nKd-Bj-ODU" firstAttribute="leading" secondItem="aau-NY-Bvn" secondAttribute="leadingMargin" id="ofO-FI-D7J"/>
+                            <constraint firstItem="Ugq-rU-zbh" firstAttribute="leading" secondItem="aau-NY-Bvn" secondAttribute="leadingMargin" constant="80" id="pfP-XX-8KR"/>
                             <constraint firstItem="ErP-6c-8KG" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="rR2-9E-xvs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ugq-rU-zbh" secondAttribute="trailing" constant="80" id="ruK-NZ-t20"/>
                             <constraint firstItem="EMO-jv-mi5" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="sLB-Ym-EhH"/>
+                            <constraint firstItem="dkV-j3-rWy" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="tHG-Ef-Vwd"/>
                             <constraint firstItem="N71-WX-e6L" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="u6g-s7-0Hj"/>
                             <constraint firstItem="N71-WX-e6L" firstAttribute="top" secondItem="EMO-jv-mi5" secondAttribute="bottom" constant="4" id="x5f-Jt-HTR"/>
                         </constraints>
@@ -786,13 +801,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rLr-rR-aNF" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="pbj-jt-zAC">
-                    <connections>
-                        <action selector="backgroundTap:" destination="mRN-bp-ag8" id="8QR-aO-frg"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="pbj-jt-zAC"/>
             </objects>
-            <point key="canvasLocation" x="-2897" y="110"/>
+            <point key="canvasLocation" x="-2869" y="102"/>
         </scene>
     </scenes>
     <resources>
@@ -806,6 +817,7 @@
         <image name="username-field-bg" width="25" height="41"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="kga-42-owT"/>
         <segue reference="7SM-cq-uCc"/>
     </inferredMetricsTieBreakers>
 </document>

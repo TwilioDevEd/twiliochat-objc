@@ -74,7 +74,14 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     _channel = channel;
     self.title = self.channel.friendlyName;
     self.channel.delegate = self;
-    [self loadMessages];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    self.textInputbarHidden = YES;
+    
+    [self.channel joinWithCompletion:^(TMResultEnum result) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [self loadMessages];
+        [self setTextInputbarHidden:NO animated:YES];
+    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

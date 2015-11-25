@@ -17,6 +17,7 @@
 		59F208F01C03920800CC2392 /* AlertDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F208EF1C03920800CC2392 /* AlertDialogController.m */; };
 		7D8DCB141BFED14F009B1B6D /* IPMessagingManagerLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */; };
 		7D8DCB161BFF467A009B1B6D /* IPMessagingManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DCB151BFF467A009B1B6D /* IPMessagingManagerTests.m */; };
+		7DAC272C1C053D08006CEA49 /* ChannelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAC272B1C053D08006CEA49 /* ChannelManager.m */; };
 		7DC302AB1C04B631000765ED /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DC302AA1C04B631000765ED /* ForgotPasswordViewController.m */; };
 		8750C85E1BF530330015CBE1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85D1BF530330015CBE1 /* Keys.plist */; };
 		8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85F1BF5307E0015CBE1 /* Keys.example.plist */; };
@@ -77,6 +78,8 @@
 		7834F26AFB8ED02DD8AF41DF /* libPods-twiliochat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twiliochat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMessagingManagerLoginTests.m; sourceTree = "<group>"; };
 		7D8DCB151BFF467A009B1B6D /* IPMessagingManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMessagingManagerTests.m; sourceTree = "<group>"; };
+		7DAC272A1C053D08006CEA49 /* ChannelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelManager.h; sourceTree = "<group>"; };
+		7DAC272B1C053D08006CEA49 /* ChannelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelManager.m; sourceTree = "<group>"; };
 		7DC302A91C04B631000765ED /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		7DC302AA1C04B631000765ED /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
 		8270D2027DDF16AF9AADE12D /* libPods-twiliochatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twiliochatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,6 +220,15 @@
 			name = forgot;
 			sourceTree = "<group>";
 		};
+		7DD549871C053E0B00AC9496 /* channels */ = {
+			isa = PBXGroup;
+			children = (
+				7DAC272A1C053D08006CEA49 /* ChannelManager.h */,
+				7DAC272B1C053D08006CEA49 /* ChannelManager.m */,
+			);
+			name = channels;
+			sourceTree = "<group>";
+		};
 		8750C8611BF5315E0015CBE1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +263,7 @@
 		87B6AC211BF51D6600E55FE2 /* twiliochat */ = {
 			isa = PBXGroup;
 			children = (
+				7DD549871C053E0B00AC9496 /* channels */,
 				7DC302A81C04B5FA000765ED /* forgot */,
 				593F44781BFA7D3400B57504 /* util */,
 				59BD031E1BFA28DF00A4AA88 /* flow */,
@@ -587,6 +600,7 @@
 				59F208F01C03920800CC2392 /* AlertDialogController.m in Sources */,
 				87DB89F41C03B81300E3935B /* StartViewController.m in Sources */,
 				7DC302AB1C04B631000765ED /* ForgotPasswordViewController.m in Sources */,
+				7DAC272C1C053D08006CEA49 /* ChannelManager.m in Sources */,
 				593F44771BFA5E2900B57504 /* MenuTableCell.m in Sources */,
 				87A486021BFB5E9500E4BE8F /* ChatTableCell.m in Sources */,
 			);

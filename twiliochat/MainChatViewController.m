@@ -4,9 +4,11 @@
 #import "ChatTableCell.h"
 #import "NSDate+ISO8601Parser.h"
 #import "SWRevealViewController.h"
+#import "ChannelManager.h"
 
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *actionButtonItem;
 
 @property (strong, nonatomic) NSMutableOrderedSet *messages;
 
@@ -61,6 +63,12 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     self.tableView.estimatedRowHeight = 70;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    if (!_channel)
+    {
+        self.channel = [ChannelManager sharedManager].generalChatroom;
+        self.navigationItem.rightBarButtonItem = nil;
+    }
 }
 
 - (NSMutableOrderedSet *)messages {
@@ -167,7 +175,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 - (void)leaveChannel {
     [self.channel leaveWithCompletion:^(TMResultEnum result) {
         if (result == TMResultSuccess) {
-            [self.revealViewController.rearViewController performSegueWithIdentifier:@"StartScreen" sender:nil];
+            [self.revealViewController.rearViewController performSegueWithIdentifier:@"OpenGeneralChat" sender:nil];
         }
         else {
             NSLog(@"Error leaving channel");
@@ -187,7 +195,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
            channelDeleted:(TMChannel *)channel {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (channel == self.channel) {
-            [self.revealViewController.rearViewController performSegueWithIdentifier:@"StartScreen" sender:nil];
+            [self.revealViewController.rearViewController performSegueWithIdentifier:@"OpenGeneralChat" sender:nil];
         }
     });
 }
@@ -197,6 +205,10 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 - (IBAction)actionButtonTouched:(UIBarButtonItem *)sender {
     [self leaveChannel];
+}
+
+- (IBAction)revealButtonTouched:(UIBarButtonItem *)sender {
+    [self.revealViewController revealToggleAnimated:YES];
 }
 
 @end

@@ -1,5 +1,6 @@
 #import <Parse/Parse.h>
 #import "IPMessagingManager.h"
+#import "ChannelManager.h"
 
 @interface IPMessagingManager ()
 @property (nonatomic, strong) TwilioIPMessagingClient *client;
@@ -112,14 +113,29 @@
                                     BOOL errorCondition = error || !token;
                                     
                                     if (!errorCondition) {
-                                        self.connecting = YES;
                                         NSLog(@"%@",results);
                                         self.client = [TwilioIPMessagingClient ipMessagingClientWithToken:token
                                                                                                  delegate:nil];
-                                        self.connecting = YES;
+                                        [self loadGeneralChatRoom:handler];
                                     }
-                                    if (handler) handler(!error, error);
+                                    else {
+                                        if (handler) handler(!error, error);
+                                    }
                                 }];
+}
+
+- (void)loadGeneralChatRoom:(void(^)(BOOL succeeded, NSError *error))handler {
+    [[ChannelManager sharedManager] loadGeneralChatRoomWithBlock:^(TMResultEnum result, TMChannel *channel) {
+        self.connecting = YES;
+        if (result == TMResultSuccess)
+        {
+            if (handler) handler(YES, nil);
+        }
+        else {
+            if (handler) handler(NO, [NSError errorWithDomain:@"channel" code:1000 userInfo:nil]);
+        }
+        self.connecting = NO;
+    }];
 }
 
 - (void)logout {

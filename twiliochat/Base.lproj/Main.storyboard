@@ -35,7 +35,7 @@
                                             <constraint firstAttribute="width" constant="15" id="zwZ-DD-HwL"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Wn-6n-kgu">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Wn-6n-kgu">
                                         <rect key="frame" x="65" y="31" width="471" height="20"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
@@ -125,7 +125,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Channel Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bj7-qL-BGQ">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Channel Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bj7-qL-BGQ">
                                                     <rect key="frame" x="30" y="11" width="562" height="24"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
@@ -205,7 +205,7 @@
                         <outlet property="tableView" destination="NJ0-X9-7ZM" id="Czi-HY-D5J"/>
                         <outlet property="usernameLabel" destination="5Wn-6n-kgu" id="Ndx-pO-IEO"/>
                         <segue destination="7ky-Oc-r4a" kind="custom" identifier="OpenChat" customClass="SWRevealViewControllerSeguePushController" id="MJd-W7-AeE"/>
-                        <segue destination="IMf-O8-3TW" kind="custom" identifier="StartScreen" customClass="SWRevealViewControllerSeguePushController" id="W4R-ba-EUF"/>
+                        <segue destination="7ky-Oc-r4a" kind="custom" identifier="OpenGeneralChat" customClass="SWRevealViewControllerSeguePushController" id="T6d-vm-lVB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r5f-kq-beF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -227,30 +227,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="IMf-O8-3TW" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="7SM-cq-uCc"/>
                         <segue destination="K27-MU-Rb1" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="3x0-jq-P5E"/>
+                        <segue destination="7ky-Oc-r4a" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="W7T-tU-HkW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ivw-Ma-iwh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1364" y="-671"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="faw-xi-G32">
-            <objects>
-                <navigationController id="IMf-O8-3TW" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gb8-Yg-b34">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Ztw-5x-HuQ" kind="relationship" relationship="rootViewController" id="a96-Sm-T5k"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="baU-SN-Xa6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-416" y="-130"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -560,59 +543,25 @@
                     <navigationItem key="navigationItem" id="sB9-eJ-xba">
                         <barButtonItem key="leftBarButtonItem" image="icon-list" id="gIk-Pj-E0l">
                             <color key="tintColor" red="1" green="0.39581004800000003" blue="0.35225513489999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="revealButtonTouched:" destination="Ni6-5b-9ca" id="8Ep-Jc-sOT"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="EmA-6s-egJ">
                             <color key="tintColor" red="0.97254901959999995" green="0.5568627451" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="actionButtonTouched:" destination="Ni6-5b-9ca" id="9kZ-mG-Ctu"/>
+                                <action selector="actionButtonTouched:" destination="Ni6-5b-9ca" id="dCl-Wf-4X2"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="actionButtonItem" destination="EmA-6s-egJ" id="UA8-YZ-rYf"/>
                         <outlet property="revealButtonItem" destination="gIk-Pj-E0l" id="Hkv-k5-YZA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Shd-gi-UIt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1302" y="-671"/>
-        </scene>
-        <!--Start View Controller-->
-        <scene sceneID="Si1-CN-yLY">
-            <objects>
-                <viewController id="Ztw-5x-HuQ" customClass="StartViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="j9U-Dg-OiX"/>
-                        <viewControllerLayoutGuide type="bottom" id="M6S-d3-KFw"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="f6f-Zt-Pe3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No channel selected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Vq-aG-Iig">
-                                <rect key="frame" x="222" y="289" width="157" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="3Vq-aG-Iig" firstAttribute="centerY" secondItem="f6f-Zt-Pe3" secondAttribute="centerY" id="bjA-kB-D6d"/>
-                            <constraint firstItem="3Vq-aG-Iig" firstAttribute="centerX" secondItem="f6f-Zt-Pe3" secondAttribute="centerX" id="gRX-8z-p0O"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="jZP-iH-ltt">
-                        <barButtonItem key="leftBarButtonItem" image="icon-list" id="B7u-3m-JYA">
-                            <color key="tintColor" red="1" green="0.39581004800000003" blue="0.35225513489999999" alpha="1" colorSpace="calibratedRGB"/>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="revealButtonItem" destination="B7u-3m-JYA" id="uO4-rH-A1H"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nzW-1d-Ulf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="490" y="50"/>
+            <point key="canvasLocation" x="838" y="-599"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GNa-mK-TAv">
@@ -630,7 +579,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Gh-7N-NGc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="490" y="-671"/>
+            <point key="canvasLocation" x="-54" y="-223"/>
         </scene>
         <!--Forgot Password View Controller-->
         <scene sceneID="hRe-yb-4Im">
@@ -678,25 +627,14 @@
                                     <action selector="sendButtonTouched:" destination="mRN-bp-ag8" eventType="touchUpInside" id="Vmc-ez-n4e"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkV-j3-rWy">
-                                <rect key="frame" x="265" y="491" width="71" height="30"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="&lt; Go back">
-                                    <color key="titleColor" red="0.97254901959999995" green="0.5568627451" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendButtonTouched:" destination="mRN-bp-ag8" eventType="touchUpInside" id="1kd-AC-vcf"/>
-                                    <segue destination="BYZ-38-t0r" kind="showDetail" identifier="ReturnToLogin" action="showViewController:sender:" id="99d-iK-xyI"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="A simple chat app built using the" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMO-jv-mi5">
-                                <rect key="frame" x="205" y="212" width="192" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A simple chat app built using the" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMO-jv-mi5">
+                                <rect key="frame" x="204" y="212" width="191.5" height="18"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="13"/>
                                 <color key="textColor" red="0.96862745100000003" green="0.90196078430000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Twilio IP Messaging API" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N71-WX-e6L">
-                                <rect key="frame" x="231" y="234" width="140" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Twilio IP Messaging API" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N71-WX-e6L">
+                                <rect key="frame" x="230" y="234" width="139.5" height="18"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
                                 <color key="textColor" red="0.96862745100000003" green="0.90196078430000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -743,13 +681,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="That's okay. Just enter your email and we'll send you a link to reset your password." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ugq-rU-zbh">
-                                <rect key="frame" x="100" y="429" width="400" height="39"/>
+                                <rect key="frame" x="60" y="429" width="480" height="38.5"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VxI-D6-jha">
-                                <rect key="frame" x="265" y="469" width="71" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VxI-D6-jha">
+                                <rect key="frame" x="265" y="477" width="71" height="30"/>
                                 <state key="normal" title="&lt; Go back">
                                     <color key="titleColor" red="0.97254901959999995" green="0.5568627451" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -764,7 +702,6 @@
                             <constraint firstAttribute="bottomMargin" secondItem="nKd-Bj-ODU" secondAttribute="bottom" constant="189" id="17q-NM-A9i"/>
                             <constraint firstItem="wU8-Ra-5C7" firstAttribute="leading" secondItem="aau-NY-Bvn" secondAttribute="leadingMargin" id="3ki-bo-Qe5"/>
                             <constraint firstItem="nKd-Bj-ODU" firstAttribute="trailing" secondItem="aau-NY-Bvn" secondAttribute="trailingMargin" id="927-qZ-lAb"/>
-                            <constraint firstItem="dkV-j3-rWy" firstAttribute="top" secondItem="Ugq-rU-zbh" secondAttribute="bottom" constant="23" id="9Hp-Rc-ebZ"/>
                             <constraint firstItem="Ugq-rU-zbh" firstAttribute="top" secondItem="nKd-Bj-ODU" secondAttribute="bottom" constant="18" id="9ar-cT-ca6"/>
                             <constraint firstItem="nKd-Bj-ODU" firstAttribute="top" secondItem="wU8-Ra-5C7" secondAttribute="bottom" id="ALK-AM-w3U"/>
                             <constraint firstItem="Ugq-rU-zbh" firstAttribute="leading" secondItem="aau-NY-Bvn" secondAttribute="leadingMargin" constant="40" id="IbZ-XK-nBI"/>
@@ -779,11 +716,8 @@
                             <constraint firstItem="VxI-D6-jha" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="epS-s3-v4u"/>
                             <constraint firstItem="EMO-jv-mi5" firstAttribute="top" secondItem="ErP-6c-8KG" secondAttribute="bottom" constant="9" id="gHR-aw-BH4"/>
                             <constraint firstItem="nKd-Bj-ODU" firstAttribute="leading" secondItem="aau-NY-Bvn" secondAttribute="leadingMargin" id="ofO-FI-D7J"/>
-                            <constraint firstItem="Ugq-rU-zbh" firstAttribute="leading" secondItem="aau-NY-Bvn" secondAttribute="leadingMargin" constant="80" id="pfP-XX-8KR"/>
                             <constraint firstItem="ErP-6c-8KG" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="rR2-9E-xvs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ugq-rU-zbh" secondAttribute="trailing" constant="80" id="ruK-NZ-t20"/>
                             <constraint firstItem="EMO-jv-mi5" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="sLB-Ym-EhH"/>
-                            <constraint firstItem="dkV-j3-rWy" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="tHG-Ef-Vwd"/>
                             <constraint firstItem="N71-WX-e6L" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="u6g-s7-0Hj"/>
                             <constraint firstItem="N71-WX-e6L" firstAttribute="top" secondItem="EMO-jv-mi5" secondAttribute="bottom" constant="4" id="x5f-Jt-HTR"/>
                         </constraints>
@@ -817,7 +751,6 @@
         <image name="username-field-bg" width="25" height="41"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kga-42-owT"/>
-        <segue reference="7SM-cq-uCc"/>
+        <segue reference="W7T-tU-HkW"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -1,6 +1,9 @@
 #import "ChannelManager.h"
 #import "IPMessagingManager.h"
 
+@interface ChannelManager ()
+@end
+
 @implementation ChannelManager
 + (instancetype)sharedManager {
     static ChannelManager *sharedMyManager = nil;
@@ -17,13 +20,46 @@
     return self;
 }
 
+- (void)loadGeneralChatRoomWithBlock:(void(^)(TMResultEnum result, TMChannel *channel))block {
+    [self populateChannelsWithBlock:^(TMResultEnum result) {
+        if (result == TMResultSuccess) {
+            NSOrderedSet *filteredSet = [self.channels filteredOrderedSetUsingPredicate:
+                                         [NSPredicate predicateWithBlock:^BOOL(TMChannel*  _Nonnull evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+                return [evaluatedObject.friendlyName isEqualToString:@"General"];
+            }]];
+            self.generalChatroom = filteredSet.firstObject;
+            
+            if (self.generalChatroom) {
+                if (block) block(result, self.generalChatroom);
+            }
+            else {
+                [self.channelsList createChannelWithFriendlyName:@"General"
+                                                            type:TMChannelTypePublic
+                                                      completion:^(TMResultEnum result, TMChannel *channel) {
+                                                          self.generalChatroom = filteredSet.firstObject;
+                                                          if (result == TMResultSuccess) {
+                                                              self.generalChatroom = channel;
+                                                              if (block) block(result, self.generalChatroom);
+                                                          }
+                                                          else {
+                                                              if (block) block(result, nil);
+                                                          }
+                                                      }];
+            }
+        }
+        else {
+            if (block) block(result, nil);
+        }
+    }];
+}
+
 
 - (void)loadChannelListWithBlock:(void(^)(TMResultEnum result, TMChannels *channelsList))block {
     self.channelsList = nil;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[IPMessagingManager sharedManager].client channelsListWithCompletion:^(TMResultEnum result, TMChannels *channelsList) {
-            if (result) {
+            if (result == TMResultSuccess) {
                 self.channelsList = channelsList;
             }
             else {
@@ -73,6 +109,11 @@
 }
 
 - (void)createChannelWithName:(NSString *)name block:(void(^)(TMResultEnum result, TMChannel *channel))block {
+    if ([name isEqualToString:@"General"]) {
+        if (block) block(TMResultFailure, nil);
+        return;
+    }
+    
     if (!self.channelsList)
     {
         [self loadChannelListWithBlock:^(TMResultEnum result, TMChannels *channelsList) {

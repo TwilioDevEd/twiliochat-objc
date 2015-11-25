@@ -7,6 +7,12 @@
 #import "ChannelManager.h"
 #import "StatusEntry.h"
 
+@implementation TMMessage(Equals)
+- (BOOL)isEqual:(TMMessage *)object {
+    return [self.sid isEqualToString:object.sid];
+}
+@end
+
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionButtonItem;
@@ -83,16 +89,17 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 - (void)setChannel:(TMChannel *)channel {
     _channel = channel;
     self.title = self.channel.friendlyName;
-    
+   
     if (self.channel.status == TMChannelStatusJoined)
     {
-        self.channel.delegate = self;
         [self loadMessages];
+        self.channel.delegate = self;
     }
     else {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         self.textInputbarHidden = YES;
         [self.channel joinWithCompletion:^(TMResultEnum result) {
+            [self loadMessages];
             self.channel.delegate = self;
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             [self setTextInputbarHidden:NO animated:YES];

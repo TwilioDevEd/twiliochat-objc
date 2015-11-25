@@ -11,7 +11,7 @@
 @property (weak, nonatomic) UITextField *emailTextField;
 @property (weak, nonatomic) UIButton *loginButton;
 @property (weak, nonatomic) UIButton *createAccountButton;
-- (BOOL)showAlertWithMessage:(NSString *)message;
+- (BOOL)showError:(NSString *)message;
 @end
 
 @interface LoginViewControllerTests : XCTestCase
@@ -70,27 +70,27 @@
 }
 
 - (void)testEmptyUsernameError {
-    [self.viewControllerMock usernameTextField].text = nil;
+    [self.viewControllerMock usernameTextField].text = @"";
     [self runUpEmptyFieldTest];
 }
 
 - (void)testEmptyPasswordError {
-    [self.viewControllerMock passwordTextField].text = nil;
+    [self.viewControllerMock passwordTextField].text = @"";
     [self runUpEmptyFieldTest];
 }
 
 - (void)testEmptyFullNameError {
-    [self.viewControllerMock fullNameTextField].text = nil;
+    [self.viewControllerMock fullNameTextField].text = @"";
     [self runUpEmptyFieldTest];
 }
 
 - (void)testEmptyEmailError {
-    [self.viewControllerMock emailTextField].text = nil;
+    [self.viewControllerMock emailTextField].text = @"";
     [self runUpEmptyFieldTest];
 }
 
 - (void)runUpEmptyFieldTest {
-    OCMExpect([self.viewControllerMock showAlertWithMessage:@"All fields are required"]);
+    OCMExpect([self.viewControllerMock showError:@"All fields are required"]);
     
     
     [[self.viewControllerMock createAccountButton] sendActionsForControlEvents:UIControlEventTouchUpInside];

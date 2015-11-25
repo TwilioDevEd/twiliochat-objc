@@ -583,7 +583,7 @@
         <!--Forgot Password View Controller-->
         <scene sceneID="hRe-yb-4Im">
             <objects>
-                <viewController id="mRN-bp-ag8" customClass="ForgotPasswordViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ForgotPasswordViewController" id="mRN-bp-ag8" customClass="ForgotPasswordViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3TH-es-GtE"/>
                         <viewControllerLayoutGuide type="bottom" id="q6r-2c-ys1"/>
@@ -731,6 +731,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="emailTextField" destination="kh6-Yo-Ysd" id="oL2-Mx-LGw"/>
+                        <outlet property="sendButton" destination="nKd-Bj-ODU" id="W0K-04-EsE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rLr-rR-aNF" sceneMemberID="firstResponder"/>

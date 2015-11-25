@@ -213,9 +213,7 @@
             return YES;
         }
     }
-    [AlertDialogController showAlertWithMessage:@"Your email is required"
-                                         title:nil
-                                     presenter:self];
+    [self showError:@"All fields are required"];
     return NO;
 }
 

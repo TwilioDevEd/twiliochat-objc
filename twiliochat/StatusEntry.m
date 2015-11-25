@@ -1,0 +1,28 @@
+//
+//  StatusEntry.m
+//  twiliochat
+//
+//  Created by Juan Carlos Pazmiño on 11/25/15.
+//  Copyright © 2015 Twilio. All rights reserved.
+//
+
+#import "StatusEntry.h"
+
+@implementation StatusEntry
++ (StatusEntry *)statusEntryWithMember:(TMMember *)member status:(MemberStatus)status {
+    return [[StatusEntry alloc] initWithMember:member status:status];
+}
+
+- (instancetype)initWithMember:(TMMember *)member status:(MemberStatus)status {
+    self = [self init];
+    if (self)
+    {
+        self.member = member;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+        self.timestamp = [dateFormatter stringFromDate:[NSDate date]];
+        self.status = status;
+    }
+    return self;
+}
+@end

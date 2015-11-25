@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="landing-logo" translatesAutoresizingMaskIntoConstraints="NO" id="DiL-4e-0qK">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="landing-logo" translatesAutoresizingMaskIntoConstraints="NO" id="DiL-4e-0qK">
                                 <rect key="frame" x="155" y="227" width="291" height="146"/>
                                 <animations/>
                             </imageView>

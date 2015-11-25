@@ -5,6 +5,7 @@
 #import "NSDate+ISO8601Parser.h"
 #import "SWRevealViewController.h"
 #import "ChannelManager.h"
+#import "StatusEntry.h"
 
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
@@ -29,6 +30,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
         [self.revealButtonItem setTarget: self.revealViewController];
         [self.revealButtonItem setAction: @selector( revealToggle: )];
         [self.navigationController.navigationBar addGestureRecognizer: self.revealViewController.panGestureRecognizer];
+        self.revealViewController.rearViewRevealOverdraw = 0.f;
     }
 
     self.bounces = YES;
@@ -81,15 +83,21 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 - (void)setChannel:(TMChannel *)channel {
     _channel = channel;
     self.title = self.channel.friendlyName;
-    self.channel.delegate = self;
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    self.textInputbarHidden = YES;
     
-    [self.channel joinWithCompletion:^(TMResultEnum result) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    if (self.channel.status == TMChannelStatusJoined)
+    {
+        self.channel.delegate = self;
         [self loadMessages];
-        [self setTextInputbarHidden:NO animated:YES];
-    }];
+    }
+    else {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        self.textInputbarHidden = YES;
+        [self.channel joinWithCompletion:^(TMResultEnum result) {
+            self.channel.delegate = self;
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            [self setTextInputbarHidden:NO animated:YES];
+        }];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -101,14 +109,24 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self getChatCellForTableView:tableView forIndexPath:indexPath];
+    UITableViewCell *cell = nil;
+    
+    id message = [self.messages objectAtIndex:indexPath.row];
+    
+    if ([message isKindOfClass:[TMMessage class]]) {
+        cell = [self getChatCellForTableView:tableView forIndexPath:indexPath message:message];
+    }
+    else {
+        cell = [self getStatuCellForTableView:tableView forIndexPath:indexPath message:message];
+    }
+    
     cell.transform = tableView.transform;
     return cell;
 }
 
 - (ChatTableCell *)getChatCellForTableView:(UITableView *)tableView
-                              forIndexPath:(NSIndexPath *)indexPath {
-    TMMessage *message = [self.messages objectAtIndex:indexPath.row];
+                              forIndexPath:(NSIndexPath *)indexPath
+                                   message:(TMMessage *)message {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ChatCellIdentifier forIndexPath:indexPath];
     
     ChatTableCell *chatCell = (ChatTableCell *)cell;
@@ -117,6 +135,19 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     chatCell.message = message.body;
     
     return chatCell;
+}
+
+- (UITableViewCell *)getStatuCellForTableView:(UITableView *)tableView
+                              forIndexPath:(NSIndexPath *)indexPath
+                                   message:(StatusEntry *)message {
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ChatStatusCellIdentifier forIndexPath:indexPath];
+    
+    UILabel *label = [cell viewWithTag:200];
+    label.text = [NSString stringWithFormat:@"User %@ has %@",
+                  message.member.identity,
+                  (message.status == MemberStatusJoined? @"joined" : @"left")];
+    
+    return cell;
 }
 
 - (void)didPressRightButton:(id)sender {
@@ -138,7 +169,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 
 
-- (void)addMessages:(NSArray<TMMessage *> *)messages {
+- (void)addMessages:(NSArray *)messages {
     [self.messages addObjectsFromArray:messages];
     [self sortMessages];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -148,6 +179,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
         }
     });
 }
+
 
 - (void)sortMessages {
     [self.messages sortUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"timestamp"
@@ -197,6 +229,18 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
             [self.revealViewController.rearViewController performSegueWithIdentifier:@"OpenGeneralChat" sender:nil];
         }
     });
+}
+
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client
+                  channel:(TMChannel *)channel
+             memberJoined:(TMMember *)member {
+    [self addMessages:@[[StatusEntry statusEntryWithMember:member status:MemberStatusJoined]]];
+}
+
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client
+                  channel:(TMChannel *)channel
+               memberLeft:(TMMember *)member {
+    [self addMessages:@[[StatusEntry statusEntryWithMember:member status:MemberStatusLeft]]];
 }
 
 

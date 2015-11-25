@@ -16,6 +16,7 @@
 @property (nonatomic) NSInteger animationOffset;
 @property (strong, nonatomic) NSArray *textFields;
 @property (weak, nonatomic) UITextField *currentTextField;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 // Constraints
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fullNameHeightConstraint;
@@ -34,6 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isSigningUp = NO;
+    [self.activityIndicator stopAnimating];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -145,6 +147,7 @@
     if ([self validateUserData]) {
         self.loginButton.enabled = NO;
         self.createAccountButton.enabled = NO;
+        [self.activityIndicator startAnimating];
         
         if (self.isSigningUp) {
             [self registerUser];
@@ -157,16 +160,19 @@
 
 - (void)registerUser {
     IPMessagingManager *manager = [IPMessagingManager sharedManager];
+    
     [manager registerWithUsername:self.usernameTextField.text
                          password:self.passwordTextField.text
                          fullName:self.fullNameTextField.text
                             email:self.emailTextField.text
                           handler:^(BOOL succeeded, NSError *error) {
+                              [self.activityIndicator stopAnimating];
                               if (succeeded) {
                                   [manager presentRootViewController];
                               }
                               else {
-                                  [self showError:@"Error while signing up"];
+                                  NSLog(@"%@", error);
+                                  [self showError:[error localizedDescription]];
                               }
                           }];
 }
@@ -176,6 +182,7 @@
     [manager loginWithUsername:self.usernameTextField.text
                       password:self.passwordTextField.text
                        handler:^(BOOL succeeded, NSError *error) {
+                           [self.activityIndicator stopAnimating];
                            if (succeeded) {
                                [manager presentRootViewController];
                            }

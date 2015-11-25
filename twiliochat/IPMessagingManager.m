@@ -140,8 +140,11 @@
 
 - (void)logout {
     [PFUser logOut];
-    [self.client shutdown];
-    self.client = nil;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.client shutdown];
+        self.client = nil;
+    });
 }
 
 - (void)updatePushToken:(NSData *)token {

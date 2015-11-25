@@ -306,8 +306,8 @@
 				7D8DCB151BFF467A009B1B6D /* IPMessagingManagerTests.m */,
 				7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */,
 				87DB89EB1BFE398C00E3935B /* IPMessagingManagerPresentTests.m */,
-				87B6AC3E1BF51D6600E55FE2 /* Info.plist */,
 				870855461C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m */,
+				87B6AC3E1BF51D6600E55FE2 /* Info.plist */,
 			);
 			path = twiliochatTests;
 			sourceTree = "<group>";

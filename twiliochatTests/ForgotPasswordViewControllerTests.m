@@ -19,22 +19,18 @@
 
 @interface ForgotPasswordViewControllerTests : XCTestCase
 @property (strong, nonatomic) id viewControllerMock;
-@property (strong, nonatomic) NSString *email;
 @end
 
 @implementation ForgotPasswordViewControllerTests
 
 - (void)setUp {
     [super setUp];
-    self.email = @"email@domain.com";
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     ForgotPasswordViewController *viewController = (ForgotPasswordViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"ForgotPasswordViewController"];
     [viewController loadView];
     
     self.viewControllerMock = OCMPartialMock(viewController);
-    
-    [self.viewControllerMock emailTextField].text = self.email;
 }
 
 - (void)tearDown {
@@ -45,9 +41,28 @@
     id mockPFUser = OCMClassMock([PFUser class]);
     id mockAlertDialogController = OCMClassMock([AlertDialogController class]);
     
+    NSString *email = @"email@domain.com";
+    [self.viewControllerMock emailTextField].text = email;
+    
     OCMStub([mockAlertDialogController alloc]).andReturn(mockAlertDialogController);
-    OCMExpect([mockPFUser requestPasswordResetForEmailInBackground:self.email]);
+    OCMExpect([mockPFUser requestPasswordResetForEmailInBackground:email]);
     OCMExpect([mockAlertDialogController showAlertWithMessage:@"We've sent you an email with further instructions" title:nil presenter:self.viewControllerMock handler:[OCMArg any]]);
+    
+    [[self.viewControllerMock sendButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
+    OCMVerifyAll(mockPFUser);
+    OCMVerifyAll(mockAlertDialogController);
+}
+
+- (void)testInvalidEmailMessage {
+    id mockPFUser = OCMClassMock([PFUser class]);
+    id mockAlertDialogController = OCMClassMock([AlertDialogController class]);
+    
+    [self.viewControllerMock emailTextField].text = @"";
+    
+    OCMStub([mockAlertDialogController alloc]).andReturn(mockAlertDialogController);
+    [[mockPFUser reject] requestPasswordResetForEmailInBackground:[OCMArg any]];
+    OCMExpect([mockAlertDialogController showAlertWithMessage:@"Your email is required" title:nil presenter:self.viewControllerMock handler:[OCMArg any]]);
     
     [[self.viewControllerMock sendButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
     

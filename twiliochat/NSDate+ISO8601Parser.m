@@ -1,11 +1,3 @@
-//
-//  NSDate+ISO8601Parser.m
-//  twiliochat
-//
-//  Created by Juan Carlos Pazmiño on 11/23/15.
-//  Copyright © 2015 Twilio. All rights reserved.
-//
-
 #import "NSDate+ISO8601Parser.h"
 
 @implementation NSDate (ISO8601Parser)
@@ -13,10 +5,17 @@
 {
     if (!dateString) return nil;
     if ([dateString hasSuffix:@"Z"]) {
-        dateString = [[dateString substringToIndex:(dateString.length-1)] stringByAppendingString:@"-0000"];
+        NSInteger dotIndex = [dateString rangeOfString:@"."].location;
+        if (dotIndex == NSNotFound) {
+            dateString = [dateString stringByAppendingString:@".0"];
+        }
+        else {
+            dateString = [dateString substringToIndex:dotIndex + 2];
+        }
+        dateString = [dateString stringByAppendingString:@"-0000"];
     }
     return [self dateFromString:dateString
-                     withFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+                     withFormat:@"yyyy-MM-dd'T'HH:mm:ss.SZ"];
 }
 
 + (NSDate *)dateFromString:(NSString *)dateString

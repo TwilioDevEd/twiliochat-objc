@@ -1,11 +1,3 @@
-//
-//  ForgotPasswordViewControllerTests.m
-//  twiliochat
-//
-//  Created by Juan Carlos Pazmiño on 11/25/15.
-//  Copyright © 2015 Twilio. All rights reserved.
-//
-
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import <Parse/Parse.h>

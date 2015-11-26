@@ -78,6 +78,22 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.channel.delegate = self;
+    [self scrollToBottomMessage];
+    //[self loadMessages];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.channel.delegate = nil;
+}
+
 - (NSMutableOrderedSet *)messages {
     if (!_messages) {
         _messages = [[NSMutableOrderedSet alloc] init];
@@ -90,24 +106,18 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     self.title = self.channel.friendlyName;
     
     if (self.channel == [ChannelManager sharedManager].generalChatroom) {
-        self.navigationItem.rightBarButtonItem = nil;
+        //self.navigationItem.rightBarButtonItem = nil;
     }
    
-    if (self.channel.status == TMChannelStatusJoined)
+    /*if (self.channel.status == TMChannelStatusJoined)
     {
-        [self loadMessages];
-        self.channel.delegate = self;
     }
     else {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         self.textInputbarHidden = YES;
         self.channel.delegate = self;
-        [self.channel joinWithCompletion:^(TMResultEnum result) {
-            [self loadMessages];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            [self setTextInputbarHidden:NO animated:YES];
-        }];
-    }
+        [self loadMessages];
+    }**/
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

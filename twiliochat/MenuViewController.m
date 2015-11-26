@@ -124,7 +124,18 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"OpenChat" sender:indexPath];
+    TMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+    if (channel.status == TMChannelStatusJoined) {
+        [self performSegueWithIdentifier:@"OpenChat" sender:channel];
+    }
+    else {
+        [channel joinWithCompletion:^(TMResultEnum result) {
+            if (result == TMResultSuccess) {
+                [self performSegueWithIdentifier:@"OpenChat" sender:channel];
+            }
+        }];
+    }
+    
 }
 
 #pragma mark - Channel
@@ -192,9 +203,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"OpenChat"]) {
-        NSIndexPath *indexPath = (NSIndexPath *)sender;
         
-        TMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+        TMChannel *channel = sender;
         UINavigationController *navigationController = [segue destinationViewController];
         MainChatViewController *chatViewController = (MainChatViewController *)[navigationController visibleViewController];
         chatViewController.channel = channel;

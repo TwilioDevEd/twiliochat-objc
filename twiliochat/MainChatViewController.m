@@ -90,7 +90,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     self.title = self.channel.friendlyName;
     
     if (self.channel == [ChannelManager sharedManager].generalChatroom) {
-        self.navigationItem.rightBarButtonItem = nil;
+        //	self.navigationItem.rightBarButtonItem = nil;
     }
    
     if (self.channel.status == TMChannelStatusJoined)
@@ -101,11 +101,15 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     else {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         self.textInputbarHidden = YES;
-        self.channel.delegate = self;
         [self.channel joinWithCompletion:^(TMResultEnum result) {
-            [self loadMessages];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            [self setTextInputbarHidden:NO animated:YES];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self loadMessages];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.channel.delegate = self;
+                    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                    [self setTextInputbarHidden:NO animated:YES];
+                });
+            });
         }];
     }
 }
@@ -229,7 +233,9 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client
                   channel:(TMChannel *)channel
              messageAdded:(TMMessage *)message {
-    [self addMessages:@[message]];
+    if (![self.messages containsObject:message]) {
+        [self addMessages:@[message]];
+    }
 }
 
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client

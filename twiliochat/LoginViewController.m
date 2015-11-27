@@ -285,7 +285,7 @@
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGSize keyboardSize = [[notification userInfo][UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     self.keyboardSize = MIN(keyboardSize.height, keyboardSize.width);
     [self moveScreenUp];
     [[NSNotificationCenter defaultCenter] removeObserver:self];

@@ -78,6 +78,11 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self scrollToBottomMessage];
+}
+
 - (NSMutableOrderedSet *)messages {
     if (!_messages) {
         _messages = [[NSMutableOrderedSet alloc] init];
@@ -90,7 +95,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     self.title = self.channel.friendlyName;
     
     if (self.channel == [ChannelManager sharedManager].generalChatroom) {
-        //	self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = nil;
     }
    
     if (self.channel.status == TMChannelStatusJoined)

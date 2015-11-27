@@ -4,7 +4,10 @@
 @interface ChannelManager ()
 @end
 
+NSString *defaultChannelName = @"General";
+
 @implementation ChannelManager
+
 + (instancetype)sharedManager {
     static ChannelManager *sharedMyManager = nil;
     static dispatch_once_t onceToken;
@@ -15,6 +18,7 @@
 }
 
 - (instancetype)init {
+    
     self.channels = [[NSMutableOrderedSet alloc] init];
     [IPMessagingManager sharedManager].client.delegate = self;
     return self;
@@ -25,7 +29,7 @@
         if (result == TMResultSuccess) {
             NSOrderedSet *filteredSet = [self.channels filteredOrderedSetUsingPredicate:
                                          [NSPredicate predicateWithBlock:^BOOL(TMChannel*  _Nonnull evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-                return [evaluatedObject.friendlyName isEqualToString:@"General"];
+                return [evaluatedObject.friendlyName isEqualToString:defaultChannelName];
             }]];
             self.generalChatroom = filteredSet.firstObject;
             
@@ -33,7 +37,7 @@
                 if (block) block(result, self.generalChatroom);
             }
             else {
-                [self.channelsList createChannelWithFriendlyName:@"General"
+                [self.channelsList createChannelWithFriendlyName:defaultChannelName
                                                             type:TMChannelTypePublic
                                                       completion:^(TMResultEnum result, TMChannel *channel) {
                                                           self.generalChatroom = filteredSet.firstObject;
@@ -109,7 +113,7 @@
 }
 
 - (void)createChannelWithName:(NSString *)name block:(void(^)(TMResultEnum result, TMChannel *channel))block {
-    if ([name isEqualToString:@"General"]) {
+    if ([name isEqualToString:defaultChannelName]) {
         if (block) block(TMResultFailure, nil);
         return;
     }

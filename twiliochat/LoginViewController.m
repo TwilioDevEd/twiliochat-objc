@@ -32,8 +32,8 @@
 
 #pragma mark - Initialization
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     self.isSigningUp = NO;
     [self.activityIndicator stopAnimating];
     
@@ -72,32 +72,36 @@
     self.constraintValues = [NSArray arrayWithArray:values];
 }
 
-- (void)hideSignInControls {
+- (void)hideSignUpControls {
     [self.createAccountButton setTitle:@"Create account" forState:UIControlStateNormal];
     [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
     
     [self setTextField:self.passwordTextField returnKeyType:UIReturnKeyDone];
     
-    [self.constraints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.constraints enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
         constraint.constant = 0.f;
     }];
+    
+    [self resetFirstResponderOnSignUpModeChange];
 }
 
-- (void)showSignInControls {
+- (void)showSignUpControls {
     [self.createAccountButton setTitle:@"Back to login" forState:UIControlStateNormal];
     [self.loginButton setTitle:@"Register" forState:UIControlStateNormal];
     
     [self setTextField:self.passwordTextField returnKeyType:UIReturnKeyNext];
     
-    [self.constraints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.constraints enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
-        constraint.constant = [(NSNumber *)[self.constraintValues objectAtIndex:idx] floatValue];
+        constraint.constant = [(NSNumber *)self.constraintValues[idx] floatValue];
     }];
+    
+    [self resetFirstResponderOnSignUpModeChange];
 }
 
 - (void)setTextField:(UITextField *)textField returnKeyType:(UIReturnKeyType)type {
-    if ([self.passwordTextField isFirstResponder]) {
+    if (self.passwordTextField.isFirstResponder) {
         [self.passwordTextField resignFirstResponder];
         self.passwordTextField.returnKeyType = type;
         [self.passwordTextField becomeFirstResponder];
@@ -105,6 +109,28 @@
     else {
         self.passwordTextField.returnKeyType = type;
     }
+}
+
+- (void)resetFirstResponderOnSignUpModeChange {
+    [self.view layoutSubviews];
+    UITextField *firstResponder = [self getFirstResponderTextField];
+    
+    if (firstResponder) {
+        NSInteger index = [self.textFields indexOfObject:firstResponder];
+        if (index > 1) {
+            [self.textFields[1] becomeFirstResponder];
+        }
+        else {
+            [self setAnimationOffsetForTextield:firstResponder];
+            [self moveScreenUp];
+        }
+    }
+}
+
+- (UITextField *)getFirstResponderTextField {
+    NSPredicate *predIsFirstResponder = [NSPredicate predicateWithFormat:@"isFirstResponder == YES"];
+    NSArray *firstResponderList = [self.textFields filteredArrayUsingPredicate:predIsFirstResponder];
+    return firstResponderList.firstObject;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -136,10 +162,10 @@
 - (void)toggleSignUpMode {
     self.isSigningUp = !self.isSigningUp;
     if (self.isSigningUp) {
-        [self showSignInControls];
+        [self showSignUpControls];
     }
     else {
-        [self hideSignInControls];
+        [self hideSignUpControls];
     }
 }
 
@@ -201,11 +227,9 @@
 }
 
 - (BOOL)validateUserData {
-    if (![self.usernameTextField.text isEqualToString: @""] &&
-        ![self.passwordTextField.text isEqualToString: @""]) {
+    if (!self.usernameTextField.text.length && !self.passwordTextField.text.length) {
         if (self.isSigningUp) {
-            if (![self.fullNameTextField.text isEqualToString:@""] &&
-                ![self.emailTextField.text isEqualToString:@""]) {
+            if (!self.fullNameTextField.text.length && !self.emailTextField.text.length) {
                 return YES;
             }
         }
@@ -250,34 +274,36 @@
     if (self.isSigningUp)
     {
         if (index == self.textFields.count - 1) {
-            [self doneEnteringDataWithTextField:textField];
+            [self doneEnteringData];
             return YES;
         }
     }
-    else {
-        if (index == 1) {
-            [self doneEnteringDataWithTextField:textField];
-            return YES;
-        }
+    else if (index == 1) {
+        [self doneEnteringData];
+        return YES;
     }
     
-    UITextField *nextTextField = (UITextField *)[self.textFields objectAtIndex:index + 1];
+    UITextField *nextTextField = (UITextField *)self.textFields[index + 1];
     [nextTextField becomeFirstResponder];
     
     return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    [self setAnimationOffsetForTextield:textField];
+    return YES;
+}
+
+- (void)setAnimationOffsetForTextield:(UITextField *)textField {
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     UIView *textFieldSuperview = textField.superview;
     CGFloat textFieldHeight = textFieldSuperview.frame.size.height;
     CGFloat textFieldY = [textFieldSuperview.superview convertPoint:textFieldSuperview.frame.origin toView:self.view].y;
     self.animationOffset = -screenHeight + textFieldY + textFieldHeight;
-    return YES;
 }
 
-- (void)doneEnteringDataWithTextField:(UITextField *)lastTextField {
-    [lastTextField resignFirstResponder];
+- (void)doneEnteringData {
+    [self.view endEditing:YES];
     [self signUpOrLoginUser];
     [self moveScreenDown];
 }

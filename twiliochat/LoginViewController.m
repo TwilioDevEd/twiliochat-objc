@@ -10,13 +10,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *fullNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-@property (nonatomic) BOOL isSigningUp;
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
-@property (nonatomic) NSInteger keyboardSize;
-@property (nonatomic) NSInteger animationOffset;
-@property (strong, nonatomic) NSArray *textFields;
-@property (weak, nonatomic) UITextField *currentTextField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
+@property (nonatomic) BOOL isSigningUp;
+@property (strong, nonatomic) TextFieldFormHandler *textFieldFormHandler;
 
 // Constraints
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fullNameHeightConstraint;
@@ -37,11 +35,6 @@
     self.isSigningUp = NO;
     [self.activityIndicator stopAnimating];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
     self.constraints = @[self.fullNameHeightConstraint,
                          self.fullNameTopConstraint,
                          self.emailHeightConstraint,
@@ -51,15 +44,13 @@
 }
 
 - (void)initializeTextFields {
-    self.textFields = @[self.usernameTextField,
-                        self.passwordTextField,
-                        self.fullNameTextField,
-                        self.emailTextField];
-    
-    [self.textFields enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        UITextField *textField = (UITextField *)obj;
-        textField.delegate = self;
-    }];
+    self.textFieldFormHandler = [[TextFieldFormHandler alloc] initWithTextFields:@[self.usernameTextField,
+                                                                                   self.passwordTextField,
+                                                                                   self.fullNameTextField,
+                                                                                   self.emailTextField]
+                                                                    topContainer:self.view];
+    self.textFieldFormHandler.delegate = self;
+    [self hideSignUpControls];
 }
 
 - (void)storeConstraintValues {
@@ -67,7 +58,6 @@
     [self.constraints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
         [values addObject:[NSNumber numberWithFloat:constraint.constant]];
-        constraint.constant = 0.f;
     }];
     self.constraintValues = [NSArray arrayWithArray:values];
 }
@@ -76,7 +66,7 @@
     [self.createAccountButton setTitle:@"Create account" forState:UIControlStateNormal];
     [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
     
-    [self setTextField:self.passwordTextField returnKeyType:UIReturnKeyDone];
+    self.textFieldFormHandler.lastTextField = self.passwordTextField;
     
     [self.constraints enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
@@ -90,7 +80,7 @@
     [self.createAccountButton setTitle:@"Back to login" forState:UIControlStateNormal];
     [self.loginButton setTitle:@"Register" forState:UIControlStateNormal];
     
-    [self setTextField:self.passwordTextField returnKeyType:UIReturnKeyNext];
+    self.textFieldFormHandler.lastTextField = nil;
     
     [self.constraints enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
@@ -100,37 +90,18 @@
     [self resetFirstResponderOnSignUpModeChange];
 }
 
-- (void)setTextField:(UITextField *)textField returnKeyType:(UIReturnKeyType)type {
-    if (self.passwordTextField.isFirstResponder) {
-        [self.passwordTextField resignFirstResponder];
-        self.passwordTextField.returnKeyType = type;
-        [self.passwordTextField becomeFirstResponder];
-    }
-    else {
-        self.passwordTextField.returnKeyType = type;
-    }
-}
-
 - (void)resetFirstResponderOnSignUpModeChange {
     [self.view layoutSubviews];
-    UITextField *firstResponder = [self getFirstResponderTextField];
+    NSInteger index = self.textFieldFormHandler.firstResponderIndex;
     
-    if (firstResponder) {
-        NSInteger index = [self.textFields indexOfObject:firstResponder];
+    if (index != NSNotFound) {
         if (index > 1) {
-            [self.textFields[1] becomeFirstResponder];
+            [self.textFieldFormHandler setFirstResponderAtIndex:1];
         }
         else {
-            [self setAnimationOffsetForTextield:firstResponder];
-            [self moveScreenUp];
+            [self.textFieldFormHandler performScroll];
         }
     }
-}
-
-- (UITextField *)getFirstResponderTextField {
-    NSPredicate *predIsFirstResponder = [NSPredicate predicateWithFormat:@"isFirstResponder == YES"];
-    NSArray *firstResponderList = [self.textFields filteredArrayUsingPredicate:predIsFirstResponder];
-    return firstResponderList.firstObject;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -139,12 +110,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.textFieldFormHandler cleanUp];
 }
 
 #pragma mark - Actions
@@ -155,6 +121,12 @@
 
 - (IBAction)createAccountButtonTouched:(UIButton *)sender {
     [self toggleSignUpMode];
+}
+
+#pragma mark - TextFieldFormHandlerDelegate
+
+- (void)textFielfFormHandlerDoneEnteringData:(TextFieldFormHandler *)handler {
+    [self signUpOrLoginUser];
 }
 
 #pragma mark - Login
@@ -241,87 +213,13 @@
     return NO;
 }
 
-#pragma mark - Animation
-
-- (void)moveScreenUp
-{
-    [self shiftScreenYPosition:-self.keyboardSize - self.animationOffset withDuration:0.30 curve: UIViewAnimationCurveEaseInOut];
-}
-
-- (void)moveScreenDown
-{
-    [self shiftScreenYPosition:0 withDuration:0.20 curve: UIViewAnimationCurveEaseInOut];
-}
-
-- (void)shiftScreenYPosition: (NSInteger)position withDuration: (CGFloat) duration curve: (UIViewAnimationCurve) curve {
-    [UIView beginAnimations:@"moveUp" context:NULL];
-    [UIView setAnimationCurve:curve];
-    [UIView setAnimationDuration:duration];
-    
-    CGRect rect = self.view.frame;
-    rect.origin.y = position;
-    self.view.frame = rect;
-    
-    [UIView commitAnimations];
-}
-
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    NSInteger index = [self.textFields indexOfObject:textField];
-    
-    if (self.isSigningUp)
-    {
-        if (index == self.textFields.count - 1) {
-            [self doneEnteringData];
-            return YES;
-        }
-    }
-    else if (index == 1) {
-        [self doneEnteringData];
-        return YES;
-    }
-    
-    UITextField *nextTextField = (UITextField *)self.textFields[index + 1];
-    [nextTextField becomeFirstResponder];
-    
-    return YES;
-}
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    [self setAnimationOffsetForTextield:textField];
-    return YES;
-}
-
-- (void)setAnimationOffsetForTextield:(UITextField *)textField {
-    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-    UIView *textFieldSuperview = textField.superview;
-    CGFloat textFieldHeight = textFieldSuperview.frame.size.height;
-    CGFloat textFieldY = [textFieldSuperview.superview convertPoint:textFieldSuperview.frame.origin toView:self.view].y;
-    self.animationOffset = -screenHeight + textFieldY + textFieldHeight;
-}
-
 - (void)doneEnteringData {
-    [self.view endEditing:YES];
     [self signUpOrLoginUser];
-    [self moveScreenDown];
-}
-
-- (void)keyboardWillShow:(NSNotification *)notification {
-    if (self.keyboardSize == 0.f) {
-        CGSize keyboardSize = [[notification userInfo][UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-        self.keyboardSize = MIN(keyboardSize.height, keyboardSize.width);
-    }
-    [self moveScreenUp];
 }
 
 #pragma mark - Style
-
-- (IBAction)backgroundTap:(id)sender {
-    [self.view endEditing:YES];
-    [self moveScreenDown];
-}
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;

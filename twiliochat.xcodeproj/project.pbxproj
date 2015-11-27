@@ -36,6 +36,7 @@
 		87DB89EE1BFE75C100E3935B /* TwilioIPMessagingClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87DB89ED1BFE75C100E3935B /* TwilioIPMessagingClient.framework */; };
 		87DB89F11C03A94300E3935B /* NSDate+ISO8601Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DB89F01C03A94300E3935B /* NSDate+ISO8601Parser.m */; };
 		87DB89F41C03B81300E3935B /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DB89F31C03B81300E3935B /* StartViewController.m */; };
+		87EF60291C0902F400814B63 /* TextFieldFormHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EF60281C0902F400814B63 /* TextFieldFormHandler.m */; };
 		87F2CE6F1BFD2C390064D863 /* ChatTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */; };
 		87F2CE731BFD356F0064D863 /* ChatStatusTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */; };
 		A6791A025DDCD04B5D1F443F /* libPods-twiliochatUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE6C21A5FA4BAC2BD3FFCDA /* libPods-twiliochatUITests.a */; };
@@ -114,6 +115,8 @@
 		87DB89F01C03A94300E3935B /* NSDate+ISO8601Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601Parser.m"; sourceTree = "<group>"; };
 		87DB89F21C03B81300E3935B /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
 		87DB89F31C03B81300E3935B /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
+		87EF60271C0902F400814B63 /* TextFieldFormHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldFormHandler.h; sourceTree = "<group>"; };
+		87EF60281C0902F400814B63 /* TextFieldFormHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldFormHandler.m; sourceTree = "<group>"; };
 		87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableCell.xib; sourceTree = "<group>"; };
 		87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatStatusTableCell.xib; path = ../ChatStatusTableCell.xib; sourceTree = "<group>"; };
 		8CEDAD3D5DA10C223B280F8B /* Pods-twiliochatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochatUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochatUITests/Pods-twiliochatUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -287,6 +290,8 @@
 				87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */,
 				87B6AC331BF51D6600E55FE2 /* Info.plist */,
 				87B6AC221BF51D6600E55FE2 /* Supporting Files */,
+				87EF60271C0902F400814B63 /* TextFieldFormHandler.h */,
+				87EF60281C0902F400814B63 /* TextFieldFormHandler.m */,
 			);
 			path = twiliochat;
 			sourceTree = "<group>";
@@ -601,6 +606,7 @@
 				87B6AC271BF51D6600E55FE2 /* AppDelegate.m in Sources */,
 				87B6AC241BF51D6600E55FE2 /* main.m in Sources */,
 				59BD03161BF68C1E00A4AA88 /* MainChatViewController.m in Sources */,
+				87EF60291C0902F400814B63 /* TextFieldFormHandler.m in Sources */,
 				59BD03211BFA296900A4AA88 /* IPMessagingManager.m in Sources */,
 				59BD031D1BF6936000A4AA88 /* MenuViewController.m in Sources */,
 				593F447B1BFA7D6A00B57504 /* InputDialogController.m in Sources */,

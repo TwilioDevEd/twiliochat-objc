@@ -57,7 +57,7 @@
 #pragma mark - Style
 
 - (IBAction)backgroundTap:(id)sender {
-    [self.emailTextField resignFirstResponder];
+    [self.view endEditing:YES];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -79,7 +79,7 @@
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        return UIInterfaceOrientationUnknown;
+        return UIInterfaceOrientationPortrait;
     }
     return UIInterfaceOrientationPortrait;
 }

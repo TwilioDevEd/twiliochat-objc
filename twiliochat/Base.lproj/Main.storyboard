@@ -504,9 +504,6 @@
                             <constraint firstItem="IV8-T5-rNU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wse-KR-YtM"/>
                             <constraint firstItem="lcd-o7-qgh" firstAttribute="top" secondItem="dDd-IQ-cnc" secondAttribute="bottom" constant="14" id="zPR-py-hEv"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="YFQ-Ij-FCD" appends="YES" id="aoZ-u9-12e"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="esv-pJ-OCw">
                         <barButtonItem key="leftBarButtonItem" image="icon-list.png" id="fIw-ZE-HSg">
@@ -529,11 +526,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="YFQ-Ij-FCD">
-                    <connections>
-                        <action selector="backgroundTap:" destination="BYZ-38-t0r" id="NuE-qL-6Dl"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-2138" y="-671"/>
         </scene>
@@ -745,9 +737,6 @@
                             <constraint firstItem="N71-WX-e6L" firstAttribute="centerX" secondItem="aau-NY-Bvn" secondAttribute="centerX" id="u6g-s7-0Hj"/>
                             <constraint firstItem="N71-WX-e6L" firstAttribute="top" secondItem="EMO-jv-mi5" secondAttribute="bottom" constant="4" id="x5f-Jt-HTR"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="pbj-jt-zAC" appends="YES" id="29F-fV-FzQ"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="pgM-tc-xZU">
                         <barButtonItem key="leftBarButtonItem" image="icon-list.png" id="ftp-6p-Tfo">
@@ -760,7 +749,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rLr-rR-aNF" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="pbj-jt-zAC"/>
             </objects>
             <point key="canvasLocation" x="-2869" y="102"/>
         </scene>

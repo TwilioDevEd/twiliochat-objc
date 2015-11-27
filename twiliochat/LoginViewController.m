@@ -268,13 +268,11 @@
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
-    CGFloat textFieldHeight = textField.superview.frame.size.height;
-    CGFloat textFieldY = [textField.superview.superview convertPoint:textField.superview.frame.origin toView:self.view].y;
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    UIView *textFieldSuperview = textField.superview;
+    CGFloat textFieldHeight = textFieldSuperview.frame.size.height;
+    CGFloat textFieldY = [textFieldSuperview.superview convertPoint:textFieldSuperview.frame.origin toView:self.view].y;
     self.animationOffset = -screenHeight + textFieldY + textFieldHeight;
-    if (self.keyboardSize != 0) {
-        [self moveScreenUp];
-    }
     return YES;
 }
 
@@ -285,10 +283,11 @@
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-    CGSize keyboardSize = [[notification userInfo][UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    self.keyboardSize = MIN(keyboardSize.height, keyboardSize.width);
+    if (self.keyboardSize == 0.f) {
+        CGSize keyboardSize = [[notification userInfo][UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        self.keyboardSize = MIN(keyboardSize.height, keyboardSize.width);
+    }
     [self moveScreenUp];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Style

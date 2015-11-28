@@ -65,8 +65,8 @@
 - (void)doneEnteringData {
     [self.topContainer endEditing:YES];
     [self moveScreenDown];
-    if ([self.delegate respondsToSelector:@selector(textFielfFormHandlerDoneEnteringData:)]) {
-        [self.delegate textFielfFormHandlerDoneEnteringData:self];
+    if ([self.delegate respondsToSelector:@selector(textFieldFormHandlerDoneEnteringData:)]) {
+        [self.delegate textFieldFormHandlerDoneEnteringData:self];
     }
 }
 
@@ -125,13 +125,13 @@
     [UIView setAnimationDuration:duration];
     
     CGRect rect = self.topContainer.frame;
-    rect.origin.y = position;
+    rect.origin.y = MIN(position, 0);
     self.topContainer.frame = rect;
     
     [UIView commitAnimations];
 }
 
-- (IBAction)backgroundTap:(id)sender {
+- (void)backgroundTap:(id)sender {
     [self.topContainer endEditing:YES];
     [self moveScreenDown];
 }

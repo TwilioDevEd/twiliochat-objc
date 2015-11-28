@@ -5,13 +5,16 @@
 @interface ForgotPasswordViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (strong, nonatomic) TextFieldFormHandler *textFieldFormHandler;
 @end
 
 @implementation ForgotPasswordViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.emailTextField.delegate = self;
+    self.textFieldFormHandler = [[TextFieldFormHandler alloc] initWithTextFields:@[self.emailTextField]
+                                                                    topContainer:self.view];
+    self.textFieldFormHandler.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,11 +33,8 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (void)textFieldFormHandlerDoneEnteringData:(TextFieldFormHandler *)handler {
     [self startPasswordRecoveryProccess];
-    [textField resignFirstResponder];
-    return YES;
 }
 
 - (void)startPasswordRecoveryProccess {

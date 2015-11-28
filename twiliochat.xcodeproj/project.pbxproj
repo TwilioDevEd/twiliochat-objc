@@ -154,6 +154,8 @@
 		593F44781BFA7D3400B57504 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				87EF60271C0902F400814B63 /* TextFieldFormHandler.h */,
+				87EF60281C0902F400814B63 /* TextFieldFormHandler.m */,
 				593F44791BFA7D6A00B57504 /* InputDialogController.h */,
 				593F447A1BFA7D6A00B57504 /* InputDialogController.m */,
 				59F208EE1C03920800CC2392 /* AlertDialogController.h */,
@@ -290,8 +292,6 @@
 				87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */,
 				87B6AC331BF51D6600E55FE2 /* Info.plist */,
 				87B6AC221BF51D6600E55FE2 /* Supporting Files */,
-				87EF60271C0902F400814B63 /* TextFieldFormHandler.h */,
-				87EF60281C0902F400814B63 /* TextFieldFormHandler.m */,
 			);
 			path = twiliochat;
 			sourceTree = "<group>";

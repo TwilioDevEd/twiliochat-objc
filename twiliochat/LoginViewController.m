@@ -24,23 +24,23 @@
 @property (strong, nonatomic) NSArray *constraints;
 @property (strong, nonatomic) NSArray *constraintValues;
 
+@property (strong, nonatomic, readonly) NSString *createAccountButtonTitle;
+@property (strong, nonatomic, readonly) NSString *loginButtonTitle;
+
 @end
 
 @implementation LoginViewController
 
 #pragma mark - Initialization
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     self.isSigningUp = NO;
     [self.activityIndicator stopAnimating];
     
-    self.constraints = @[self.fullNameHeightConstraint,
-                         self.fullNameTopConstraint,
-                         self.emailHeightConstraint,
-                         self.emailTopConstraint];
-    [self storeConstraintValues];
+    [self initializeConstraints];
     [self initializeTextFields];
+    [self refreshSignUpControls];
 }
 
 - (void)initializeTextFields {
@@ -50,10 +50,14 @@
                                                                                    self.emailTextField]
                                                                     topContainer:self.view];
     self.textFieldFormHandler.delegate = self;
-    [self hideSignUpControls];
 }
 
-- (void)storeConstraintValues {
+- (void)initializeConstraints {
+    self.constraints = @[self.fullNameHeightConstraint,
+                         self.fullNameTopConstraint,
+                         self.emailHeightConstraint,
+                         self.emailTopConstraint];
+    
     NSMutableArray *values = [NSMutableArray array];
     [self.constraints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
@@ -62,33 +66,28 @@
     self.constraintValues = [NSArray arrayWithArray:values];
 }
 
-- (void)hideSignUpControls {
-    [self.createAccountButton setTitle:@"Create account" forState:UIControlStateNormal];
-    [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
+- (void)refreshSignUpControls {
+    [self.createAccountButton setTitle:self.createAccountButtonTitle forState:UIControlStateNormal];
+    [self.loginButton setTitle:self.loginButtonTitle forState:UIControlStateNormal];
     
-    self.textFieldFormHandler.lastTextField = self.passwordTextField;
+    self.textFieldFormHandler.lastTextField = self.isSigningUp? nil : self.passwordTextField;
     
     [self.constraints enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
-        constraint.constant = 0.f;
+        constraint.constant = self.isSigningUp? [(NSNumber *)self.constraintValues[idx] floatValue] : 0.f;
     }];
     
     [self resetFirstResponderOnSignUpModeChange];
 }
 
-- (void)showSignUpControls {
-    [self.createAccountButton setTitle:@"Back to login" forState:UIControlStateNormal];
-    [self.loginButton setTitle:@"Register" forState:UIControlStateNormal];
-    
-    self.textFieldFormHandler.lastTextField = nil;
-    
-    [self.constraints enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
-        constraint.constant = [(NSNumber *)self.constraintValues[idx] floatValue];
-    }];
-    
-    [self resetFirstResponderOnSignUpModeChange];
+- (NSString *)createAccountButtonTitle {
+    return self.isSigningUp? @"Back to login" : @"Create account";
 }
+
+- (NSString *)loginButtonTitle {
+    return self.isSigningUp? @"Register" : @"Login";
+}
+
 
 - (void)resetFirstResponderOnSignUpModeChange {
     [self.view layoutSubviews];
@@ -125,7 +124,7 @@
 
 #pragma mark - TextFieldFormHandlerDelegate
 
-- (void)textFielfFormHandlerDoneEnteringData:(TextFieldFormHandler *)handler {
+- (void)textFieldFormHandlerDoneEnteringData:(TextFieldFormHandler *)handler {
     [self signUpOrLoginUser];
 }
 
@@ -133,12 +132,7 @@
 
 - (void)toggleSignUpMode {
     self.isSigningUp = !self.isSigningUp;
-    if (self.isSigningUp) {
-        [self showSignUpControls];
-    }
-    else {
-        [self hideSignUpControls];
-    }
+    [self refreshSignUpControls];
 }
 
 - (void)signUpOrLoginUser {
@@ -158,7 +152,6 @@
 
 - (void)registerUser {
     IPMessagingManager *manager = [IPMessagingManager sharedManager];
-    
     [manager registerWithUsername:self.usernameTextField.text
                          password:self.passwordTextField.text
                          fullName:self.fullNameTextField.text
@@ -169,7 +162,6 @@
                                   [manager presentRootViewController];
                               }
                               else {
-                                  NSLog(@"%@", error);
                                   [self showError:[error localizedDescription]];
                               }
                           }];
@@ -199,9 +191,9 @@
 }
 
 - (BOOL)validateUserData {
-    if (!self.usernameTextField.text.length && !self.passwordTextField.text.length) {
+    if (self.usernameTextField.text.length && self.passwordTextField.text.length) {
         if (self.isSigningUp) {
-            if (!self.fullNameTextField.text.length && !self.emailTextField.text.length) {
+            if (self.fullNameTextField.text.length && self.emailTextField.text.length) {
                 return YES;
             }
         }

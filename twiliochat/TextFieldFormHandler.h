@@ -4,7 +4,7 @@
 
 @protocol TextFieldFormHandlerDelegate <NSObject>
 @optional
-- (void)textFielfFormHandlerDoneEnteringData:(TextFieldFormHandler *)handler;
+- (void)textFieldFormHandlerDoneEnteringData:(TextFieldFormHandler *)handler;
 @end
 
 @interface TextFieldFormHandler : NSObject <UITextFieldDelegate>

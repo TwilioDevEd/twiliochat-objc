@@ -120,6 +120,7 @@
 		87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableCell.xib; sourceTree = "<group>"; };
 		87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatStatusTableCell.xib; path = ../ChatStatusTableCell.xib; sourceTree = "<group>"; };
 		8CEDAD3D5DA10C223B280F8B /* Pods-twiliochatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochatUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochatUITests/Pods-twiliochatUITests.release.xcconfig"; sourceTree = "<group>"; };
+		AD1EBB901C09617C00D35A96 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -292,6 +293,7 @@
 				87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */,
 				87B6AC331BF51D6600E55FE2 /* Info.plist */,
 				87B6AC221BF51D6600E55FE2 /* Supporting Files */,
+				AD1EBB901C09617C00D35A96 /* defines.h */,
 			);
 			path = twiliochat;
 			sourceTree = "<group>";

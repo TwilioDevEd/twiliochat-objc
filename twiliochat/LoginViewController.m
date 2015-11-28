@@ -3,6 +3,7 @@
 #import "LoginViewController.h"
 #import "IPMessagingManager.h"
 #import "AlertDialogController.h"
+#import "defines.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
@@ -205,36 +206,10 @@
     return NO;
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (void)doneEnteringData {
-    [self signUpOrLoginUser];
-}
-
-#pragma mark - Style
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 
-- (BOOL)shouldAutorotate {
-    return YES;
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        return UIInterfaceOrientationMaskAll;
-    }
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        return UIInterfaceOrientationUnknown;
-    }
-    return UIInterfaceOrientationPortrait;
-}
+SINGLE_ORIENTATON_ON_IPHONE (Portrait)
 
 @end

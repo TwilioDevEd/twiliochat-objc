@@ -1,6 +1,7 @@
 #import <Parse/Parse.h>
 #import "ForgotPasswordViewController.h"
 #import "AlertDialogController.h"
+#import "defines.h"
 
 @interface ForgotPasswordViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -54,35 +55,10 @@
     [self startPasswordRecoveryProccess];
 }
 
-#pragma mark - Style
-
-- (IBAction)backgroundTap:(id)sender {
-    [self.view endEditing:YES];
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 
-- (BOOL)shouldAutorotate {
-    return YES;
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        return UIInterfaceOrientationMaskAll;
-    }
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        return UIInterfaceOrientationPortrait;
-    }
-    return UIInterfaceOrientationPortrait;
-}
-
+SINGLE_ORIENTATON_ON_IPHONE (Portrait)
 
 @end

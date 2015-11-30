@@ -38,16 +38,6 @@
                ReferencedContainer = "container:twiliochat.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "87B6AC421BF51D6600E55FE2"
-               BuildableName = "twiliochatUITests.xctest"
-               BlueprintName = "twiliochatUITests"
-               ReferencedContainer = "container:twiliochat.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

@@ -5,7 +5,6 @@
 
 @interface ForgotPasswordViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (strong, nonatomic) TextFieldFormHandler *textFieldFormHandler;
 @end
 
@@ -23,7 +22,7 @@
 }
 
 - (BOOL)validateUserData {
-    if (![self.emailTextField.text isEqualToString:@""]) {
+    if (!self.emailTextField.text.length) {
         return YES;
     }
     [AlertDialogController showAlertWithMessage:@"Your email is required"
@@ -32,7 +31,7 @@
     return NO;
 }
 
-#pragma mark - UITextFieldDelegate
+#pragma mark - TextFieldFormHandlerDelegate
 
 - (void)textFieldFormHandlerDoneEnteringData:(TextFieldFormHandler *)handler {
     [self startPasswordRecoveryProccess];
@@ -40,14 +39,25 @@
 
 - (void)startPasswordRecoveryProccess {
     if ([self validateUserData]) {
-        [PFUser requestPasswordResetForEmailInBackground:self.emailTextField.text];
-        [AlertDialogController showAlertWithMessage:@"We've sent you an email with further instructions"
-                                              title:nil
-                                          presenter:self
-                                            handler:^{
-                                                [self performSegueWithIdentifier:@"BackToLogin"
-                                                                          sender:self];
-                                            }];
+        self.view.userInteractionEnabled = NO;
+
+        [PFUser requestPasswordResetForEmailInBackground:self.emailTextField.text block:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                [AlertDialogController showAlertWithMessage:@"We've sent you an email with further instructions"
+                                                      title:nil
+                                                  presenter:self
+                                                    handler:^{
+                                                        [self performSegueWithIdentifier:@"BackToLogin"
+                                                                                  sender:self];
+                                                    }];
+            }
+            else {
+                [AlertDialogController showAlertWithMessage:[error localizedDescription]
+                                                      title:nil
+                                                  presenter:self];
+                self.view.userInteractionEnabled = YES;
+            }
+        }];
     }
 }
 

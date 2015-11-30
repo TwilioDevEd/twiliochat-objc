@@ -2,14 +2,10 @@
 
 @implementation AlertDialogController
 + (void)showAlertWithMessage:(NSString *)message title:(NSString *)title presenter:(UIViewController *)presenter {
-    [[[AlertDialogController alloc] init] showAlertWithMessage:message title:title presenter:presenter handler:nil];
+    [AlertDialogController showAlertWithMessage:message title:title presenter:presenter handler:nil];
 }
 
 + (void)showAlertWithMessage:(NSString *)message title:(NSString *)title presenter:(UIViewController *)presenter handler:(void(^)(void))handler {
-    [[[AlertDialogController alloc] init] showAlertWithMessage:message title:title presenter:presenter handler:handler];
-}
-
-- (void)showAlertWithMessage:(NSString *)message title:(NSString *)title presenter:(UIViewController *)presenter handler:(void(^)(void))handler {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];

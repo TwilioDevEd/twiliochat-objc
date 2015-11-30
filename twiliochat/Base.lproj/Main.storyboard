@@ -746,7 +746,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="emailTextField" destination="kh6-Yo-Ysd" id="oL2-Mx-LGw"/>
-                        <outlet property="sendButton" destination="nKd-Bj-ODU" id="W0K-04-EsE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rLr-rR-aNF" sceneMemberID="firstResponder"/>

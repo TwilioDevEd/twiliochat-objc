@@ -138,8 +138,7 @@
 
 - (void)signUpOrLoginUser {
     if ([self validateUserData]) {
-        self.loginButton.enabled = NO;
-        self.createAccountButton.enabled = NO;
+        self.view.userInteractionEnabled = NO;
         [self.activityIndicator startAnimating];
         
         if (self.isSigningUp) {
@@ -187,8 +186,7 @@
     [AlertDialogController showAlertWithMessage:message
                                               title:nil
                                           presenter:self];
-    self.loginButton.enabled = YES;
-    self.createAccountButton.enabled = YES;
+    self.view.userInteractionEnabled = YES;
 }
 
 - (BOOL)validateUserData {

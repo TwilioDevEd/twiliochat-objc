@@ -96,10 +96,10 @@
     
     if (index != NSNotFound) {
         if (index > 1) {
-            [self.textFieldFormHandler setFirstResponderAtIndex:1];
+            [self.textFieldFormHandler setTextFieldAtIndexAsFirstResponder:1];
         }
         else {
-            [self.textFieldFormHandler performScroll];
+            [self.textFieldFormHandler resetScroll];
         }
     }
 }

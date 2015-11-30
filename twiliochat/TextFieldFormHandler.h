@@ -10,8 +10,8 @@
 @interface TextFieldFormHandler : NSObject <UITextFieldDelegate>
 - (instancetype)initWithTextFields:(NSArray<UITextField *> *)textfields topContainer:(UIView *)view;
 - (void)cleanUp;
-- (void)setFirstResponderAtIndex:(NSInteger)index;
-- (void)performScroll;
+- (void)setTextFieldAtIndexAsFirstResponder:(NSInteger)index;
+- (void)resetScroll;
 @property (nonatomic, readonly) NSInteger firstResponderIndex;
 @property (weak, nonatomic) id<TextFieldFormHandlerDelegate> delegate;
 @property (strong, nonatomic) UITextField *lastTextField;

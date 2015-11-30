@@ -67,11 +67,11 @@
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    [self setAnimationOffsetForTextield:textField];
+    [self setAnimationOffsetForTextField:textField];
     return YES;
 }
 
-- (void)setAnimationOffsetForTextield:(UITextField *)textField {
+- (void)setAnimationOffsetForTextField:(UITextField *)textField {
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat textFieldHeight = textField.frame.size.height;
     CGFloat textFieldY = [textField convertPoint:CGPointZero toView:self.topContainer].y;
@@ -86,12 +86,12 @@
     [self moveScreenUp];
 }
 
-- (void)performScroll {
-    [self setAnimationOffsetForTextield:self.firstResponder];
+- (void)resetScroll {
+    [self setAnimationOffsetForTextField:self.firstResponder];
     [self moveScreenUp];
 }
 
-- (void)setFirstResponderAtIndex:(NSInteger)index {
+- (void)setTextFieldAtIndexAsFirstResponder:(NSInteger)index {
     [self.textFields[index] becomeFirstResponder];
 }
 

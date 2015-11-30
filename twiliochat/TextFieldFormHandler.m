@@ -42,20 +42,16 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSInteger index = [self.textFields indexOfObject:textField];
-    
-    if (self.lastTextField)
-    {
-        if (self.lastTextField == textField) {
-            [self doneEnteringData];
-            return YES;
-        }
+    if (self.lastTextField && self.lastTextField == textField) {
+        [self doneEnteringData];
+        return YES;
     }
-    else if (index == self.textFields.count - 1) {
+    else if (textField == self.textFields.lastObject) {
         [self doneEnteringData];
         return YES;
     }
     
+    NSInteger index = [self.textFields indexOfObject:textField];
     UITextField *nextTextField = (UITextField *)self.textFields[index + 1];
     [nextTextField becomeFirstResponder];
     

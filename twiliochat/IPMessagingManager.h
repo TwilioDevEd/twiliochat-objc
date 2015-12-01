@@ -14,9 +14,6 @@
                     fullName:(NSString *)fullName
                        email:(NSString *)email
                      handler:(void(^)(BOOL succeeded, NSError *error))handler;
-- (void)registerWithUsername:(NSString *)username
-                    password:(NSString *)password
-                     handler:(void(^)(BOOL succeeded, NSError *error))handler;
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password
                   handler:(void(^)(BOOL succeeded, NSError *error))handler;
 

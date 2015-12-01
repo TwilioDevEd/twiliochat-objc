@@ -22,34 +22,39 @@
 - (void)presentRootViewController {
     if ([self hasIdentity]) {
         if (self.connecting) {
-            [self presentViewController:@"RevealViewController"];
+            [self presentViewControllerByName:@"RevealViewController"];
         }
         else {
             [self connectClient:^(BOOL success, NSError *error) {
                 if (success) {
-                    [self presentViewController:@"RevealViewController"];
+                    [self presentViewControllerByName:@"RevealViewController"];
                 }
                 else {
-                    [self presentViewController:@"LoginViewController"];
+                    [self presentViewControllerByName:@"LoginViewController"];
                 }
             }];
         }
     }
     else {
-        [self presentViewController:@"LoginViewController"];
+        [self presentViewControllerByName:@"LoginViewController"];
     }
 }
 
-- (void)presentViewController:(NSString *)viewController {
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName: @"Main" bundle: [NSBundle mainBundle]];
-    UIWindow *window = [[UIApplication sharedApplication].delegate window];
-    window.rootViewController = [storyBoard instantiateViewControllerWithIdentifier:viewController];
+- (void)presentViewControllerByName:(NSString *)viewController {
+    [self presentViewController:[[self storyboardWithName:@"Main"] instantiateViewControllerWithIdentifier:viewController]];
 }
 
 - (void)presentLaunchScreen {
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName: @"LaunchScreen" bundle: [NSBundle mainBundle]];
+    [self presentViewController:[[self storyboardWithName:@"LaunchScreen"] instantiateInitialViewController]];
+}
+
+- (void)presentViewController:(UIViewController *)viewController {
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
-    window.rootViewController = [storyBoard instantiateInitialViewController];
+    window.rootViewController = viewController;
+}
+
+- (UIStoryboard *)storyboardWithName:(NSString *)name {
+    return [UIStoryboard storyboardWithName: name bundle: [NSBundle mainBundle]];
 }
 
 - (BOOL)hasIdentity {
@@ -69,20 +74,12 @@
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            [self connectClient:^(BOOL succeeded, NSError *error) {
-                if (handler) handler(succeeded, error);
-            }];
+            [self connectClient:handler];
         }
         else {
             if (handler) handler(succeeded, error);
         }
     }];
-}
-
-- (void)registerWithUsername:(NSString *)username
-                    password:(NSString *)password
-                     handler:(void(^)(BOOL succeeded, NSError *error))handler {
-    [self registerWithUsername:username password:password fullName:@"" email:@"" handler:handler];
 }
 
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password
@@ -91,9 +88,7 @@
                                  password:password
                                     block:^(PFUser *user, NSError *error) {
                                         if (!error) {
-                                            [self connectClient:^(BOOL succeeded, NSError *error) {
-                                                if (handler) handler(succeeded, error);
-                                            }];
+                                            [self connectClient:handler];
                                         }
                                         else {
                                             if (handler) handler(!error, error);

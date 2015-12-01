@@ -167,13 +167,13 @@
 			name = util;
 			sourceTree = "<group>";
 		};
-		59B7FAE11BF542BF008824EA /* parse */ = {
+		59B7FAE11BF542BF008824EA /* login */ = {
 			isa = PBXGroup;
 			children = (
 				87B6AC281BF51D6600E55FE2 /* LoginViewController.h */,
 				87B6AC291BF51D6600E55FE2 /* LoginViewController.m */,
 			);
-			name = parse;
+			name = login;
 			sourceTree = "<group>";
 		};
 		59BD03131BF68C0000A4AA88 /* chat */ = {
@@ -202,13 +202,13 @@
 			name = menu;
 			sourceTree = "<group>";
 		};
-		59BD031E1BFA28DF00A4AA88 /* flow */ = {
+		59BD031E1BFA28DF00A4AA88 /* messaging */ = {
 			isa = PBXGroup;
 			children = (
 				59BD031F1BFA296900A4AA88 /* IPMessagingManager.h */,
 				59BD03201BFA296900A4AA88 /* IPMessagingManager.m */,
 			);
-			name = flow;
+			name = messaging;
 			sourceTree = "<group>";
 		};
 		797EBDD49B927B469DA2C914 /* Pods */ = {
@@ -279,10 +279,10 @@
 				7DD549871C053E0B00AC9496 /* channels */,
 				7DC302A81C04B5FA000765ED /* forgot */,
 				593F44781BFA7D3400B57504 /* util */,
-				59BD031E1BFA28DF00A4AA88 /* flow */,
+				59BD031E1BFA28DF00A4AA88 /* messaging */,
 				59BD03171BF6930700A4AA88 /* menu */,
 				59BD03131BF68C0000A4AA88 /* chat */,
-				59B7FAE11BF542BF008824EA /* parse */,
+				59B7FAE11BF542BF008824EA /* login */,
 				8750C8611BF5315E0015CBE1 /* Resources */,
 				87B6AC251BF51D6600E55FE2 /* AppDelegate.h */,
 				87B6AC261BF51D6600E55FE2 /* AppDelegate.m */,

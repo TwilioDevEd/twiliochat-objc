@@ -157,13 +157,7 @@
                          fullName:self.fullNameTextField.text
                             email:self.emailTextField.text
                           handler:^(BOOL succeeded, NSError *error) {
-                              [self.activityIndicator stopAnimating];
-                              if (succeeded) {
-                                  [manager presentRootViewController];
-                              }
-                              else {
-                                  [self showError:[error localizedDescription]];
-                              }
+                              [self handleResponse:succeeded error:error];
                           }];
 }
 
@@ -172,21 +166,25 @@
     [manager loginWithUsername:self.usernameTextField.text
                       password:self.passwordTextField.text
                        handler:^(BOOL succeeded, NSError *error) {
-                           [self.activityIndicator stopAnimating];
-                           if (succeeded) {
-                               [manager presentRootViewController];
-                           }
-                           else {
-                               [self showError:@"Login failed, please verify your credentials"];
-                           }
+                           [self handleResponse:succeeded error:error];
                        }];
+}
+
+- (void)handleResponse:(BOOL)succeeded error:(NSError *)error {
+    [self.activityIndicator stopAnimating];
+    if (succeeded) {
+        [[IPMessagingManager sharedManager] presentRootViewController];
+    }
+    else {
+        [self showError:[error localizedDescription]];
+    }
+    self.view.userInteractionEnabled = YES;
 }
 
 - (void)showError:(NSString *)message {
     [AlertDialogController showAlertWithMessage:message
                                               title:nil
                                           presenter:self];
-    self.view.userInteractionEnabled = YES;
 }
 
 - (BOOL)validateUserData {

@@ -105,7 +105,8 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+    return channel != [ChannelManager sharedManager].generalChatroom;
 }
 
 

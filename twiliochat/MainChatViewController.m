@@ -7,11 +7,11 @@
 #import "ChannelManager.h"
 #import "StatusEntry.h"
 
-@implementation TMMessage(Equals)
-- (BOOL)isEqual:(TMMessage *)object {
+/*@implementation TWMMessage(Equals)
+- (BOOL)isEqual:(TWMMessage *)object {
     return [self.sid isEqualToString:object.sid];
 }
-@end
+@end*/
 
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
@@ -90,7 +90,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     return _messages;
 }
 
-- (void)setChannel:(TMChannel *)channel {
+- (void)setChannel:(TWMChannel *)channel {
     _channel = channel;
     self.title = self.channel.friendlyName;
     
@@ -98,7 +98,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
         self.navigationItem.rightBarButtonItem = nil;
     }
    
-    if (self.channel.status == TMChannelStatusJoined)
+    if (self.channel.status == TWMChannelStatusJoined)
     {
         [self loadMessages];
         self.channel.delegate = self;
@@ -106,7 +106,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     else {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         self.textInputbarHidden = YES;
-        [self.channel joinWithCompletion:^(TMResultEnum result) {
+        [self.channel joinWithCompletion:^(TWMResult result) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [self loadMessages];
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -132,7 +132,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     
     id message = [self.messages objectAtIndex:indexPath.row];
     
-    if ([message isKindOfClass:[TMMessage class]]) {
+    if ([message isKindOfClass:[TWMMessage class]]) {
         cell = [self getChatCellForTableView:tableView forIndexPath:indexPath message:message];
     }
     else {
@@ -145,7 +145,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 - (ChatTableCell *)getChatCellForTableView:(UITableView *)tableView
                               forIndexPath:(NSIndexPath *)indexPath
-                                   message:(TMMessage *)message {
+                                   message:(TWMMessage *)message {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ChatCellIdentifier forIndexPath:indexPath];
     
     ChatTableCell *chatCell = (ChatTableCell *)cell;
@@ -177,10 +177,10 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 
 #pragma mark Chat Service
 - (void)sendMessage: (NSString *)inputMessage {
-    TMMessage *message = [self.channel.messages createMessageWithBody:inputMessage];
+    TWMMessage *message = [self.channel.messages createMessageWithBody:inputMessage];
     [self.channel.messages sendMessage:message
-                            completion:^(TMResultEnum result) {
-                                if (result == TMResultFailure) {
+                            completion:^(TWMResult result) {
+                                if (result == TWMResultFailure) {
                                     NSLog(@"send message error");
                                 }
                             }];
@@ -223,8 +223,8 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 }
 
 - (void)leaveChannel {
-    [self.channel leaveWithCompletion:^(TMResultEnum result) {
-        if (result == TMResultSuccess) {
+    [self.channel leaveWithCompletion:^(TWMResult result) {
+        if (result == TWMResultSuccess) {
             [self.revealViewController.rearViewController performSegueWithIdentifier:@"OpenGeneralChat" sender:nil];
         }
         else {
@@ -236,15 +236,15 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 #pragma mark - TMMessageDelegate
 
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client
-                  channel:(TMChannel *)channel
-             messageAdded:(TMMessage *)message {
+                  channel:(TWMChannel *)channel
+             messageAdded:(TWMMessage *)message {
     if (![self.messages containsObject:message]) {
         [self addMessages:@[message]];
     }
 }
 
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client
-           channelDeleted:(TMChannel *)channel {
+           channelDeleted:(TWMChannel *)channel {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (channel == self.channel) {
             [self.revealViewController.rearViewController performSegueWithIdentifier:@"OpenGeneralChat" sender:nil];
@@ -253,14 +253,14 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 }
 
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client
-                  channel:(TMChannel *)channel
-             memberJoined:(TMMember *)member {
+                  channel:(TWMChannel *)channel
+             memberJoined:(TWMMember *)member {
     [self addMessages:@[[StatusEntry statusEntryWithMember:member status:MemberStatusJoined]]];
 }
 
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client
-                  channel:(TMChannel *)channel
-               memberLeft:(TMMember *)member {
+                  channel:(TWMChannel *)channel
+               memberLeft:(TWMMember *)member {
     [self addMessages:@[[StatusEntry statusEntryWithMember:member status:MemberStatusLeft]]];
 }
 

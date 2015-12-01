@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 
-@property (strong, nonatomic) TMChannel *recentlyAddedChannel;
+@property (strong, nonatomic) TWMChannel *recentlyAddedChannel;
 @end
 
 @implementation MenuViewController
@@ -66,12 +66,12 @@
         MenuTableCell *menuCell = (MenuTableCell *)[tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
         cell = menuCell;
         
-        TMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+        TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
         NSString *nameLabel = channel.friendlyName;
         if (channel.friendlyName.length == 0) {
             nameLabel = @"(no friendly name)";
         }
-        if (channel.type == TMChannelTypePrivate) {
+        if (channel.type == TWMChannelTypePrivate) {
             nameLabel = [nameLabel stringByAppendingString:@" (private)"];
         }
         menuCell.channelName = nameLabel;
@@ -90,8 +90,8 @@
 }
 
 - (void)populateChannels {
-    [[ChannelManager sharedManager] populateChannelsWithBlock:^(TMResultEnum result) {
-        if (result == TMResultSuccess) {
+    [[ChannelManager sharedManager] populateChannelsWithBlock:^(TWMResult result) {
+        if (result == TWMResultSuccess) {
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
         }
@@ -111,9 +111,9 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        TMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
-        [channel destroyWithCompletion:^(TMResultEnum result) {
-            if (result == TMResultSuccess) {
+        TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+        [channel destroyWithCompletion:^(TWMResult result) {
+            if (result == TWMResultSuccess) {
                 [tableView reloadData];
             }
             else {
@@ -140,15 +140,15 @@
 
 #pragma mark - TwilioIPMessagingClientDelegate delegate
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelAdded:(TMChannel *)channel {
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelAdded:(TWMChannel *)channel {
     [self.tableView reloadData];
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelChanged:(TMChannel *)channel {
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelChanged:(TWMChannel *)channel {
     [self.tableView reloadData];
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelDeleted:(TMChannel *)channel {
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelDeleted:(TWMChannel *)channel {
     [self.tableView reloadData];
 }
 
@@ -194,7 +194,7 @@
     if ([segue.identifier isEqualToString:@"OpenChat"]) {
         NSIndexPath *indexPath = (NSIndexPath *)sender;
         
-        TMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+        TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
         UINavigationController *navigationController = [segue destinationViewController];
         MainChatViewController *chatViewController = (MainChatViewController *)[navigationController visibleViewController];
         chatViewController.channel = channel;

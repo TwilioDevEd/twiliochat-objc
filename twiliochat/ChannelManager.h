@@ -11,12 +11,12 @@
 
 @interface ChannelManager : NSObject <TwilioIPMessagingClientDelegate>
 + (instancetype)sharedManager;
-- (void)populateChannelsWithBlock:(void(^)(TMResultEnum result))block;
-- (void)createChannelWithName:(NSString *)name block:(void(^)(TMResultEnum result, TMChannel *channel))block;
-- (void)loadGeneralChatRoomWithBlock:(void(^)(TMResultEnum result, TMChannel *channel))block;
-@property (strong, nonatomic) TMChannels *channelsList;
+- (void)populateChannelsWithBlock:(void(^)(TWMResult result))block;
+- (void)createChannelWithName:(NSString *)name block:(void(^)(TWMResult result, TWMChannel *channel))block;
+- (void)createGeneralChatRoomWithBlock:(void(^)(TWMResult result, TWMChannel *channel))block;
+@property (strong, nonatomic) TWMChannels *channelsList;
 @property (strong, nonatomic) NSMutableOrderedSet *channels;
 @property (weak, nonatomic) id<TwilioIPMessagingClientDelegate> delegate;
-@property (strong, nonatomic) TMChannel *generalChatroom;
+@property (strong, nonatomic) TWMChannel *generalChatroom;
 
 @end

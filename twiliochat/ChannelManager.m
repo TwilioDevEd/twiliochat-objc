@@ -4,8 +4,8 @@
 @interface ChannelManager ()
 @end
 
-NSString *defaultChannelUniqueName = @"general23";
-NSString *defaultChannelName = @"General23";
+NSString *defaultChannelUniqueName = @"general";
+NSString *defaultChannelName = @"General";
 
 @implementation ChannelManager
 

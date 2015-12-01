@@ -2,6 +2,7 @@
 #import <Parse/Parse.h>
 #import <OCMock/OCMock.h>
 #import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
+/*
 #import "IPMessagingManager.h"
 
 @interface IPMessagingManager (Test)
@@ -62,3 +63,4 @@
 }
 
 @end
+ */

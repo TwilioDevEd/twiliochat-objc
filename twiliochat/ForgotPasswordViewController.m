@@ -5,6 +5,7 @@
 
 @interface ForgotPasswordViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (strong, nonatomic) TextFieldFormHandler *textFieldFormHandler;
 @end
 
@@ -22,7 +23,7 @@
 }
 
 - (BOOL)validateUserData {
-    if (!self.emailTextField.text.length) {
+    if (self.emailTextField.text.length) {
         return YES;
     }
     [AlertDialogController showAlertWithMessage:@"Your email is required"

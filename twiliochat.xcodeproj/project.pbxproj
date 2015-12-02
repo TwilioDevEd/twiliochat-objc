@@ -40,6 +40,7 @@
 		87F2CE6F1BFD2C390064D863 /* ChatTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */; };
 		87F2CE731BFD356F0064D863 /* ChatStatusTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */; };
 		A6791A025DDCD04B5D1F443F /* libPods-twiliochatUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE6C21A5FA4BAC2BD3FFCDA /* libPods-twiliochatUITests.a */; };
+		AD9906D51C0EB1A800913A52 /* ChatTableCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD9906D41C0EB1A800913A52 /* ChatTableCellTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +122,7 @@
 		87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatStatusTableCell.xib; sourceTree = "<group>"; };
 		8CEDAD3D5DA10C223B280F8B /* Pods-twiliochatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochatUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochatUITests/Pods-twiliochatUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AD1EBB901C09617C00D35A96 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		AD9906D41C0EB1A800913A52 /* ChatTableCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableCellTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +316,7 @@
 				7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */,
 				87DB89EB1BFE398C00E3935B /* IPMessagingManagerPresentTests.m */,
 				870855461C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m */,
+				AD9906D41C0EB1A800913A52 /* ChatTableCellTests.m */,
 				87B6AC3E1BF51D6600E55FE2 /* Info.plist */,
 			);
 			path = twiliochatTests;
@@ -629,6 +632,7 @@
 			files = (
 				87DB89EC1BFE398C00E3935B /* IPMessagingManagerPresentTests.m in Sources */,
 				7D8DCB161BFF467A009B1B6D /* IPMessagingManagerTests.m in Sources */,
+				AD9906D51C0EB1A800913A52 /* ChatTableCellTests.m in Sources */,
 				7D8DCB141BFED14F009B1B6D /* IPMessagingManagerLoginTests.m in Sources */,
 				87B6AC3D1BF51D6600E55FE2 /* LoginViewControllerTests.m in Sources */,
 				870855471C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m in Sources */,

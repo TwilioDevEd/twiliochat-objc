@@ -7,12 +7,6 @@
 #import "ChannelManager.h"
 #import "StatusEntry.h"
 
-/*@implementation TWMMessage(Equals)
-- (BOOL)isEqual:(TWMMessage *)object {
-    return [self.sid isEqualToString:object.sid];
-}
-@end*/
-
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionButtonItem;

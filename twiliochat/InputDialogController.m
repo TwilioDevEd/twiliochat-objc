@@ -33,7 +33,7 @@
     self.saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self removeTextFieldObserver];
         NSString *textFieldText = [[alert textFields][0] text];
-        handler(textFieldText);
+        if(handler) handler(textFieldText);
     }];
     
     self.saveAction.enabled = NO;

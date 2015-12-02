@@ -40,16 +40,16 @@ NSString *defaultChannelName = @"General";
                                                           if (result == TWMResultSuccess) {
                                                               self.generalChatroom = channel;
                                                               [self joinGeneralChatRoomWithUniqueName:defaultChannelUniqueName block:block];
-                                                              block(result, self.generalChatroom);
+                                                              if (block) block(result, self.generalChatroom);
                                                           }
                                                           else {
-                                                              block(result, nil);
+                                                              if (block) block(result, nil);
                                                           }
                                                       }];
             }
         }
         else {
-            block(result, nil);
+            if (block) block(result, nil);
         }
     }];
 }
@@ -65,19 +65,19 @@ NSString *defaultChannelName = @"General";
             if (uniqueName) {
                 [self.generalChatroom setUniqueName:defaultChannelUniqueName completion:^(TWMResult result) {
                     if (result == TWMResultSuccess) {
-                        block(result, weakGeneralChatRoom);
+                        if (block) block(result, weakGeneralChatRoom);
                     }
                     else {
-                        block(result, nil);
+                        if (block) block(result, nil);
                     }
                 }];
             }
             else {
-                block(result, self.generalChatroom);
+                if (block) block(result, weakGeneralChatRoom);
             }
         }
         else {
-            block(result, nil);
+            if (block) block(result, nil);
         }
     }];
 }

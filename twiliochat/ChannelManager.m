@@ -25,56 +25,50 @@ NSString *defaultChannelName = @"General Channel";
     return self;
 }
 
-- (void)createGeneralChatRoomWithBlock:(void(^)(TWMResult result, TWMChannel *channel))block {
+- (void)createGeneralChatRoomWithBlock:(void(^)(BOOL succeeded))block {
     [self.channelsList createChannelWithFriendlyName:defaultChannelName
                                                 type:TWMChannelTypePublic
                                           completion:^(TWMResult result, TWMChannel *channel) {
-                                              self.generalChatroom = channel;
                                               if (result == TWMResultSuccess) {
                                                   self.generalChatroom = channel;
-                                                  if (block) block(result, self.generalChatroom);
                                               }
-                                              else {
-                                                  if (block) block(result, nil);
-                                              }
+                                              if (block) block(result == TWMResultSuccess);
                                           }];
 }
 
-- (void)joinGeneralChatRoomWithBlock:(void(^)(TWMResult result, TWMChannel *generalChatRoom))block {
-    [self populateChannelsWithBlock:^(TWMResult result) {
+- (void)joinGeneralChatRoomWithBlock:(void(^)(BOOL succeeded))block {
+    [self populateChannelsWithBlock:^(BOOL succeeded) {
         self.generalChatroom = [self.channelsList channelWithUniqueName:defaultChannelUniqueName];
         if (self.generalChatroom) {
             [self joinGeneralChatRoomWithUniqueName:nil block:block];
         }
         else {
-            [self createGeneralChatRoomWithBlock:^(TWMResult result, TWMChannel *channel) {
-                [self joinGeneralChatRoomWithUniqueName:defaultChannelUniqueName block:block];
+            [self createGeneralChatRoomWithBlock:^(BOOL succeeded) {
+                if (succeeded) {
+                    [self joinGeneralChatRoomWithUniqueName:defaultChannelUniqueName block:block];
+                    return;
+                }
+                if (block) block(YES);
             }];
         }
     }];
 }
 
-- (void)joinGeneralChatRoomWithUniqueName:(NSString *)uniqueName block:(void(^)(TWMResult result, TWMChannel *channel))block {
-    __weak TWMChannel *weakGeneralChatRoom = self.generalChatroom;
+- (void)joinGeneralChatRoomWithUniqueName:(NSString *)uniqueName block:(void(^)(BOOL succeeded))block {
     [self.generalChatroom joinWithCompletion:^(TWMResult result) {
         if (result == TWMResultSuccess) {
             if (uniqueName) {
-                [self.generalChatroom setUniqueName:defaultChannelUniqueName completion:^(TWMResult result) {
-                    if (result == TWMResultSuccess) {
-                        if (block) block(result, weakGeneralChatRoom);
-                    }
-                    else {
-                        if (block) block(result, nil);
-                    }
-                }];
-            }
-            else {
-                if (block) block(result, weakGeneralChatRoom);
+                [self setGeneralChatRoomUniqueNameWithBlock:block];
+                return;
             }
         }
-        else {
-            if (block) block(result, nil);
-        }
+        if (block) block(result == TWMResultSuccess);
+    }];
+}
+
+- (void)setGeneralChatRoomUniqueNameWithBlock:(void(^)(BOOL succeeded))block {
+    [self.generalChatroom setUniqueName:defaultChannelUniqueName completion:^(TWMResult result) {
+        if (block) block(result == TWMResultSuccess);
     }];
 }
 
@@ -86,15 +80,12 @@ NSString *defaultChannelName = @"General Channel";
             if (result == TWMResultSuccess) {
                 self.channelsList = channelsList;
             }
-            else {
-                // Show error
-            }
             if (block) block(result, self.channelsList);
         }];
     });
 }
 
-- (void)populateChannelsWithBlock:(void(^)(TWMResult result))block {
+- (void)populateChannelsWithBlock:(void(^)(BOOL succeeded))block {
     self.channels = nil;
     
     [self loadChannelListWithBlock:^(TWMResult result, TWMChannels *channelsList) {
@@ -106,9 +97,6 @@ NSString *defaultChannelName = @"General Channel";
                         [self.channels addObjectsFromArray:[self.channelsList allObjects]];
                         [self sortChannels];                        
                     }
-                    else {
-                        NSLog(@"Error creating channel");
-                    }
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (block) block(result);
                     });
@@ -117,7 +105,6 @@ NSString *defaultChannelName = @"General Channel";
         }
         else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"Error creating channel");
                 self.channelsList = nil;
                 self.channels = nil;
                 if (block) block(result);
@@ -127,13 +114,15 @@ NSString *defaultChannelName = @"General Channel";
 }
 
 - (void)sortChannels {
-    [self.channels sortUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"friendlyName"
-                                                                      ascending:YES
-                                                                       selector:@selector(localizedCaseInsensitiveCompare:)]]];
+    SEL sortSelector = @selector(localizedCaseInsensitiveCompare:);
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"friendlyName"
+                                                               ascending:YES
+                                                                selector:sortSelector];
+    [self.channels sortUsingDescriptors:@[descriptor]];
 }
 
-- (void)createChannelWithName:(NSString *)name block:(void(^)(TWMResult result, TWMChannel *channel))block {
-    if ([name isEqualToString:defaultChannelUniqueName]) {
+- (void)createChannelWithName:(NSString *)name block:(void(^)(BOOL succeeded, TWMChannel *channel))block {
+    if ([name isEqualToString:defaultChannelName]) {
         if (block) block(TWMResultFailure, nil);
         return;
     }
@@ -145,7 +134,6 @@ NSString *defaultChannelName = @"General Channel";
                 [self createChannelWithName:name block:block];
             }
             else {
-                NSLog(@"Error creating channel");
                 if (block) block(result, nil);
             }
         }];
@@ -155,19 +143,7 @@ NSString *defaultChannelName = @"General Channel";
     [self.channelsList createChannelWithFriendlyName:name
                                                 type:TWMChannelTypePublic
                                           completion:^(TWMResult result, TWMChannel *channel) {
-                                              __weak TWMChannel *ch = channel;
-                                              if (result == TWMResultSuccess) {
-                                                  [channel joinWithCompletion:^(TWMResult result) {
-                                                      [channel setAttributes:@{@"owner": [[IPMessagingManager sharedManager] userIdentity]}
-                                                                  completion:^(TWMResult result) {
-                                                                      if (block) block(result, ch);
-                                                                  }];
-                                                  }];
-                                              }
-                                              else {
-                                                  NSLog(@"Error creating channel");
-                                                  if (block) block(result, nil);
-                                              }
+                                              if (block) block(result == TWMResultSuccess, channel);
                                           }];
 }
 
@@ -191,6 +167,5 @@ NSString *defaultChannelName = @"General Channel";
         [self.delegate ipMessagingClient:client channelDeleted:channel];
     });
 }
-
 
 @end

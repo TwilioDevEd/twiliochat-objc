@@ -1,36 +1,74 @@
-.chapter(data-title='Your New Viewsaurus Tutorial')
-  .step(data-title='Welcome!', data-file='tutorial/config.json')
-    h2 Welcome to Viewsaurus
-
-    p Thanks for writing a Viewsaurus tutorial! If you're new to Viewsaurus, feel free to click through this brief tutorial showing you how a Viewsaurus tutorial is structured.
-
-    p The tutorial's navigation controls are located above this text. Use <i class="fa fa-fw fa-play"></i> to move to the next step of the tutorial. Use <i class="fa fa-fw fa-play fa-rotate-180"></i> to move to the previous step of the tutorial (if there is one). Use <i class="fa fa-fw fa-list"></i> to see an overview of all the steps in the tutorial.
-
-    p Let's begin by walking through the files generated for you in the `tutorial` directory with the `saurus new` command - those files are actually what is being used to show you this tutorial right now!
-
-  .step(data-title='Tutorial Configuration', data-file='tutorial/config.json')
+.chapter(data-title='Twilio Chat Objective-C')
+  .step(data-title='Introduction', data-file='twiliochat/AppDelegate.m')
     :markdown
-      ## Configuration
+      ## Introduction
+      
+      Ready to implement a chat application using Twilio IP Messaging Client?
+      Here is how it works at a high level:
+      
+      1. We use [Parse](//www.parse.com/) to handle session management and user
+      registration in our app. 
+      
+      1. [Twilio IP Messaging](//www.twilio.com/ip-messaging) is the core product
+      we'll be using to handle all the chat functionality. 
+      
+      1. TODO: Much more information about Twilio services.
+      
+  .step(data-title='Initializing the Client', data-file='twiliochat/IPMessagingManager.m', data-highlight='99-126')
+    :markdown
+      ## Initializing the IP Messaging Client
+      
+      The only thing you need to create a client, is an access token. This token
+      holds information about your Twilio account and IP Messaging API keys. You
+      can find an example application written in node that demonstrates how to
+      generate the token [here](//github.com/TwilioDevEd/twiliochat).
+      
+      We use [Parse cloud code
+      webhooks](//parse.com/docs/cloudcode/guide#cloud-code-advanced-cloud-code-webhooks)
+      to make a request to our server and get the access token.
+      
+      ---
 
-      The first file we'll look at is `config.json`. This contains high-level configuration information about your tutorial. This JSON file contains several properties you can declare about your tutorial:
-
-      * `title`: This is the title of your tutorial which will show on the first page
-      * `description`: This is a string of text that will appear above the "Start" button for your tutorial.
-      * `repo`: This is the GitHub repo that your code lives in. Right now we assume all projects are hosted there, but we'll likely make this agnostic in the future.
-      * `heroku`: This indicates whether or not your project supports instant deployment with the [Heroku Button](https://blog.heroku.com/archives/2014/8/7/heroku-button)
-
-      Now, let's take a look at the first file that contains the actual content of the tutorial, `index.jade`.
-
-  .step(data-title='Step Two')
-    h2 Under Construction
-
-    p more tutorial to come.
-
-  //- Example: include markdown file
-    .step(data-title='Step Three', data-file='', data-highlight='')
-      include:markdown three.md
-
-  //- Example: include jade file (don't need file extension)
-    .step(data-title='Step Four', data-file='', data-highlight='')
-      include four
-
+      **See Also:**
+      * [Parse cloud code webhooks](//parse.com/docs/cloudcode/guide#cloud-code-advanced-cloud-code-webhooks)
+      
+  .step(data-title='Getting the Channel List', data-file='twiliochat/ChannelManager.m', data-highlight='28-55')
+    :markdown
+      ## Getting the Channel List
+      
+      Our `ChannelManager` class takes care of everything related to channels.
+      The first thing we need to do when the class is initialized, is to store
+      a list of channels of type `TWMChannelList` that we get by calling the method `channelsListWithCompletion`
+      from the IP Messaging Client.
+      
+      Once we have a `TWMChannelList` we can fetch the actual channels using the
+      `channelsList's` method `loadChannelsWithCompletion`. Once that operation
+      finishes successfully, call the method `allObjects` on the same object, to
+      get an array of channels.
+      
+  .step(data-title='Join the General Room', data-file='twiliochat/ChannelManager.m', data-highlight='57-83')
+    :markdown
+      ## Join the General Channel
+      
+      This application will try to join a channel called "General" when it starts.
+      If the channel doesn't exist, we'll create one with that name. The scope of
+      this example application will show you how to work only with public channels,
+      but the IP Messaging client allows you to create private channels and handle
+      invitations.
+      
+      Once you have joined a channel, you can register a class as the `TWMChannelDelegate`
+      so you can start listening to events such as `messageAdded` or `memberJoined`.
+      We'll show you how to do this in the next step.
+      
+  .step(data-title='Listen to Chat Events', data-file='twiliochat/MainChatViewController.m', data-highlight='232-259')
+    :markdown
+      We registered `MainChatViewCOntroller` as the `TWMChannelDelegate`, and here
+      we implemented the following methods that listen to channel events:
+      
+      * `messageAdded`: When someone sends a message to the channel you are connected to.
+      * `channelDeleted`: When someone deletes a channel.
+      * `memberJoined`: When someone joins the channel.
+      * `memberLeft`: When someone leaves the channel.
+      
+      As you may have noticed, each one of these methods include useful objects
+      as parameters, such as the actual message that was added to the channel.

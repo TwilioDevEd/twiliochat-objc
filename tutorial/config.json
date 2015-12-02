@@ -1,6 +1,6 @@
 {
-    "title": "Learn You twiliochat-objc For Much Win",
-    "repo": "<your GitHub username>/<GitHub repo name>",
-    "description": "Thanks for writing a tutorial with Viewsaurus! This example tutorial will show you the basic functionality of Viewsaurus. Click the \"Start\" button below to see how Viewsaurus works.",
+    "title": "Twilio Chat",
+    "repo": "TwilioDevEd/twiliochat-objc",
+    "description": "Learn to implement a simple chat application using Twilio IP Messaging Client",
     "heroku": false
 }

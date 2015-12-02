@@ -5,7 +5,7 @@
 @end
 
 NSString *defaultChannelUniqueName = @"general";
-NSString *defaultChannelName = @"General";
+NSString *defaultChannelName = @"General Channel";
 
 @implementation ChannelManager
 
@@ -26,36 +26,32 @@ NSString *defaultChannelName = @"General";
 }
 
 - (void)createGeneralChatRoomWithBlock:(void(^)(TWMResult result, TWMChannel *channel))block {
-    [self populateChannelsWithBlock:^(TWMResult result) {
-        if (result == TWMResultSuccess) {
-            self.generalChatroom = [self.channelsList channelWithUniqueName:defaultChannelUniqueName];
-            if (self.generalChatroom) {
-                [self joinGeneralChatRoomWithBlock:block];
-            }
-            else {
-                [self.channelsList createChannelWithFriendlyName:defaultChannelName
-                                                            type:TWMChannelTypePublic
-                                                      completion:^(TWMResult result, TWMChannel *channel) {
-                                                          self.generalChatroom = channel;
-                                                          if (result == TWMResultSuccess) {
-                                                              self.generalChatroom = channel;
-                                                              [self joinGeneralChatRoomWithUniqueName:defaultChannelUniqueName block:block];
-                                                              if (block) block(result, self.generalChatroom);
-                                                          }
-                                                          else {
-                                                              if (block) block(result, nil);
-                                                          }
-                                                      }];
-            }
-        }
-        else {
-            if (block) block(result, nil);
-        }
-    }];
+    [self.channelsList createChannelWithFriendlyName:defaultChannelName
+                                                type:TWMChannelTypePublic
+                                          completion:^(TWMResult result, TWMChannel *channel) {
+                                              self.generalChatroom = channel;
+                                              if (result == TWMResultSuccess) {
+                                                  self.generalChatroom = channel;
+                                                  if (block) block(result, self.generalChatroom);
+                                              }
+                                              else {
+                                                  if (block) block(result, nil);
+                                              }
+                                          }];
 }
 
-- (void)joinGeneralChatRoomWithBlock:(void(^)(TWMResult result, TWMChannel *channel))block {
-    [self joinGeneralChatRoomWithUniqueName:nil block:block];
+- (void)joinGeneralChatRoomWithBlock:(void(^)(TWMResult result, TWMChannel *generalChatRoom))block {
+    [self populateChannelsWithBlock:^(TWMResult result) {
+        self.generalChatroom = [self.channelsList channelWithUniqueName:defaultChannelUniqueName];
+        if (self.generalChatroom) {
+            [self joinGeneralChatRoomWithUniqueName:nil block:block];
+        }
+        else {
+            [self createGeneralChatRoomWithBlock:^(TWMResult result, TWMChannel *channel) {
+                [self joinGeneralChatRoomWithUniqueName:defaultChannelUniqueName block:block];
+            }];
+        }
+    }];
 }
 
 - (void)joinGeneralChatRoomWithUniqueName:(NSString *)uniqueName block:(void(^)(TWMResult result, TWMChannel *channel))block {
@@ -137,7 +133,7 @@ NSString *defaultChannelName = @"General";
 }
 
 - (void)createChannelWithName:(NSString *)name block:(void(^)(TWMResult result, TWMChannel *channel))block {
-    if ([name isEqualToString:defaultChannelName]) {
+    if ([name isEqualToString:defaultChannelUniqueName]) {
         if (block) block(TWMResultFailure, nil);
         return;
     }

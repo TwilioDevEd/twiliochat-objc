@@ -120,7 +120,7 @@
 }
 
 - (void)loadGeneralChatRoom:(void(^)(BOOL succeeded, NSError *error))handler {
-    [[ChannelManager sharedManager] createGeneralChatRoomWithBlock:^(TWMResult result, TWMChannel *channel) {
+    [[ChannelManager sharedManager] joinGeneralChatRoomWithBlock:^(TWMResult result, TWMChannel *channel) {
         self.connecting = YES;
         if (result == TWMResultSuccess)
         {

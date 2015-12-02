@@ -8,8 +8,6 @@
 
 @implementation ChatTableCell
 
-@synthesize date = _date;
-
 - (void)setUser:(NSString *)user {
     self.userLabel.text = user;
 }
@@ -26,33 +24,12 @@
     return self.messageLabel.text;
 }
 
-- (void)setDate:(NSDate *)date {
-    _date = date;
-    self.dateLabel.text = [self formattedDate];
+- (void)setDate:(NSString *)date {
+    self.dateLabel.text = date;
 }
 
-- (NSString*)formattedDate {
-    NSDate *messageDate = [self roundDateToDay:_date];
-    NSDate *todayDate = [self roundDateToDay:[NSDate date]];
-    
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    
-    if ([messageDate compare:todayDate] == NSOrderedSame) {
-        format.dateFormat = @"'Today' - hh:mma";
-    }
-    else
-    {
-        format.dateFormat = @"MMM. dd - hh:mma";
-    }
-    
-    return [format stringFromDate:_date];
-}
-
-- (NSDate *)roundDateToDay:(NSDate *)date {
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
-                                               fromDate:date];
-    return [calendar dateFromComponents:components];
+- (NSString *)date {
+    return self.messageLabel.text;
 }
 
 - (void)awakeFromNib {

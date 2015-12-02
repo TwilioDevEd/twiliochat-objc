@@ -23,6 +23,7 @@
 		870855471C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870855461C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m */; };
 		8750C85E1BF530330015CBE1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85D1BF530330015CBE1 /* Keys.plist */; };
 		8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85F1BF5307E0015CBE1 /* Keys.example.plist */; };
+		8762FB941C0F348600A1A035 /* DateTodayFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8762FB931C0F348600A1A035 /* DateTodayFormatter.m */; };
 		87A486021BFB5E9500E4BE8F /* ChatTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A486011BFB5E9500E4BE8F /* ChatTableCell.m */; };
 		87B6AC241BF51D6600E55FE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC231BF51D6600E55FE2 /* main.m */; };
 		87B6AC271BF51D6600E55FE2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC261BF51D6600E55FE2 /* AppDelegate.m */; };
@@ -40,7 +41,7 @@
 		87F2CE6F1BFD2C390064D863 /* ChatTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */; };
 		87F2CE731BFD356F0064D863 /* ChatStatusTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */; };
 		A6791A025DDCD04B5D1F443F /* libPods-twiliochatUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE6C21A5FA4BAC2BD3FFCDA /* libPods-twiliochatUITests.a */; };
-		AD9906D51C0EB1A800913A52 /* ChatTableCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD9906D41C0EB1A800913A52 /* ChatTableCellTests.m */; };
+		AD9906D51C0EB1A800913A52 /* DateTodayFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD9906D41C0EB1A800913A52 /* DateTodayFormatterTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,8 @@
 		870855461C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewControllerTests.m; sourceTree = "<group>"; };
 		8750C85D1BF530330015CBE1 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		8750C85F1BF5307E0015CBE1 /* Keys.example.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.example.plist; sourceTree = "<group>"; };
+		8762FB921C0F348600A1A035 /* DateTodayFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTodayFormatter.h; sourceTree = "<group>"; };
+		8762FB931C0F348600A1A035 /* DateTodayFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTodayFormatter.m; sourceTree = "<group>"; };
 		87A486001BFB5E9500E4BE8F /* ChatTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableCell.h; sourceTree = "<group>"; };
 		87A486011BFB5E9500E4BE8F /* ChatTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableCell.m; sourceTree = "<group>"; };
 		87B6AC1F1BF51D6600E55FE2 /* twiliochat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twiliochat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,7 +125,7 @@
 		87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatStatusTableCell.xib; sourceTree = "<group>"; };
 		8CEDAD3D5DA10C223B280F8B /* Pods-twiliochatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochatUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochatUITests/Pods-twiliochatUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AD1EBB901C09617C00D35A96 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
-		AD9906D41C0EB1A800913A52 /* ChatTableCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableCellTests.m; sourceTree = "<group>"; };
+		AD9906D41C0EB1A800913A52 /* DateTodayFormatterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTodayFormatterTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,8 @@
 				59F208EF1C03920800CC2392 /* AlertDialogController.m */,
 				87DB89EF1C03A94300E3935B /* NSDate+ISO8601Parser.h */,
 				87DB89F01C03A94300E3935B /* NSDate+ISO8601Parser.m */,
+				8762FB921C0F348600A1A035 /* DateTodayFormatter.h */,
+				8762FB931C0F348600A1A035 /* DateTodayFormatter.m */,
 			);
 			name = util;
 			sourceTree = "<group>";
@@ -316,7 +321,7 @@
 				7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */,
 				87DB89EB1BFE398C00E3935B /* IPMessagingManagerPresentTests.m */,
 				870855461C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m */,
-				AD9906D41C0EB1A800913A52 /* ChatTableCellTests.m */,
+				AD9906D41C0EB1A800913A52 /* DateTodayFormatterTests.m */,
 				87B6AC3E1BF51D6600E55FE2 /* Info.plist */,
 			);
 			path = twiliochatTests;
@@ -619,6 +624,7 @@
 				87DB89F11C03A94300E3935B /* NSDate+ISO8601Parser.m in Sources */,
 				59F208F01C03920800CC2392 /* AlertDialogController.m in Sources */,
 				87DB89F41C03B81300E3935B /* StartViewController.m in Sources */,
+				8762FB941C0F348600A1A035 /* DateTodayFormatter.m in Sources */,
 				7DC302AB1C04B631000765ED /* ForgotPasswordViewController.m in Sources */,
 				7DAC272C1C053D08006CEA49 /* ChannelManager.m in Sources */,
 				593F44771BFA5E2900B57504 /* MenuTableCell.m in Sources */,
@@ -632,7 +638,7 @@
 			files = (
 				87DB89EC1BFE398C00E3935B /* IPMessagingManagerPresentTests.m in Sources */,
 				7D8DCB161BFF467A009B1B6D /* IPMessagingManagerTests.m in Sources */,
-				AD9906D51C0EB1A800913A52 /* ChatTableCellTests.m in Sources */,
+				AD9906D51C0EB1A800913A52 /* DateTodayFormatterTests.m in Sources */,
 				7D8DCB141BFED14F009B1B6D /* IPMessagingManagerLoginTests.m in Sources */,
 				87B6AC3D1BF51D6600E55FE2 /* LoginViewControllerTests.m in Sources */,
 				870855471C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m in Sources */,

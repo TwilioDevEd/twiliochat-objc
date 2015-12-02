@@ -6,6 +6,7 @@
 #import "SWRevealViewController.h"
 #import "ChannelManager.h"
 #import "StatusEntry.h"
+#import "DateTodayFormatter.h"
 
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
@@ -144,7 +145,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     
     ChatTableCell *chatCell = (ChatTableCell *)cell;
     chatCell.user = message.author;
-    chatCell.date = [NSDate dateWithISO8601String:message.timestamp];
+    chatCell.date = [[[DateTodayFormatter alloc] init] stringFromDate:[NSDate dateWithISO8601String:message.timestamp]];
     chatCell.message = message.body;
     
     return chatCell;

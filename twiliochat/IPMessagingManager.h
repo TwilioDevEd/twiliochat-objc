@@ -20,6 +20,4 @@
 - (void)logout;
 
 - (void)presentLaunchScreen;
-- (void)updatePushToken:(NSData *)token;
-- (void)receivedNotification:(NSDictionary *)notification;
 @end

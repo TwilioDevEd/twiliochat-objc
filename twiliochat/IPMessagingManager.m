@@ -4,8 +4,6 @@
 
 @interface IPMessagingManager ()
 @property (nonatomic, strong) TwilioIPMessagingClient *client;
-@property (nonatomic, strong) NSData *lastToken;
-@property (nonatomic, strong) NSDictionary *lastNotification;
 @property (nonatomic) BOOL connected;
 @end
 
@@ -179,6 +177,10 @@
             [accessManager updateToken:token];
         }
     }];
+}
+
+- (void)accessManager:(TwilioAccessManager *)accessManager error:(NSError *)error {
+    NSLog(@"Access manager error: %@", [error localizedDescription]);
 }
 
 #pragma mark Internal helpers

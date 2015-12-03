@@ -174,11 +174,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 - (void)sendMessage: (NSString *)inputMessage {
     TWMMessage *message = [self.channel.messages createMessageWithBody:inputMessage];
     [self.channel.messages sendMessage:message
-                            completion:^(TWMResult result) {
-                                if (result == TWMResultFailure) {
-                                    NSLog(@"send message error");
-                                }
-                            }];
+                            completion:nil];
 }
 
 
@@ -221,9 +217,6 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     [self.channel leaveWithCompletion:^(TWMResult result) {
         if (result == TWMResultSuccess) {
             [self.revealViewController.rearViewController performSegueWithIdentifier:@"OpenGeneralChat" sender:nil];
-        }
-        else {
-            NSLog(@"Error leaving channel");
         }
     }];
 }

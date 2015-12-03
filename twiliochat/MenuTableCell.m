@@ -20,7 +20,6 @@
     self.label = (UILabel *)[self viewWithTag:200];
     self.selectedBackgroundView.backgroundColor = [self selectedBackgroundColor];
     self.label.highlightedTextColor = [UIColor colorWithRed:0.22 green:0.024 blue:0.016 alpha:1];
-    //self.label.highlightedTextColor = [UIColor colorWithRed:0.22 green:0.024 blue:0.016 alpha:1];
 }
 
 - (UIColor *)selectedBackgroundColor {
@@ -32,11 +31,9 @@
 
     if (selected) {
         self.label.highlightedTextColor = [UIColor colorWithRed:0.22 green:0.024 blue:0.016 alpha:1];
-        //self.contentView.backgroundColor = [self selectedBackgroundColor];
     }
     else {
         self.label.textColor = [UIColor colorWithRed:0.973 green:0.557 blue:0.502 alpha:1];
-        //self.contentView.backgroundColor = [UIColor clearColor];
     }
 }
 

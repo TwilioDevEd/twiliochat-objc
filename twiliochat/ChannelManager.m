@@ -79,8 +79,8 @@ NSString *defaultChannelName = @"General Channel";
 - (void)populateChannelsWithBlock:(void(^)(BOOL succeeded))block {
     self.channels = nil;
     
-    [self loadChannelListWithBlock:^(TWMResult result, TWMChannels *channelsList) {
-        if (result == TWMResultSuccess) {
+    [self loadChannelListWithBlock:^(BOOL succeeded, TWMChannels *channelsList) {
+        if (succeeded) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [self.channelsList loadChannelsWithCompletion:^(TWMResult result) {
                     if (result == TWMResultSuccess) {
@@ -89,7 +89,7 @@ NSString *defaultChannelName = @"General Channel";
                         [self sortChannels];
                     }
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        if (block) block(result);
+                        if (block) block(succeeded);
                     });
                 }];
             });
@@ -98,13 +98,13 @@ NSString *defaultChannelName = @"General Channel";
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.channelsList = nil;
                 self.channels = nil;
-                if (block) block(result);
+                if (block) block(succeeded);
             });
         }
     }];
 }
 
-- (void)loadChannelListWithBlock:(void(^)(TWMResult result, TWMChannels *channelsList))block {
+- (void)loadChannelListWithBlock:(void(^)(BOOL succeeded, TWMChannels *channelsList))block {
     self.channelsList = nil;
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -112,7 +112,7 @@ NSString *defaultChannelName = @"General Channel";
             if (result == TWMResultSuccess) {
                 self.channelsList = channelsList;
             }
-            if (block) block(result, self.channelsList);
+            if (block) block(result == TWMResultSuccess, self.channelsList);
         }];
     });
 }
@@ -129,18 +129,18 @@ NSString *defaultChannelName = @"General Channel";
 
 - (void)createChannelWithName:(NSString *)name block:(void(^)(BOOL succeeded, TWMChannel *channel))block {
     if ([name isEqualToString:defaultChannelName]) {
-        if (block) block(TWMResultFailure, nil);
+        if (block) block(NO, nil);
         return;
     }
     
     if (!self.channelsList)
     {
-        [self loadChannelListWithBlock:^(TWMResult result, TWMChannels *channelsList) {
-            if (result == TWMResultSuccess) {
+        [self loadChannelListWithBlock:^(BOOL succeeded, TWMChannels *channelsList) {
+            if (succeeded) {
                 [self createChannelWithName:name block:block];
             }
             else {
-                if (block) block(result, nil);
+                if (block) block(succeeded, nil);
             }
         }];
         return;

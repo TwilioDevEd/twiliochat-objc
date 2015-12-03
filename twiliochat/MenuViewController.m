@@ -91,16 +91,13 @@
 
 - (void)populateChannels {
     [[ChannelManager sharedManager] populateChannelsWithBlock:^(BOOL succeeded) {
-        if (succeeded) {
-            [self.tableView reloadData];
-            [self.refreshControl endRefreshing];
-        }
-        else {
+        if (!succeeded) {
             [AlertDialogController showAlertWithMessage:@"Failed to load channels."
                                                   title:@"IP Messaging Demo"
                                               presenter:self];
-            [self.tableView reloadData];
         }
+        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
     }];
 }
 

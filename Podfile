@@ -7,8 +7,8 @@ target 'twiliochat' do
   pod 'Parse', '~> 1.9'
   pod 'SWRevealViewController', '~> 2.3'
   pod 'SlackTextViewController', '~> 1.7'
-  pod 'TwilioCommon', :podspec => 'https://dev.twiliocdn.com/sdk/rtc/ios/common/releases/0.1.5.b20-2f246aa/TwilioCommon.podspec'
-  pod 'TwilioIPMessagingClient', :podspec => 'https://dev.twiliocdn.com/sdk/rtc/ios/ip-messaging/releases/0.13.2.b180-2b4a2a1/TwilioIPMessagingClient.podspec'
+  pod 'TwilioIPMessagingClient', :podspec => 'https://media.twiliocdn.com/sdk/rtc/ios/ip-messaging/v0.13/TwilioIPMessagingClient.podspec'
+  pod 'TwilioCommon', :podspec => 'https://media.twiliocdn.com/sdk/rtc/ios/common/v0.1/TwilioCommon.podspec'
 end
 
 target 'twiliochatTests' do

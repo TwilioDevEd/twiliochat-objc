@@ -117,28 +117,21 @@
         [self logout];
     }
     
-    NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
-    NSDictionary *parameters = @{@"device": uuid};
-    
-    [PFCloud callFunctionInBackground:@"token"
-                       withParameters:parameters
-                                block:^(NSDictionary *results, NSError *error) {
-                                    NSString *token = [results objectForKey:@"token"];
-                                    BOOL errorCondition = error || !token;
-                                    
-                                    if (!errorCondition) {
-                                        [self initializeClientWithToken: token];
-                                        [self loadGeneralChatRoom:handler];
-                                    }
-                                    else {
-                                        if (handler) handler(!error, error);
-                                    }
-                                }];
+    [self requestTokenWithBlock:^(BOOL succeeded, NSString *token) {
+        if (succeeded) {
+            [self initializeClientWithToken: token];
+            [self loadGeneralChatRoom:handler];
+        }
+        else {
+            NSError *error = [self errorWithDescription:@"Could not get access token" code:301];
+            if (handler) handler(succeeded, error);
+        }
+    }];
 }
 
-- (void) initializeClientWithToken:(NSString *)token {
-    self.client = [TwilioIPMessagingClient ipMessagingClientWithToken:token
-                                                             delegate:nil];
+- (void)initializeClientWithToken:(NSString *)token {
+    TwilioAccessManager *accessManager = [TwilioAccessManager accessManagerWithToken:token delegate: self];
+    self.client = [TwilioIPMessagingClient ipMessagingClientWithAccessManager:accessManager delegate:nil];
 }
 
 - (void)loadGeneralChatRoom:(void(^)(BOOL succeeded, NSError *error))handler {
@@ -149,38 +142,43 @@
             if (handler) handler(succeeded, nil);
         }
         else if (handler) {
-            NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"Could not join General channel"};
-            NSError *error = [NSError errorWithDomain:@"app"
-                                                 code:300
-                                             userInfo:userInfo];
+            NSError *error = [self errorWithDescription:@"Could not join General channel" code:300];
             if (handler) handler(succeeded, error);
         }
     }];
 }
 
-- (void)updatePushToken:(NSData *)token {
-    self.lastToken = token;
-    [self updateIpMessagingClient];
+- (void)requestTokenWithBlock:(void(^)(BOOL succeeded, NSString *token))handler {
+    NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
+    NSDictionary *parameters = @{@"device": uuid};
+
+    [PFCloud callFunctionInBackground:@"token"
+                       withParameters:parameters
+                                block:^(NSDictionary *results, NSError *error) {
+                                    NSString *token = [results objectForKey:@"token"];
+                                    BOOL errorCondition = error || !token;
+
+                                    if (handler) handler(!errorCondition, token);
+                                }];
+
 }
 
-- (void)receivedNotification:(NSDictionary *)notification {
-    self.lastNotification = notification;
-    [self updateIpMessagingClient];
+- (NSError *)errorWithDescription:(NSString *)description code:(NSInteger)code {
+    NSDictionary *userInfo = @{NSLocalizedDescriptionKey: description};
+    NSError *error = [NSError errorWithDomain:@"app"
+                                         code:code
+                                     userInfo:userInfo];
+    return error;
 }
 
+# pragma mark TwilioAccessManagerDelegate
 
-#pragma mark Push functionality
-
-- (void)updateIpMessagingClient {
-    if (self.lastToken) {
-        [self.client registerWithToken:self.lastToken];
-        self.lastToken = nil;
-    }
-    
-    if (self.lastNotification) {
-        [self.client handleNotification:self.lastNotification];
-        self.lastNotification = nil;
-    }
+- (void)accessManagerTokenExpired:(TwilioAccessManager *)accessManager {
+    [self requestTokenWithBlock:^(BOOL succeeded, NSString *token) {
+        if (succeeded) {
+            [accessManager updateToken:token];
+        }
+    }];
 }
 
 #pragma mark Internal helpers

@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 
-@interface IPMessagingManager : NSObject
+@interface IPMessagingManager : NSObject <TwilioAccessManagerDelegate>
 @property (nonatomic, strong, readonly) TwilioIPMessagingClient *client;
 
 + (instancetype)sharedManager;

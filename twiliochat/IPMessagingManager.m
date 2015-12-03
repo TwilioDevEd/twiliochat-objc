@@ -19,6 +19,8 @@
     return sharedMyManager;
 }
 
+# pragma mark Present view controllers
+
 - (void)presentRootViewController {
     if ([self hasIdentity]) {
         if (self.connected) {
@@ -56,6 +58,8 @@
 - (UIStoryboard *)storyboardWithName:(NSString *)name {
     return [UIStoryboard storyboardWithName: name bundle: [NSBundle mainBundle]];
 }
+
+# pragma mark User and session management
 
 - (BOOL)hasIdentity {
     return [PFUser currentUser] && [[PFUser currentUser] isAuthenticated];
@@ -95,6 +99,18 @@
                                         }
                                     }];
 }
+
+- (void)logout {
+    [PFUser logOut];
+    self.connected = NO;
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.client shutdown];
+        self.client = nil;
+    });
+}
+
+# pragma mark Twilio Client
 
 - (void)connectClient:(void(^)(BOOL succeeded, NSError *error))handler {
     if (self.client) {
@@ -140,16 +156,6 @@
             if (handler) handler(succeeded, error);
         }
     }];
-}
-
-- (void)logout {
-    [PFUser logOut];
-    self.connected = NO;
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.client shutdown];
-        self.client = nil;
-    });
 }
 
 - (void)updatePushToken:(NSData *)token {

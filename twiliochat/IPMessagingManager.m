@@ -6,7 +6,7 @@
 @property (nonatomic, strong) TwilioIPMessagingClient *client;
 @property (nonatomic, strong) NSData *lastToken;
 @property (nonatomic, strong) NSDictionary *lastNotification;
-@property (nonatomic) BOOL connecting;
+@property (nonatomic) BOOL connected;
 @end
 
 @implementation IPMessagingManager
@@ -21,7 +21,7 @@
 
 - (void)presentRootViewController {
     if ([self hasIdentity]) {
-        if (self.connecting) {
+        if (self.connected) {
             [self presentViewControllerByName:@"RevealViewController"];
         }
         else {
@@ -120,21 +120,25 @@
 }
 
 - (void)loadGeneralChatRoom:(void(^)(BOOL succeeded, NSError *error))handler {
-    [[ChannelManager sharedManager] joinGeneralChatRoomWithBlock:^(TWMResult result, TWMChannel *channel) {
-        self.connecting = YES;
-        if (result == TWMResultSuccess)
+    [[ChannelManager sharedManager] joinGeneralChatRoomWithBlock:^(BOOL succeeded) {
+        if (succeeded)
         {
-            if (handler) handler(YES, nil);
+            self.connected = YES;
+            if (handler) handler(succeeded, nil);
         }
-        else {
-            if (handler) handler(NO, [NSError errorWithDomain:@"channel" code:1000 userInfo:nil]);
+        else if (handler) {
+            NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"Could not join General channel"};
+            NSError *error = [NSError errorWithDomain:@"app"
+                                                 code:300
+                                             userInfo:userInfo];
+            if (handler) handler(succeeded, error);
         }
-        self.connecting = NO;
     }];
 }
 
 - (void)logout {
     [PFUser logOut];
+    self.connected = NO;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.client shutdown];

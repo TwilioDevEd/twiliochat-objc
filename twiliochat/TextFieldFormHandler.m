@@ -42,11 +42,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (self.lastTextField && self.lastTextField == textField) {
-        [self doneEnteringData];
-        return YES;
-    }
-    else if (textField == self.textFields.lastObject) {
+    if ((self.lastTextField && self.lastTextField == textField) || textField == self.textFields.lastObject) {
         [self doneEnteringData];
         return YES;
     }
@@ -133,14 +129,10 @@
 }
 
 - (void)setTextField:(UITextField *)textField returnKeyType:(UIReturnKeyType)type {
-    if (textField.isFirstResponder) {
-        [textField resignFirstResponder];
-        textField.returnKeyType = type;
-        [textField becomeFirstResponder];
-    }
-    else {
-        textField.returnKeyType = type;
-    }
+    BOOL isFirstResponder = textField.isFirstResponder;
+    if (isFirstResponder) [textField resignFirstResponder];
+    textField.returnKeyType = type;
+    if (isFirstResponder) [textField becomeFirstResponder];
 }
 
 - (void)setLastTextField:(UITextField *)lastTextField {

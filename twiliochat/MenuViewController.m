@@ -90,8 +90,8 @@
 }
 
 - (void)populateChannels {
-    [[ChannelManager sharedManager] populateChannelsWithBlock:^(TWMResult result) {
-        if (result == TWMResultSuccess) {
+    [[ChannelManager sharedManager] populateChannelsWithBlock:^(BOOL succeeded) {
+        if (succeeded) {
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
         }

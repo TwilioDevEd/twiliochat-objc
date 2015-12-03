@@ -101,22 +101,28 @@
         [self logout];
     }
     
+    NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
+    NSDictionary *parameters = @{@"device": uuid};
+    
     [PFCloud callFunctionInBackground:@"token"
-                       withParameters:@{@"device": [[UIDevice currentDevice] identifierForVendor].UUIDString}
+                       withParameters:parameters
                                 block:^(NSDictionary *results, NSError *error) {
                                     NSString *token = [results objectForKey:@"token"];
                                     BOOL errorCondition = error || !token;
                                     
                                     if (!errorCondition) {
-                                        NSLog(@"%@",results);
-                                        self.client = [TwilioIPMessagingClient ipMessagingClientWithToken:token
-                                                                                                 delegate:nil];
+                                        [self initializeClientWithToken: token];
                                         [self loadGeneralChatRoom:handler];
                                     }
                                     else {
                                         if (handler) handler(!error, error);
                                     }
                                 }];
+}
+
+- (void) initializeClientWithToken:(NSString *)token {
+    self.client = [TwilioIPMessagingClient ipMessagingClientWithToken:token
+                                                             delegate:nil];
 }
 
 - (void)loadGeneralChatRoom:(void(^)(BOOL succeeded, NSError *error))handler {

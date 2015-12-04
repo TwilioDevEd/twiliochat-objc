@@ -10,9 +10,24 @@
       registration in our app. 
 
       1. [Twilio IP Messaging](//www.twilio.com/ip-messaging) is the core product
-      we'll be using to handle all the chat functionality. 
+      we'll be using to handle all the chat functionality.
 
-      1. TODO: Much more information about Twilio services.
+      1. We use a server side app to generate [user access
+      tokens](//www.twilio.com/docs/api/ip-messaging/guides/identity) which contains
+      all your Twilio account information. The IP Messaging Client uses this token
+      to connect with the API
+
+      1. [Twilio Common](//media.twiliocdn.com/sdk/rtc/ios/common/releases/0.1.7.b23-4ca8945/docs/)
+      is the part of the SDK than handles access tokens and even refreshes them upon token
+      expiration.
+
+      ---
+
+      **See Also:**
+      * [IP Messaging API](//www.twilio.com/docs/api/ip-messaging)
+      * [iOS QuickStart](//www.twilio.com/docs/api/ip-messaging/guides/quickstart-ios)
+      * [Channels and Messages](//www.twilio.com/docs/api/ip-messaging/guides/channels)
+      * [User Identity & Access Tokens](//www.twilio.com/docs/api/ip-messaging/guides/channels)
 
   .step(data-title='Initializing the Client', data-file='twiliochat/IPMessagingManager.m', data-highlight='115-142')
     :markdown

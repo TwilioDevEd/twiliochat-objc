@@ -20,24 +20,18 @@
 # pragma mark Present view controllers
 
 - (void)presentRootViewController {
-    if ([self hasIdentity]) {
-        if (self.connected) {
-            [self presentViewControllerByName:@"RevealViewController"];
-        }
-        else {
-            [self connectClient:^(BOOL success, NSError *error) {
-                if (success) {
-                    [self presentViewControllerByName:@"RevealViewController"];
-                }
-                else {
-                    [self presentViewControllerByName:@"LoginViewController"];
-                }
-            }];
-        }
-    }
-    else {
+    if (!self.hasIdentity) {
         [self presentViewControllerByName:@"LoginViewController"];
+        return;
     }
+    if (!self.connected) {
+        [self connectClient:^(BOOL success, NSError *error) {
+            NSString *viewController = success ? @"RevealViewController" : @"LoginViewController";
+            [self presentViewControllerByName:viewController];
+        }];
+        return;
+    }
+    [self presentViewControllerByName:@"RevealViewController"];
 }
 
 - (void)presentViewControllerByName:(NSString *)viewController {
@@ -77,10 +71,9 @@
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             [self connectClient:handler];
+            return;
         }
-        else {
-            if (handler) handler(succeeded, error);
-        }
+        if (handler) handler(succeeded, error);
     }];
 }
 
@@ -91,10 +84,9 @@
                                     block:^(PFUser *user, NSError *error) {
                                         if (!error) {
                                             [self connectClient:handler];
+                                            return;
                                         }
-                                        else {
-                                            if (handler) handler(!error, error);
-                                        }
+                                        if (handler) handler(!error, error);
                                     }];
 }
 
@@ -175,6 +167,9 @@
     [self requestTokenWithBlock:^(BOOL succeeded, NSString *token) {
         if (succeeded) {
             [accessManager updateToken:token];
+        }
+        else {
+            NSLog(@"Error while trying to get new access token");
         }
     }];
 }

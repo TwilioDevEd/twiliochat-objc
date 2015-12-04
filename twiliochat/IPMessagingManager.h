@@ -3,11 +3,11 @@
 
 @interface IPMessagingManager : NSObject <TwilioAccessManagerDelegate>
 @property (nonatomic, strong, readonly) TwilioIPMessagingClient *client;
+@property (nonatomic, readonly) BOOL hasIdentity;
 
 + (instancetype)sharedManager;
 - (void)presentRootViewController;
 - (NSString *)userIdentity;
-- (BOOL)hasIdentity;
 
 - (void)registerWithUsername:(NSString *)username
                     password:(NSString *)password

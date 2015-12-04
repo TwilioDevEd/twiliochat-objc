@@ -80,27 +80,24 @@ NSString *defaultChannelName = @"General Channel";
     self.channels = nil;
     
     [self loadChannelListWithBlock:^(BOOL succeeded, TWMChannels *channelsList) {
-        if (succeeded) {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [self.channelsList loadChannelsWithCompletion:^(TWMResult result) {
-                    if (result == TWMResultSuccess) {
-                        self.channels = [[NSMutableOrderedSet alloc] init];
-                        [self.channels addObjectsFromArray:[self.channelsList allObjects]];
-                        [self sortChannels];
-                    }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if (block) block(succeeded);
-                    });
-                }];
-            });
+        if (!succeeded) {
+            self.channelsList = nil;
+            self.channels = nil;
+            if (block) block(succeeded);
+            return;
         }
-        else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.channelsList = nil;
-                self.channels = nil;
-                if (block) block(succeeded);
-            });
-        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self.channelsList loadChannelsWithCompletion:^(TWMResult result) {
+                if (result == TWMResultSuccess) {
+                    self.channels = [[NSMutableOrderedSet alloc] init];
+                    [self.channels addObjectsFromArray:[self.channelsList allObjects]];
+                    [self sortChannels];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (block) block(succeeded);
+                });
+            }];
+        });
     }];
 }
 
@@ -112,7 +109,9 @@ NSString *defaultChannelName = @"General Channel";
             if (result == TWMResultSuccess) {
                 self.channelsList = channelsList;
             }
-            if (block) block(result == TWMResultSuccess, self.channelsList);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) block(result == TWMResultSuccess, self.channelsList);
+            });
         }];
     });
 }

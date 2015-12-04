@@ -48,9 +48,9 @@
                                            password:self.password
                                            fullName:self.fullName
                                               email:self.email
-                                            handler:^(BOOL succeeded, NSError *error) {
-                                                XCTAssertTrue(succeeded, @"Registration should be successful");
-                                            }];
+                                         completion:^(BOOL succeeded, NSError *error) {
+                                             XCTAssertTrue(succeeded, @"Registration should be successful");
+                                         }];
     OCMVerifyAll(self.pfUserMock);
     OCMVerifyAll(self.messagingManagerMock);
 }
@@ -61,9 +61,9 @@
                                            password:self.password
                                            fullName:self.fullName
                                               email:self.email
-                                            handler:^(BOOL succeeded, NSError *error) {
-                                                XCTAssertFalse(succeeded, @"Registration should fail");
-                                            }];
+                                         completion:^(BOOL succeeded, NSError *error) {
+                                             XCTAssertFalse(succeeded, @"Registration should fail");
+                                         }];
     OCMVerifyAll(self.pfUserMock);
 }
 
@@ -73,9 +73,9 @@
                                            password:self.password
                                            fullName:self.fullName
                                               email:self.email
-                                            handler:^(BOOL succeeded, NSError *error) {
-                                                XCTAssertFalse(succeeded, @"Registration should fail");
-                                            }];
+                                         completion:^(BOOL succeeded, NSError *error) {
+                                             XCTAssertFalse(succeeded, @"Registration should fail");
+                                         }];
     OCMVerifyAll(self.pfUserMock);
     OCMVerifyAll(self.messagingManagerMock);
 }
@@ -99,9 +99,9 @@
     [self prepareLoginWithSuccessStatus:YES clientStatus:YES];
     [self.messagingManagerMock loginWithUsername:self.username
                                         password:self.password
-                                         handler:^(BOOL succeeded, NSError *error) {
-                                             XCTAssertTrue(succeeded, @"Login should be successful");
-                                         }];
+                                      completion:^(BOOL succeeded, NSError *error) {
+                                          XCTAssertTrue(succeeded, @"Login should be successful");
+                                      }];
     OCMVerifyAll(self.pfUserMock);
     OCMVerifyAll(self.messagingManagerMock);
 }
@@ -110,9 +110,9 @@
     [self prepareLoginWithSuccessStatus:NO clientStatus:YES];
     [self.messagingManagerMock loginWithUsername:self.username
                                         password:self.password
-                                         handler:^(BOOL succeeded, NSError *error) {
-                                             XCTAssertNotNil(error, @"Login should fail");
-                                         }];
+                                      completion:^(BOOL succeeded, NSError *error) {
+                                          XCTAssertNotNil(error, @"Login should fail");
+                                      }];
     OCMVerifyAll(self.pfUserMock);
 }
 
@@ -120,9 +120,9 @@
     [self prepareLoginWithSuccessStatus:YES clientStatus:NO];
     [self.messagingManagerMock loginWithUsername:self.username
                                         password:self.password
-                                         handler:^(BOOL succeeded, NSError *error) {
-                                             XCTAssertNotNil(error, @"Login should fail");
-                                         }];
+                                      completion:^(BOOL succeeded, NSError *error) {
+                                          XCTAssertNotNil(error, @"Login should fail");
+                                      }];
     OCMVerifyAll(self.pfUserMock);
     OCMVerifyAll(self.messagingManagerMock);
 }

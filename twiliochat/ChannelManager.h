@@ -3,9 +3,9 @@
 
 @interface ChannelManager : NSObject <TwilioIPMessagingClientDelegate>
 + (instancetype)sharedManager;
-- (void)populateChannelsWithBlock:(void(^)(BOOL succeeded))block;
-- (void)createChannelWithName:(NSString *)name block:(void(^)(BOOL succeeded, TWMChannel *channel))block;
-- (void)joinGeneralChatRoomWithBlock:(void(^)(BOOL succeeded))block;
+- (void)populateChannelsWithCompletion:(void(^)(BOOL succeeded))completion;
+- (void)createChannelWithName:(NSString *)name completion:(void(^)(BOOL succeeded, TWMChannel *channel))completion;
+- (void)joinGeneralChatRoomWithCompletion:(void(^)(BOOL succeeded))completion;
 @property (strong, nonatomic) TWMChannels *channelsList;
 @property (strong, nonatomic) NSMutableOrderedSet *channels;
 @property (weak, nonatomic) id<TwilioIPMessagingClientDelegate> delegate;

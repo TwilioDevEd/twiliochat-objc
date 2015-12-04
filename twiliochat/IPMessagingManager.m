@@ -20,24 +20,18 @@
 # pragma mark Present view controllers
 
 - (void)presentRootViewController {
-    if ([self hasIdentity]) {
-        if (self.connected) {
-            [self presentViewControllerByName:@"RevealViewController"];
-        }
-        else {
-            [self connectClient:^(BOOL success, NSError *error) {
-                if (success) {
-                    [self presentViewControllerByName:@"RevealViewController"];
-                }
-                else {
-                    [self presentViewControllerByName:@"LoginViewController"];
-                }
-            }];
-        }
-    }
-    else {
+    if (!self.hasIdentity) {
         [self presentViewControllerByName:@"LoginViewController"];
+        return;
     }
+    if (!self.connected) {
+        [self connectClientWithCompletion:^(BOOL success, NSError *error) {
+            NSString *viewController = success ? @"RevealViewController" : @"LoginViewController";
+            [self presentViewControllerByName:viewController];
+        }];
+        return;
+    }
+    [self presentViewControllerByName:@"RevealViewController"];
 }
 
 - (void)presentViewControllerByName:(NSString *)viewController {
@@ -67,7 +61,7 @@
                     password:(NSString *)password
                     fullName:(NSString *)fullName
                        email:(NSString *)email
-                     handler:(void(^)(BOOL succeeded, NSError *error))handler {
+                  completion:(void(^)(BOOL succeeded, NSError *error))completion {
     PFUser *user = [PFUser user];
     user.username = username;
     user.password = password;
@@ -76,32 +70,30 @@
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            [self connectClient:handler];
+            [self connectClientWithCompletion:completion];
+            return;
         }
-        else {
-            if (handler) handler(succeeded, error);
-        }
+        if (completion) completion(succeeded, error);
     }];
 }
 
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password
-                  handler:(void(^)(BOOL succeeded, NSError *error))handler {
+               completion:(void(^)(BOOL succeeded, NSError *error))completion {
     [PFUser logInWithUsernameInBackground:username
                                  password:password
                                     block:^(PFUser *user, NSError *error) {
                                         if (!error) {
-                                            [self connectClient:handler];
+                                            [self connectClientWithCompletion:completion];
+                                            return;
                                         }
-                                        else {
-                                            if (handler) handler(!error, error);
-                                        }
+                                        if (completion) completion(!error, error);
                                     }];
 }
 
 - (void)logout {
     [PFUser logOut];
     self.connected = NO;
-
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.client shutdown];
         self.client = nil;
@@ -110,19 +102,19 @@
 
 # pragma mark Twilio Client
 
-- (void)connectClient:(void(^)(BOOL succeeded, NSError *error))handler {
+- (void)connectClientWithCompletion:(void(^)(BOOL succeeded, NSError *error))completion {
     if (self.client) {
         [self logout];
     }
     
-    [self requestTokenWithBlock:^(BOOL succeeded, NSString *token) {
+    [self requestTokenWithCompletion:^(BOOL succeeded, NSString *token) {
         if (succeeded) {
             [self initializeClientWithToken: token];
-            [self loadGeneralChatRoom:handler];
+            [self loadGeneralChatRoomWithCompletion:completion];
         }
         else {
             NSError *error = [self errorWithDescription:@"Could not get access token" code:301];
-            if (handler) handler(succeeded, error);
+            if (completion) completion(succeeded, error);
         }
     }];
 }
@@ -132,33 +124,33 @@
     self.client = [TwilioIPMessagingClient ipMessagingClientWithAccessManager:accessManager delegate:nil];
 }
 
-- (void)loadGeneralChatRoom:(void(^)(BOOL succeeded, NSError *error))handler {
-    [[ChannelManager sharedManager] joinGeneralChatRoomWithBlock:^(BOOL succeeded) {
+- (void)loadGeneralChatRoomWithCompletion:(void(^)(BOOL succeeded, NSError *error))completion {
+    [[ChannelManager sharedManager] joinGeneralChatRoomWithCompletion:^(BOOL succeeded) {
         if (succeeded)
         {
             self.connected = YES;
-            if (handler) handler(succeeded, nil);
+            if (completion) completion(succeeded, nil);
         }
-        else if (handler) {
+        else if (completion) {
             NSError *error = [self errorWithDescription:@"Could not join General channel" code:300];
-            if (handler) handler(succeeded, error);
+            if (completion) completion(succeeded, error);
         }
     }];
 }
 
-- (void)requestTokenWithBlock:(void(^)(BOOL succeeded, NSString *token))handler {
+- (void)requestTokenWithCompletion:(void(^)(BOOL succeeded, NSString *token))completion {
     NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
     NSDictionary *parameters = @{@"device": uuid};
-
+    
     [PFCloud callFunctionInBackground:@"token"
                        withParameters:parameters
                                 block:^(NSDictionary *results, NSError *error) {
                                     NSString *token = [results objectForKey:@"token"];
                                     BOOL errorCondition = error || !token;
-
-                                    if (handler) handler(!errorCondition, token);
+                                    
+                                    if (completion) completion(!errorCondition, token);
                                 }];
-
+    
 }
 
 - (NSError *)errorWithDescription:(NSString *)description code:(NSInteger)code {
@@ -172,9 +164,12 @@
 # pragma mark TwilioAccessManagerDelegate
 
 - (void)accessManagerTokenExpired:(TwilioAccessManager *)accessManager {
-    [self requestTokenWithBlock:^(BOOL succeeded, NSString *token) {
+    [self requestTokenWithCompletion:^(BOOL succeeded, NSString *token) {
         if (succeeded) {
             [accessManager updateToken:token];
+        }
+        else {
+            NSLog(@"Error while trying to get new access token");
         }
     }];
 }

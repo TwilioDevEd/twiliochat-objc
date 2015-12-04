@@ -156,18 +156,18 @@
                          password:self.passwordTextField.text
                          fullName:self.fullNameTextField.text
                             email:self.emailTextField.text
-                          handler:^(BOOL succeeded, NSError *error) {
-                              [self handleResponse:succeeded error:error];
-                          }];
+                       completion:^(BOOL succeeded, NSError *error) {
+                           [self handleResponse:succeeded error:error];
+                       }];
 }
 
 - (void)loginUser {
     IPMessagingManager *manager = [IPMessagingManager sharedManager];
     [manager loginWithUsername:self.usernameTextField.text
                       password:self.passwordTextField.text
-                       handler:^(BOOL succeeded, NSError *error) {
-                           [self handleResponse:succeeded error:error];
-                       }];
+                    completion:^(BOOL succeeded, NSError *error) {
+                        [self handleResponse:succeeded error:error];
+                    }];
 }
 
 - (void)handleResponse:(BOOL)succeeded error:(NSError *)error {
@@ -183,8 +183,8 @@
 
 - (void)showError:(NSString *)message {
     [AlertDialogController showAlertWithMessage:message
-                                              title:nil
-                                          presenter:self];
+                                          title:nil
+                                      presenter:self];
 }
 
 - (BOOL)validateUserData {

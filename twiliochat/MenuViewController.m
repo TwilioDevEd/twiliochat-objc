@@ -24,11 +24,11 @@
     [super viewDidLoad];
     
     CGRect tableFrame = self.tableView.frame;
-
+    
     UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home-bg"]];
     [bgImage setFrame:tableFrame];
     self.tableView.backgroundView = bgImage;
-
+    
     self.usernameLabel.text = [PFUser currentUser].username;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -60,29 +60,37 @@
     UITableViewCell *cell = nil;
     
     if (![ChannelManager sharedManager].channels) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"loadingCell"];
+        cell = [self loadingCellForTableView:tableView];
     }
     else {
-        MenuTableCell *menuCell = (MenuTableCell *)[tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
-        cell = menuCell;
-        
-        TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
-        NSString *nameLabel = channel.friendlyName;
-        if (channel.friendlyName.length == 0) {
-            nameLabel = @"(no friendly name)";
-        }
-        if (channel.type == TWMChannelTypePrivate) {
-            nameLabel = [nameLabel stringByAppendingString:@" (private)"];
-        }
-        menuCell.channelName = nameLabel;
+        cell = [self channelCellForTableView:tableView atIndexPath:indexPath];
     }
-    
     [cell layoutIfNeeded];
-
+    
     return cell;
 }
 
 #pragma mark - Internal methods
+
+- (UITableViewCell *)loadingCellForTableView:(UITableView *)tableView {
+    return [tableView dequeueReusableCellWithIdentifier:@"loadingCell"];
+}
+
+- (UITableViewCell *)channelCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+    MenuTableCell *menuCell = (MenuTableCell *)[tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
+    
+    TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+    NSString *nameLabel = channel.friendlyName;
+    if (channel.friendlyName.length == 0) {
+        nameLabel = @"(no friendly name)";
+    }
+    if (channel.type == TWMChannelTypePrivate) {
+        nameLabel = [nameLabel stringByAppendingString:@" (private)"];
+    }
+    menuCell.channelName = nameLabel;
+    
+    return menuCell;
+}
 
 - (void)refreshChannels {
     [self.refreshControl beginRefreshing];
@@ -90,7 +98,7 @@
 }
 
 - (void)populateChannels {
-    [[ChannelManager sharedManager] populateChannelsWithBlock:^(BOOL succeeded) {
+    [[ChannelManager sharedManager] populateChannelsWithCompletion:^(BOOL succeeded) {
         if (!succeeded) {
             [AlertDialogController showAlertWithMessage:@"Failed to load channels."
                                                   title:@"IP Messaging Demo"
@@ -132,7 +140,7 @@
                                  message:@"Enter a name for this channel."
                              placeholder:@"Name"
                                presenter:self handler:^(NSString *text) {
-                                   [[ChannelManager sharedManager] createChannelWithName:text block:nil];
+                                   [[ChannelManager sharedManager] createChannelWithName:text completion:nil];
                                }];
 }
 
@@ -161,10 +169,10 @@
                                                             style:UIAlertActionStyleCancel
                                                           handler:nil];
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm"
-                                                         style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction *action) {
-                                                           [self logOut];
-                                                       }];
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction *action) {
+                                                              [self logOut];
+                                                          }];
     
     [alert addAction:defaultAction];
     [alert addAction:confirmAction];

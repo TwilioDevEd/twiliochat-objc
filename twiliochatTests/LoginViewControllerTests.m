@@ -30,7 +30,7 @@
     
     self.messagingManagerMock = OCMClassMock([IPMessagingManager class]);
     OCMStub([self.messagingManagerMock sharedManager]).andReturn(self.messagingManagerMock);
-   
+    
     self.username = @"hello";
     self.password = @"123";
     self.fullName = @"Name";
@@ -60,7 +60,7 @@
                                                      password:self.password
                                                      fullName:self.fullName
                                                         email:self.email
-                                                      handler:handler]);
+                                                   completion:handler]);
     OCMExpect([self.messagingManagerMock presentRootViewController]);
     
     [[self.viewControllerMock createAccountButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
@@ -104,7 +104,7 @@
     id handler = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){YES}), [OCMArg defaultValue], nil];
     OCMExpect([self.messagingManagerMock loginWithUsername:self.username
                                                   password:self.password
-                                                   handler:handler]);
+                                                completion:handler]);
     OCMExpect([self.messagingManagerMock presentRootViewController]);
     
     [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];

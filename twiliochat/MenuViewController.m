@@ -24,11 +24,11 @@
     [super viewDidLoad];
     
     CGRect tableFrame = self.tableView.frame;
-
+    
     UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home-bg"]];
     [bgImage setFrame:tableFrame];
     self.tableView.backgroundView = bgImage;
-
+    
     self.usernameLabel.text = [PFUser currentUser].username;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -98,7 +98,7 @@
 }
 
 - (void)populateChannels {
-    [[ChannelManager sharedManager] populateChannelsWithBlock:^(BOOL succeeded) {
+    [[ChannelManager sharedManager] populateChannelsWithCompletion:^(BOOL succeeded) {
         if (!succeeded) {
             [AlertDialogController showAlertWithMessage:@"Failed to load channels."
                                                   title:@"IP Messaging Demo"
@@ -140,7 +140,7 @@
                                  message:@"Enter a name for this channel."
                              placeholder:@"Name"
                                presenter:self handler:^(NSString *text) {
-                                   [[ChannelManager sharedManager] createChannelWithName:text block:nil];
+                                   [[ChannelManager sharedManager] createChannelWithName:text completion:nil];
                                }];
 }
 
@@ -169,10 +169,10 @@
                                                             style:UIAlertActionStyleCancel
                                                           handler:nil];
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm"
-                                                         style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction *action) {
-                                                           [self logOut];
-                                                       }];
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction *action) {
+                                                              [self logOut];
+                                                          }];
     
     [alert addAction:defaultAction];
     [alert addAction:confirmAction];

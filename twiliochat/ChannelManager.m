@@ -2,6 +2,9 @@
 #import "IPMessagingManager.h"
 
 @interface ChannelManager ()
+{
+    TWMChannel *_generalChatroom;
+}
 @end
 
 NSString *defaultChannelUniqueName = @"general";
@@ -27,10 +30,14 @@ NSString *defaultChannelName = @"General Channel";
 
 #pragma mark General channel
 
-- (void)joinGeneralChatRoomWithCompletion:(void(^)(BOOL succeeded))completion {
+- (TWMChannel *)generalChatroom {
+    return _generalChatroom;
+}
+
+- (void)joinGeneralChatRoomWithCompletion:(nonnull SucceedHandler)completion {
     [self populateChannelsWithCompletion:^(BOOL succeeded) {
-        self.generalChatroom = [self.channelsList channelWithUniqueName:defaultChannelUniqueName];
-        if (self.generalChatroom) {
+        _generalChatroom = [self.channelsList channelWithUniqueName:defaultChannelUniqueName];
+        if (_generalChatroom) {
             [self joinGeneralChatRoomWithUniqueName:nil completion:completion];
         }
         else {
@@ -39,51 +46,51 @@ NSString *defaultChannelName = @"General Channel";
                     [self joinGeneralChatRoomWithUniqueName:defaultChannelUniqueName completion:completion];
                     return;
                 }
-                if (completion) completion(NO);
+                completion(NO);
             }];
         }
     }];
 }
 
-- (void)joinGeneralChatRoomWithUniqueName:(NSString *)uniqueName completion:(void(^)(BOOL succeeded))completion {
-    [self.generalChatroom joinWithCompletion:^(TWMResult result) {
+- (void)joinGeneralChatRoomWithUniqueName:(NSString *)uniqueName completion:(nonnull SucceedHandler)completion {
+    [_generalChatroom joinWithCompletion:^(TWMResult result) {
         if (result == TWMResultSuccess) {
             if (uniqueName) {
                 [self setGeneralChatRoomUniqueNameWithCompletion:completion];
                 return;
             }
         }
-        if (completion) completion(result == TWMResultSuccess);
+        completion(result == TWMResultSuccess);
     }];
 }
 
-- (void)createGeneralChatRoomWithCompletion:(void(^)(BOOL succeeded))completion {
+- (void)createGeneralChatRoomWithCompletion:(nonnull SucceedHandler)completion {
     [self.channelsList createChannelWithFriendlyName:defaultChannelName
                                                 type:TWMChannelTypePublic
                                           completion:^(TWMResult result, TWMChannel *channel) {
                                               if (result == TWMResultSuccess) {
-                                                  self.generalChatroom = channel;
+                                                  _generalChatroom = channel;
                                               }
-                                              if (completion) completion(result == TWMResultSuccess);
+                                              completion(result == TWMResultSuccess);
                                           }];
 }
 
-- (void)setGeneralChatRoomUniqueNameWithCompletion:(void(^)(BOOL succeeded))completion {
-    [self.generalChatroom setUniqueName:defaultChannelUniqueName completion:^(TWMResult result) {
-        if (completion) completion(result == TWMResultSuccess);
+- (void)setGeneralChatRoomUniqueNameWithCompletion:(nonnull SucceedHandler)completion {
+    [_generalChatroom setUniqueName:defaultChannelUniqueName completion:^(TWMResult result) {
+        completion(result == TWMResultSuccess);
     }];
 }
 
 #pragma mark Populate channels
 
-- (void)populateChannelsWithCompletion:(void(^)(BOOL succeeded))completion {
+- (void)populateChannelsWithCompletion:(nonnull SucceedHandler)completion {
     self.channels = nil;
     
     [self loadChannelListWithCompletion:^(BOOL succeeded, TWMChannels *channelsList) {
         if (!succeeded) {
             self.channelsList = nil;
             self.channels = nil;
-            if (completion) completion(succeeded);
+            completion(succeeded);
             return;
         }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -94,14 +101,14 @@ NSString *defaultChannelName = @"General Channel";
                     [self sortChannels];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (completion) completion(succeeded);
+                    completion(succeeded);
                 });
             }];
         });
     }];
 }
 
-- (void)loadChannelListWithCompletion:(void(^)(BOOL succeeded, TWMChannels *channelsList))completion {
+- (void)loadChannelListWithCompletion:(nonnull ChannelsListHandler)completion {
     self.channelsList = nil;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -110,7 +117,7 @@ NSString *defaultChannelName = @"General Channel";
                 self.channelsList = channelsList;
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) completion(result == TWMResultSuccess, self.channelsList);
+                completion(result == TWMResultSuccess, self.channelsList);
             });
         }];
     });
@@ -126,9 +133,9 @@ NSString *defaultChannelName = @"General Channel";
 
 # pragma mark Create channel
 
-- (void)createChannelWithName:(NSString *)name completion:(void(^)(BOOL succeeded, TWMChannel *channel))completion {
+- (void)createChannelWithName:(NSString *)name completion:(nullable ChannelHandler)completion {
     if ([name isEqualToString:defaultChannelName]) {
-        if (completion) completion(NO, nil);
+        completion(NO, nil);
         return;
     }
     
@@ -138,8 +145,8 @@ NSString *defaultChannelName = @"General Channel";
             if (succeeded) {
                 [self createChannelWithName:name completion:completion];
             }
-            else {
-                if (completion) completion(succeeded, nil);
+            else if(completion) {
+                completion(succeeded, nil);
             }
         }];
         return;
@@ -148,7 +155,7 @@ NSString *defaultChannelName = @"General Channel";
     [self.channelsList createChannelWithFriendlyName:name
                                                 type:TWMChannelTypePublic
                                           completion:^(TWMResult result, TWMChannel *channel) {
-                                              if (completion) completion(result == TWMResultSuccess, channel);
+                                              completion(result == TWMResultSuccess, channel);
                                           }];
 }
 

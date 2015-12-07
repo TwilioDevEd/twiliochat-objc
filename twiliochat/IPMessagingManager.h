@@ -1,17 +1,16 @@
 #import <Foundation/Foundation.h>
 #import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 
-NS_ASSUME_NONNULL_BEGIN
-typedef void (^StatusWithErrorHandler) (BOOL succeeded, NSError * _Nullable);
-typedef void (^StatusWithTokenHandler) (BOOL succeeded, NSString * _Nullable);
+typedef void (^StatusWithErrorHandler) (BOOL succeeded, NSError *);
+typedef void (^StatusWithTokenHandler) (BOOL succeeded, NSString *);
 
 @interface IPMessagingManager : NSObject <TwilioAccessManagerDelegate>
-@property (nonatomic, strong, readonly, nullable) TwilioIPMessagingClient *client;
+@property (nonatomic, strong, readonly) TwilioIPMessagingClient *client;
 @property (nonatomic, readonly) BOOL hasIdentity;
 
 + (instancetype)sharedManager;
 - (void)presentRootViewController;
-- (nullable NSString *)userIdentity;
+- (NSString *)userIdentity;
 
 - (void)registerWithUsername:(NSString *)username
                     password:(NSString *)password
@@ -25,4 +24,3 @@ typedef void (^StatusWithTokenHandler) (BOOL succeeded, NSString * _Nullable);
 
 - (void)presentLaunchScreen;
 @end
-NS_ASSUME_NONNULL_END

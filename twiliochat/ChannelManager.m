@@ -155,7 +155,7 @@ NSString *defaultChannelName = @"General Channel";
     [self.channelsList createChannelWithFriendlyName:name
                                                 type:TWMChannelTypePublic
                                           completion:^(TWMResult result, TWMChannel *channel) {
-                                              completion(result == TWMResultSuccess, channel);
+                                              if (completion) completion(result == TWMResultSuccess, channel);
                                           }];
 }
 

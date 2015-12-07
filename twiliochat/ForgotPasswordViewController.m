@@ -42,7 +42,7 @@
     if ([self validateUserData]) {
         self.view.userInteractionEnabled = NO;
 
-        [PFUser requestPasswordResetForEmailInBackground:self.emailTextField.text block:^(BOOL succeeded, NSError * _Nullable error) {
+        [PFUser requestPasswordResetForEmailInBackground:self.emailTextField.text block:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 [AlertDialogController showAlertWithMessage:@"We've sent you an email with further instructions"
                                                       title:nil

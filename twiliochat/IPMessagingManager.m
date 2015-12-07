@@ -61,7 +61,7 @@
                     password:(NSString *)password
                     fullName:(NSString *)fullName
                        email:(NSString *)email
-                  completion:(nonnull StatusWithErrorHandler)completion {
+                  completion:(StatusWithErrorHandler)completion {
     PFUser *user = [PFUser user];
     user.username = username;
     user.password = password;
@@ -73,12 +73,12 @@
             [self connectClientWithCompletion:completion];
             return;
         }
-        completion(succeeded, error);
+        if (completion) completion(succeeded, error);
     }];
 }
 
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password
-               completion:(nonnull StatusWithErrorHandler)completion {
+               completion:(StatusWithErrorHandler)completion {
     [PFUser logInWithUsernameInBackground:username
                                  password:password
                                     block:^(PFUser *user, NSError *error) {
@@ -86,7 +86,7 @@
                                             [self connectClientWithCompletion:completion];
                                             return;
                                         }
-                                        completion(!error, error);
+                                        if (completion) completion(!error, error);
                                     }];
 }
 
@@ -102,7 +102,7 @@
 
 # pragma mark Twilio Client
 
-- (void)connectClientWithCompletion:(nonnull StatusWithErrorHandler)completion {
+- (void)connectClientWithCompletion:(StatusWithErrorHandler)completion {
     if (self.client) {
         [self logout];
     }
@@ -114,7 +114,7 @@
         }
         else {
             NSError *error = [self errorWithDescription:@"Could not get access token" code:301];
-            completion(succeeded, error);
+            if (completion) completion(succeeded, error);
         }
     }];
 }
@@ -124,21 +124,21 @@
     self.client = [TwilioIPMessagingClient ipMessagingClientWithAccessManager:accessManager delegate:nil];
 }
 
-- (void)loadGeneralChatRoomWithCompletion:(nonnull StatusWithErrorHandler)completion {
+- (void)loadGeneralChatRoomWithCompletion:(StatusWithErrorHandler)completion {
     [[ChannelManager sharedManager] joinGeneralChatRoomWithCompletion:^(BOOL succeeded) {
         if (succeeded)
         {
             self.connected = YES;
-            completion(succeeded, nil);
+            if (completion) completion(succeeded, nil);
         }
         else {
             NSError *error = [self errorWithDescription:@"Could not join General channel" code:300];
-            completion(succeeded, error);
+            if (completion) completion(succeeded, error);
         }
     }];
 }
 
-- (void)requestTokenWithCompletion:(nonnull StatusWithTokenHandler)completion {
+- (void)requestTokenWithCompletion:(StatusWithTokenHandler)completion {
     NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
     NSDictionary *parameters = @{@"device": uuid};
     
@@ -148,7 +148,7 @@
                                     NSString *token = [results objectForKey:@"token"];
                                     BOOL errorCondition = error || !token;
                                     
-                                    completion(!errorCondition, token);
+                                    if (completion) completion(!errorCondition, token);
                                 }];
     
 }

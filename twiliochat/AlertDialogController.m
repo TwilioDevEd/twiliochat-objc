@@ -12,7 +12,7 @@
     
     UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"Ok"
                                                             style:UIAlertActionStyleCancel
-                                                          handler:^(UIAlertAction * _Nonnull action) {
+                                                          handler:^(UIAlertAction *action) {
                                                               if (handler) handler();
                                                           }];
     

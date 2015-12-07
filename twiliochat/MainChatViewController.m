@@ -33,7 +33,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
         [self.navigationController.navigationBar addGestureRecognizer: self.revealViewController.panGestureRecognizer];
         self.revealViewController.rearViewRevealOverdraw = 0.f;
     }
-
+    
     self.bounces = YES;
     self.shakeToClearEnabled = YES;
     self.keyboardPanningEnabled = YES;
@@ -69,7 +69,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     
     if (!_channel)
     {
-        self.channel = [ChannelManager sharedManager].generalChatroom;
+        self.channel = [ChannelManager sharedManager].generalChannel;
     }
 }
 
@@ -89,10 +89,10 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
     _channel = channel;
     self.title = self.channel.friendlyName;
     
-    if (self.channel == [ChannelManager sharedManager].generalChatroom) {
+    if (self.channel == [ChannelManager sharedManager].generalChannel) {
         self.navigationItem.rightBarButtonItem = nil;
     }
-   
+    
     if (self.channel.status == TWMChannelStatusJoined)
     {
         [self loadMessages];
@@ -152,8 +152,8 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 }
 
 - (UITableViewCell *)getStatuCellForTableView:(UITableView *)tableView
-                              forIndexPath:(NSIndexPath *)indexPath
-                                   message:(StatusEntry *)message {
+                                 forIndexPath:(NSIndexPath *)indexPath
+                                      message:(StatusEntry *)message {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ChatStatusCellIdentifier forIndexPath:indexPath];
     
     UILabel *label = [cell viewWithTag:200];

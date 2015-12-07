@@ -13,6 +13,6 @@ typedef void (^ChannelHandler) (BOOL success, TWMChannel *);
 @property (strong, nonatomic) TWMChannels *channelsList;
 @property (strong, nonatomic) NSMutableOrderedSet *channels;
 @property (weak, nonatomic) id<TwilioIPMessagingClientDelegate> delegate;
-@property (strong, nonatomic, readonly) TWMChannel *generalChatroom;
+@property (strong, nonatomic, readonly) TWMChannel *generalChannel;
 
 @end

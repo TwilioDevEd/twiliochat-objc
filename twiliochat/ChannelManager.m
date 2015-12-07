@@ -3,7 +3,7 @@
 
 @interface ChannelManager ()
 {
-    TWMChannel *_generalChatroom;
+    TWMChannel *_generalChannel;
 }
 @end
 
@@ -30,14 +30,14 @@ NSString *defaultChannelName = @"General Channel";
 
 #pragma mark General channel
 
-- (TWMChannel *)generalChatroom {
-    return _generalChatroom;
+- (TWMChannel *)generalChannel {
+    return _generalChannel;
 }
 
 - (void)joinGeneralChatRoomWithCompletion:(SucceedHandler)completion {
     [self populateChannelsWithCompletion:^(BOOL succeeded) {
-        _generalChatroom = [self.channelsList channelWithUniqueName:defaultChannelUniqueName];
-        if (_generalChatroom) {
+        _generalChannel = [self.channelsList channelWithUniqueName:defaultChannelUniqueName];
+        if (_generalChannel) {
             [self joinGeneralChatRoomWithUniqueName:nil completion:completion];
         }
         else {
@@ -53,7 +53,7 @@ NSString *defaultChannelName = @"General Channel";
 }
 
 - (void)joinGeneralChatRoomWithUniqueName:(NSString *)uniqueName completion:(SucceedHandler)completion {
-    [_generalChatroom joinWithCompletion:^(TWMResult result) {
+    [_generalChannel joinWithCompletion:^(TWMResult result) {
         if (result == TWMResultSuccess) {
             if (uniqueName) {
                 [self setGeneralChatRoomUniqueNameWithCompletion:completion];
@@ -69,14 +69,14 @@ NSString *defaultChannelName = @"General Channel";
                                                 type:TWMChannelTypePublic
                                           completion:^(TWMResult result, TWMChannel *channel) {
                                               if (result == TWMResultSuccess) {
-                                                  _generalChatroom = channel;
+                                                  _generalChannel = channel;
                                               }
                                               if (completion) completion(result == TWMResultSuccess);
                                           }];
 }
 
 - (void)setGeneralChatRoomUniqueNameWithCompletion:(SucceedHandler)completion {
-    [_generalChatroom setUniqueName:defaultChannelUniqueName completion:^(TWMResult result) {
+    [_generalChannel setUniqueName:defaultChannelUniqueName completion:^(TWMResult result) {
         if (completion) completion(result == TWMResultSuccess);
     }];
 }

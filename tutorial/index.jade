@@ -28,6 +28,8 @@
       * [iOS QuickStart](//www.twilio.com/docs/api/ip-messaging/guides/quickstart-ios)
       * [Channels and Messages](//www.twilio.com/docs/api/ip-messaging/guides/channels)
       * [User Identity & Access Tokens](//www.twilio.com/docs/api/ip-messaging/guides/channels)
+      * [Twilio IP Messaging Client Reference](//media.twiliocdn.com/sdk/rtc/ios/ip-messaging/releases/0.13.3.b181-17abeb8/docs/)
+      * [Twilio Common Reference](//media.twiliocdn.com/sdk/rtc/ios/common/releases/0.1.7.b23-4ca8945/docs/)
 
   .step(data-title='Initializing the Client', data-file='twiliochat/IPMessagingManager.m', data-highlight='105-154')
     :markdown
@@ -65,7 +67,7 @@
     :markdown
       ## Join the General Channel
 
-      This application will try to join a channel called "General" when it starts.
+      This application will try to join a channel called "General Channel" when it starts.
       If the channel doesn't exist, we'll create one with that name. The scope of
       this example application will show you how to work only with public channels,
       but the IP Messaging client allows you to create private channels and handle
@@ -107,10 +109,10 @@
 
       We use an input dialog so the user can type the name of the new channel.
       The only restriction here, is that the user can't create a channel called
-      "General". Other than that, creating a channel is as simple as calling
+      "General Channel". Other than that, creating a channel is as simple as calling
       `createChannelWithFriendlyName`
 
-  .step(data-title='Deleting a Channel', data-file='twiliochat/MenuViewController.m', data-highlight='113-125')
+  .step(data-title='Deleting a Channel', data-file='twiliochat/MenuViewController.m', data-highlight='81-93')
     :markdown
       ## Deleting a Channel
 
@@ -124,8 +126,6 @@
       ## Where to Next?
 
       That's it! We've just implemented a simple chat application in objective-c.
-
-      ### Did this help?
 
       Thanks for checking out this tutorial! If you have any feedback to share
       with us, we'd love to hear it. Tweet

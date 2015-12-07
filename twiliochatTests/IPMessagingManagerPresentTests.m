@@ -5,7 +5,7 @@
 #import "AppDelegate.h"
 
 @interface IPMessagingManager (Test)
-- (void)connectClient:(void(^)(BOOL succeeded, NSError *error))handler;
+- (void)connectClientWithCompletion:(void(^)(BOOL succeeded, NSError *error))handler;
 @end
 
 @interface IPMessagingManagerPresentTests : XCTestCase
@@ -83,7 +83,7 @@
     }
 
     if (user) {
-        OCMExpect([self.messagingManagerMock connectClient:connectBlock]);
+        OCMExpect([self.messagingManagerMock connectClientWithCompletion:connectBlock]);
         OCMExpect([self.pfUserMock isAuthenticated]).andReturn(YES);
     }
     

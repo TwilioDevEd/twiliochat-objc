@@ -15,7 +15,8 @@ Objective-C implementation of Twilio Chat
 1. Now configure your [Parse](https://www.parse.com) keys so the application can
    manage sessions. Click [here](#create-a-parse-app) for more information on how
    to create a `Parse App`.
-   The project includes a sample `Keys.example.plist` file, but you need to duplicate
+
+1. The project includes a sample `Keys.example.plist` file, but you need to duplicate
    it, name it `Keys.plist` and within Xcode change the values to match your
    `Parse Keys`. You can copy the file outside of XCode, and can locate the file
    at:
@@ -30,6 +31,17 @@ Objective-C implementation of Twilio Chat
    ```
    twiliochat -> Resources -> Keys.plist
    ```
+
+1. In order for the app to get the access token from Twilio, you need to set up a
+   [parse webhook](https://parse.com/docs/cloudcode/guide#cloud-code-advanced-cloud-code-webhooks)
+   in your parse app described in a previous step. This webhook's URL should be pointing
+   at your own `Twilio token generation app`. There's one application example written
+   in Node that demonstrates how to generate access tokens,
+   [here](https://github.com/TwilioDevEd/twiliochat).
+
+   If you need to expose you localhost so it is visible to Parse, you can use
+   [ngrok](https://ngrok.com/), a handy tool that will give the outside world access
+   to you localhost in any port you specify.
 
 1. Now the project is ready to run at least in the simulator. So, just click the play
    button in XCode and try our App!

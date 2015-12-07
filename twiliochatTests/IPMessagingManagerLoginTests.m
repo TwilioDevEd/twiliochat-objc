@@ -4,7 +4,7 @@
 #import "IPMessagingManager.h"
 
 @interface IPMessagingManager (Test)
-- (void)connectClient:(void(^)(BOOL succeeded, NSError *error))handler;
+- (void)connectClientWithCompletion:(void(^)(BOOL succeeded, NSError *error))handler;
 @end
 
 @interface IPMessagingManagerLoginTests : XCTestCase
@@ -151,7 +151,7 @@
         connectBlock = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){NO}), self.error, nil];
     }
     
-    OCMExpect([self.messagingManagerMock connectClient:connectBlock]);
+    OCMExpect([self.messagingManagerMock connectClientWithCompletion:connectBlock]);
 }
 
 @end

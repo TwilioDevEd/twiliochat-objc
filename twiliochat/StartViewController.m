@@ -9,15 +9,15 @@
 @implementation StartViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    self.revealViewController.rearViewRevealOverdraw = 0.f;
-    
-    if (self.revealViewController)
-    {
-        [self.revealButtonItem setTarget: self.revealViewController];
-        [self.revealButtonItem setAction: @selector( revealToggle: )];
-        [self.navigationController.navigationBar addGestureRecognizer: self.revealViewController.panGestureRecognizer];
-    }
+  [super viewDidLoad];
+  self.revealViewController.rearViewRevealOverdraw = 0.f;
+  
+  if (self.revealViewController)
+  {
+    [self.revealButtonItem setTarget: self.revealViewController];
+    [self.revealButtonItem setAction: @selector( revealToggle: )];
+    [self.navigationController.navigationBar addGestureRecognizer: self.revealViewController.panGestureRecognizer];
+  }
 }
 
 @end

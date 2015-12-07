@@ -26,90 +26,90 @@
 @implementation LoginViewControllerTests
 
 - (void)setUp {
-    [super setUp];
-    
-    self.messagingManagerMock = OCMClassMock([IPMessagingManager class]);
-    OCMStub([self.messagingManagerMock sharedManager]).andReturn(self.messagingManagerMock);
-    
-    self.username = @"hello";
-    self.password = @"123";
-    self.fullName = @"Name";
-    self.email = @"email@domain.com";
-    
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    LoginViewController *viewController = (LoginViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    [viewController loadView];
-    
-    self.viewControllerMock = OCMPartialMock(viewController);
-    
-    [self.viewControllerMock usernameTextField].text = self.username;
-    [self.viewControllerMock passwordTextField].text = self.password;
-    [self.viewControllerMock fullNameTextField].text = self.fullName;
-    [self.viewControllerMock emailTextField].text = self.email;
+  [super setUp];
+  
+  self.messagingManagerMock = OCMClassMock([IPMessagingManager class]);
+  OCMStub([self.messagingManagerMock sharedManager]).andReturn(self.messagingManagerMock);
+  
+  self.username = @"hello";
+  self.password = @"123";
+  self.fullName = @"Name";
+  self.email = @"email@domain.com";
+  
+  UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+  LoginViewController *viewController = (LoginViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+  [viewController loadView];
+  
+  self.viewControllerMock = OCMPartialMock(viewController);
+  
+  [self.viewControllerMock usernameTextField].text = self.username;
+  [self.viewControllerMock passwordTextField].text = self.password;
+  [self.viewControllerMock fullNameTextField].text = self.fullName;
+  [self.viewControllerMock emailTextField].text = self.email;
 }
 
 - (void)tearDown {
-    [super tearDown];
-    [self.viewControllerMock stopMocking];
-    [self.messagingManagerMock stopMocking];
+  [super tearDown];
+  [self.viewControllerMock stopMocking];
+  [self.messagingManagerMock stopMocking];
 }
 
 - (void)testRegisterUser {
-    id handler = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){YES}), [OCMArg defaultValue], nil];
-    OCMExpect([self.messagingManagerMock registerWithUsername:self.username
-                                                     password:self.password
-                                                     fullName:self.fullName
-                                                        email:self.email
-                                                   completion:handler]);
-    OCMExpect([self.messagingManagerMock presentRootViewController]);
-    
-    [[self.viewControllerMock createAccountButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
-    [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
-    
-    OCMVerifyAll(self.messagingManagerMock);
+  id handler = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){YES}), [OCMArg defaultValue], nil];
+  OCMExpect([self.messagingManagerMock registerWithUsername:self.username
+                                                   password:self.password
+                                                   fullName:self.fullName
+                                                      email:self.email
+                                                 completion:handler]);
+  OCMExpect([self.messagingManagerMock presentRootViewController]);
+  
+  [[self.viewControllerMock createAccountButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
+  [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
+  
+  OCMVerifyAll(self.messagingManagerMock);
 }
 
 - (void)testEmptyUsernameError {
-    [self.viewControllerMock usernameTextField].text = @"";
-    [self runUpEmptyFieldTest];
+  [self.viewControllerMock usernameTextField].text = @"";
+  [self runUpEmptyFieldTest];
 }
 
 - (void)testEmptyPasswordError {
-    [self.viewControllerMock passwordTextField].text = @"";
-    [self runUpEmptyFieldTest];
+  [self.viewControllerMock passwordTextField].text = @"";
+  [self runUpEmptyFieldTest];
 }
 
 - (void)testEmptyFullNameError {
-    [self.viewControllerMock fullNameTextField].text = @"";
-    [self runUpEmptyFieldTest];
+  [self.viewControllerMock fullNameTextField].text = @"";
+  [self runUpEmptyFieldTest];
 }
 
 - (void)testEmptyEmailError {
-    [self.viewControllerMock emailTextField].text = @"";
-    [self runUpEmptyFieldTest];
+  [self.viewControllerMock emailTextField].text = @"";
+  [self runUpEmptyFieldTest];
 }
 
 - (void)runUpEmptyFieldTest {
-    OCMExpect([self.viewControllerMock showError:@"All fields are required"]);
-    
-    
-    [[self.viewControllerMock createAccountButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
-    [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
-    
-    OCMVerifyAll(self.messagingManagerMock);
-    OCMVerifyAll(self.viewControllerMock);
+  OCMExpect([self.viewControllerMock showError:@"All fields are required"]);
+  
+  
+  [[self.viewControllerMock createAccountButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
+  [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
+  
+  OCMVerifyAll(self.messagingManagerMock);
+  OCMVerifyAll(self.viewControllerMock);
 }
 
 - (void)testLoginUser {
-    id handler = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){YES}), [OCMArg defaultValue], nil];
-    OCMExpect([self.messagingManagerMock loginWithUsername:self.username
-                                                  password:self.password
-                                                completion:handler]);
-    OCMExpect([self.messagingManagerMock presentRootViewController]);
-    
-    [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
-    
-    OCMVerifyAll(self.messagingManagerMock);
+  id handler = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){YES}), [OCMArg defaultValue], nil];
+  OCMExpect([self.messagingManagerMock loginWithUsername:self.username
+                                                password:self.password
+                                              completion:handler]);
+  OCMExpect([self.messagingManagerMock presentRootViewController]);
+  
+  [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
+  
+  OCMVerifyAll(self.messagingManagerMock);
 }
 
 @end

@@ -2,8 +2,8 @@
 #import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 
 typedef enum {
-    MemberStatusJoined,
-    MemberStatusLeft
+  MemberStatusJoined,
+  MemberStatusLeft
 } MemberStatus;
 
 @interface StatusEntry : NSObject

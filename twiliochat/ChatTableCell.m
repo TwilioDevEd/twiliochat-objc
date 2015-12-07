@@ -9,33 +9,33 @@
 @implementation ChatTableCell
 
 - (void)setUser:(NSString *)user {
-    self.userLabel.text = user;
+  self.userLabel.text = user;
 }
 
 - (NSString *)user {
-    return self.userLabel.text;
+  return self.userLabel.text;
 }
 
 - (void)setMessage:(NSString *)message {
-    self.messageLabel.text = message;
+  self.messageLabel.text = message;
 }
 
 - (NSString *)message {
-    return self.messageLabel.text;
+  return self.messageLabel.text;
 }
 
 - (void)setDate:(NSString *)date {
-    self.dateLabel.text = date;
+  self.dateLabel.text = date;
 }
 
 - (NSString *)date {
-    return self.messageLabel.text;
+  return self.messageLabel.text;
 }
 
 - (void)awakeFromNib {
-    self.userLabel = (UILabel *)[self viewWithTag:200];
-    self.dateLabel = (UILabel *)[self viewWithTag:201];
-    self.messageLabel = (UILabel *)[self viewWithTag:202];
+  self.userLabel = (UILabel *)[self viewWithTag:200];
+  self.dateLabel = (UILabel *)[self viewWithTag:201];
+  self.messageLabel = (UILabel *)[self viewWithTag:202];
 }
 
 @end

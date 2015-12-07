@@ -21,137 +21,137 @@
 @implementation IPMessagingManagerLoginTests
 
 - (void)setUp {
-    [super setUp];
-    
-    self.pfUserMock = OCMClassMock([PFUser class]);
-    self.messagingManagerMock = OCMPartialMock([IPMessagingManager sharedManager]);
-    
-    self.username = @"hello";
-    self.password = @"123";
-    self.fullName = @"Name";
-    self.email = @"email@domain.com";
-    
-    self.error = [NSError errorWithDomain:@"" code:-1000 userInfo:nil];
-    
-    self.token = @"test-token";
+  [super setUp];
+  
+  self.pfUserMock = OCMClassMock([PFUser class]);
+  self.messagingManagerMock = OCMPartialMock([IPMessagingManager sharedManager]);
+  
+  self.username = @"hello";
+  self.password = @"123";
+  self.fullName = @"Name";
+  self.email = @"email@domain.com";
+  
+  self.error = [NSError errorWithDomain:@"" code:-1000 userInfo:nil];
+  
+  self.token = @"test-token";
 }
 
 - (void)tearDown {
-    [super tearDown];
-    [self.pfUserMock stopMocking];
-    [self.messagingManagerMock stopMocking];
+  [super tearDown];
+  [self.pfUserMock stopMocking];
+  [self.messagingManagerMock stopMocking];
 }
 
 - (void)testRegisterUser {
-    [self prepareRegistrationWithSuccessStatus:YES clientStatus:YES];
-    [self.messagingManagerMock registerWithUsername:self.username
-                                           password:self.password
-                                           fullName:self.fullName
-                                              email:self.email
-                                         completion:^(BOOL succeeded, NSError *error) {
-                                             XCTAssertTrue(succeeded, @"Registration should be successful");
-                                         }];
-    OCMVerifyAll(self.pfUserMock);
-    OCMVerifyAll(self.messagingManagerMock);
+  [self prepareRegistrationWithSuccessStatus:YES clientStatus:YES];
+  [self.messagingManagerMock registerWithUsername:self.username
+                                         password:self.password
+                                         fullName:self.fullName
+                                            email:self.email
+                                       completion:^(BOOL succeeded, NSError *error) {
+                                         XCTAssertTrue(succeeded, @"Registration should be successful");
+                                       }];
+  OCMVerifyAll(self.pfUserMock);
+  OCMVerifyAll(self.messagingManagerMock);
 }
 
 - (void)testFailedRegisterUser {
-    [self prepareRegistrationWithSuccessStatus:NO clientStatus:YES];
-    [self.messagingManagerMock registerWithUsername:self.username
-                                           password:self.password
-                                           fullName:self.fullName
-                                              email:self.email
-                                         completion:^(BOOL succeeded, NSError *error) {
-                                             XCTAssertFalse(succeeded, @"Registration should fail");
-                                         }];
-    OCMVerifyAll(self.pfUserMock);
+  [self prepareRegistrationWithSuccessStatus:NO clientStatus:YES];
+  [self.messagingManagerMock registerWithUsername:self.username
+                                         password:self.password
+                                         fullName:self.fullName
+                                            email:self.email
+                                       completion:^(BOOL succeeded, NSError *error) {
+                                         XCTAssertFalse(succeeded, @"Registration should fail");
+                                       }];
+  OCMVerifyAll(self.pfUserMock);
 }
 
 - (void)testRegisterUserWithFailedClient {
-    [self prepareRegistrationWithSuccessStatus:YES clientStatus:NO];
-    [self.messagingManagerMock registerWithUsername:self.username
-                                           password:self.password
-                                           fullName:self.fullName
-                                              email:self.email
-                                         completion:^(BOOL succeeded, NSError *error) {
-                                             XCTAssertFalse(succeeded, @"Registration should fail");
-                                         }];
-    OCMVerifyAll(self.pfUserMock);
-    OCMVerifyAll(self.messagingManagerMock);
+  [self prepareRegistrationWithSuccessStatus:YES clientStatus:NO];
+  [self.messagingManagerMock registerWithUsername:self.username
+                                         password:self.password
+                                         fullName:self.fullName
+                                            email:self.email
+                                       completion:^(BOOL succeeded, NSError *error) {
+                                         XCTAssertFalse(succeeded, @"Registration should fail");
+                                       }];
+  OCMVerifyAll(self.pfUserMock);
+  OCMVerifyAll(self.messagingManagerMock);
 }
 
 - (void)prepareRegistrationWithSuccessStatus:(BOOL)status clientStatus:(BOOL)clientStatus {
-    OCMStub([self.pfUserMock user]).andReturn(self.pfUserMock);
-    
-    id arg = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){status}), [OCMArg defaultValue], nil];
-    OCMExpect([self.pfUserMock signUpInBackgroundWithBlock:arg]);
-    OCMExpect([self.pfUserMock setUsername:self.username]);
-    OCMExpect([self.pfUserMock setPassword:self.password]);
-    OCMExpect([self.pfUserMock setObject:self.fullName forKeyedSubscript:@"fullName"]);
-    OCMExpect([self.pfUserMock setEmail:self.email]);
-    
-    if(status) {
-        [self prepareClientConnectStatus:clientStatus];
-    }
+  OCMStub([self.pfUserMock user]).andReturn(self.pfUserMock);
+  
+  id arg = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){status}), [OCMArg defaultValue], nil];
+  OCMExpect([self.pfUserMock signUpInBackgroundWithBlock:arg]);
+  OCMExpect([self.pfUserMock setUsername:self.username]);
+  OCMExpect([self.pfUserMock setPassword:self.password]);
+  OCMExpect([self.pfUserMock setObject:self.fullName forKeyedSubscript:@"fullName"]);
+  OCMExpect([self.pfUserMock setEmail:self.email]);
+  
+  if(status) {
+    [self prepareClientConnectStatus:clientStatus];
+  }
 }
 
 - (void)testLoginUser {
-    [self prepareLoginWithSuccessStatus:YES clientStatus:YES];
-    [self.messagingManagerMock loginWithUsername:self.username
-                                        password:self.password
-                                      completion:^(BOOL succeeded, NSError *error) {
-                                          XCTAssertTrue(succeeded, @"Login should be successful");
-                                      }];
-    OCMVerifyAll(self.pfUserMock);
-    OCMVerifyAll(self.messagingManagerMock);
+  [self prepareLoginWithSuccessStatus:YES clientStatus:YES];
+  [self.messagingManagerMock loginWithUsername:self.username
+                                      password:self.password
+                                    completion:^(BOOL succeeded, NSError *error) {
+                                      XCTAssertTrue(succeeded, @"Login should be successful");
+                                    }];
+  OCMVerifyAll(self.pfUserMock);
+  OCMVerifyAll(self.messagingManagerMock);
 }
 
 - (void)testFailedLoginUser {
-    [self prepareLoginWithSuccessStatus:NO clientStatus:YES];
-    [self.messagingManagerMock loginWithUsername:self.username
-                                        password:self.password
-                                      completion:^(BOOL succeeded, NSError *error) {
-                                          XCTAssertNotNil(error, @"Login should fail");
-                                      }];
-    OCMVerifyAll(self.pfUserMock);
+  [self prepareLoginWithSuccessStatus:NO clientStatus:YES];
+  [self.messagingManagerMock loginWithUsername:self.username
+                                      password:self.password
+                                    completion:^(BOOL succeeded, NSError *error) {
+                                      XCTAssertNotNil(error, @"Login should fail");
+                                    }];
+  OCMVerifyAll(self.pfUserMock);
 }
 
 - (void)testLoginUserWithFailedClient {
-    [self prepareLoginWithSuccessStatus:YES clientStatus:NO];
-    [self.messagingManagerMock loginWithUsername:self.username
-                                        password:self.password
-                                      completion:^(BOOL succeeded, NSError *error) {
-                                          XCTAssertNotNil(error, @"Login should fail");
-                                      }];
-    OCMVerifyAll(self.pfUserMock);
-    OCMVerifyAll(self.messagingManagerMock);
+  [self prepareLoginWithSuccessStatus:YES clientStatus:NO];
+  [self.messagingManagerMock loginWithUsername:self.username
+                                      password:self.password
+                                    completion:^(BOOL succeeded, NSError *error) {
+                                      XCTAssertNotNil(error, @"Login should fail");
+                                    }];
+  OCMVerifyAll(self.pfUserMock);
+  OCMVerifyAll(self.messagingManagerMock);
 }
 
 - (void)prepareLoginWithSuccessStatus:(BOOL)status clientStatus:(BOOL)clientStatus {
-    id loginBlock = nil;
-    
-    if(status) {
-        loginBlock = [OCMArg invokeBlockWithArgs:self.pfUserMock, [OCMArg defaultValue], nil];
-        [self prepareClientConnectStatus:clientStatus];
-    }
-    else {
-        loginBlock = [OCMArg invokeBlockWithArgs:[OCMArg defaultValue], self.error, nil];
-    }
-    
-    OCMExpect([self.pfUserMock logInWithUsernameInBackground:self.username password:self.password block:loginBlock]);
+  id loginBlock = nil;
+  
+  if(status) {
+    loginBlock = [OCMArg invokeBlockWithArgs:self.pfUserMock, [OCMArg defaultValue], nil];
+    [self prepareClientConnectStatus:clientStatus];
+  }
+  else {
+    loginBlock = [OCMArg invokeBlockWithArgs:[OCMArg defaultValue], self.error, nil];
+  }
+  
+  OCMExpect([self.pfUserMock logInWithUsernameInBackground:self.username password:self.password block:loginBlock]);
 }
 
 - (void)prepareClientConnectStatus:(BOOL)status {
-    id connectBlock = nil;
-    
-    if (status) {
-        connectBlock = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){YES}), [OCMArg defaultValue], nil];
-    }
-    else {
-        connectBlock = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){NO}), self.error, nil];
-    }
-    
-    OCMExpect([self.messagingManagerMock connectClientWithCompletion:connectBlock]);
+  id connectBlock = nil;
+  
+  if (status) {
+    connectBlock = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){YES}), [OCMArg defaultValue], nil];
+  }
+  else {
+    connectBlock = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){NO}), self.error, nil];
+  }
+  
+  OCMExpect([self.messagingManagerMock connectClientWithCompletion:connectBlock]);
 }
 
 @end

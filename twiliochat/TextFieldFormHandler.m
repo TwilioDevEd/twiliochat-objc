@@ -11,23 +11,10 @@
 - (instancetype)initWithTextFields:(NSArray<UITextField *> *)textfields topContainer:(UIView *)view {
     self = [self init];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillShow:)
-                                                     name:UIKeyboardWillShowNotification
-                                                   object:nil];
-
         self.topContainer = view;
         self.textFields = textfields;
-        NSInteger count = self.textFields.count;
-        [self.textFields enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            UITextField *textField = (UITextField *)obj;
-            textField.delegate = self;
-            [self setTextField:textField returnKeyType:(idx < count - 1? UIReturnKeyNext : UIReturnKeyDone)];
-        }];
-        
-        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                            action:@selector(backgroundTap:)];
-        [self.topContainer addGestureRecognizer:tapGestureRecognizer];
+        [self initializeTextFields];
+        [self initializeObjervers];
     }
     return self;
 }
@@ -36,8 +23,28 @@
     [self cleanUp];
 }
 
+- (void)initializeObjervers {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                           action:@selector(backgroundTap:)];
+    [self.topContainer addGestureRecognizer:tapGestureRecognizer];
+}
+
 - (void)cleanUp {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)initializeTextFields {
+    NSInteger count = self.textFields.count;
+    [self.textFields enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        UITextField *textField = (UITextField *)obj;
+        textField.delegate = self;
+        [self setTextField:textField returnKeyType:(idx < count - 1? UIReturnKeyNext : UIReturnKeyDone)];
+    }];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

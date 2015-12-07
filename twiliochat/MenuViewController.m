@@ -70,44 +70,7 @@
     return cell;
 }
 
-#pragma mark - Internal methods
-
-- (UITableViewCell *)loadingCellForTableView:(UITableView *)tableView {
-    return [tableView dequeueReusableCellWithIdentifier:@"loadingCell"];
-}
-
-- (UITableViewCell *)channelCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    MenuTableCell *menuCell = (MenuTableCell *)[tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
-    
-    TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
-    NSString *nameLabel = channel.friendlyName;
-    if (channel.friendlyName.length == 0) {
-        nameLabel = @"(no friendly name)";
-    }
-    if (channel.type == TWMChannelTypePrivate) {
-        nameLabel = [nameLabel stringByAppendingString:@" (private)"];
-    }
-    menuCell.channelName = nameLabel;
-    
-    return menuCell;
-}
-
-- (void)refreshChannels {
-    [self.refreshControl beginRefreshing];
-    [self populateChannels];
-}
-
-- (void)populateChannels {
-    [[ChannelManager sharedManager] populateChannelsWithCompletion:^(BOOL succeeded) {
-        if (!succeeded) {
-            [AlertDialogController showAlertWithMessage:@"Failed to load channels."
-                                                  title:@"IP Messaging Demo"
-                                              presenter:self];
-        }
-        [self.tableView reloadData];
-        [self.refreshControl endRefreshing];
-    }];
-}
+#pragma mark - Table view delegate
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
@@ -131,6 +94,42 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"OpenChat" sender:indexPath];
+}
+
+#pragma mark - Internal methods
+
+- (UITableViewCell *)loadingCellForTableView:(UITableView *)tableView {
+    return [tableView dequeueReusableCellWithIdentifier:@"loadingCell"];
+}
+
+- (UITableViewCell *)channelCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+    MenuTableCell *menuCell = (MenuTableCell *)[tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
+    
+    TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+    NSString *friendlyName = channel.friendlyName;
+    if (channel.friendlyName.length == 0) {
+        friendlyName = @"(no friendly name)";
+    }
+    menuCell.channelName = friendlyName;
+    
+    return menuCell;
+}
+
+- (void)refreshChannels {
+    [self.refreshControl beginRefreshing];
+    [self populateChannels];
+}
+
+- (void)populateChannels {
+    [[ChannelManager sharedManager] populateChannelsWithCompletion:^(BOOL succeeded) {
+        if (!succeeded) {
+            [AlertDialogController showAlertWithMessage:@"Failed to load channels"
+                                                  title:@"IP Messaging Demo"
+                                              presenter:self];
+        }
+        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 #pragma mark - Channel

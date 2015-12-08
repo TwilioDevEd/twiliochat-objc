@@ -64,7 +64,8 @@ static NSInteger const TWCLabelTag = 200;
   
   font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
   [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:font}];
-  
+
+  self.tableView.allowsSelection = NO;
   self.tableView.estimatedRowHeight = 70;
   self.tableView.rowHeight = UITableViewAutomaticDimension;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -21,8 +21,8 @@
 
 - (void)awakeFromNib {
   self.label = (UILabel *)[self viewWithTag:200];
-  self.selectedBackgroundView.backgroundColor = self.selectedBackgroundColor;
   self.label.highlightedTextColor = self.labelHighlightedTextColor;
+  self.label.textColor = self.labelTextColor;
 }
 
 - (UIColor *)selectedBackgroundColor {
@@ -39,12 +39,16 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   [super setSelected:selected animated:animated];
-  
   if (selected) {
+    self.contentView.backgroundColor = self.selectedBackgroundColor;
     self.label.highlightedTextColor = self.labelHighlightedTextColor;
   }
-  else {
-    self.label.textColor = self.labelTextColor;
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+  [super setHighlighted:highlighted animated:animated];
+  if (highlighted) {
+    self.contentView.backgroundColor = self.selectedBackgroundColor;
   }
 }
 

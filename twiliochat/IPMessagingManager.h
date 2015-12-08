@@ -5,7 +5,7 @@ typedef void (^StatusWithErrorHandler) (BOOL succeeded, NSError *);
 typedef void (^StatusWithTokenHandler) (BOOL succeeded, NSString *);
 
 @interface IPMessagingManager : NSObject <TwilioAccessManagerDelegate>
-@property (nonatomic, strong, readonly) TwilioIPMessagingClient *client;
+@property (strong, nonatomic, readonly) TwilioIPMessagingClient *client;
 @property (nonatomic, readonly) BOOL hasIdentity;
 
 + (instancetype)sharedManager;

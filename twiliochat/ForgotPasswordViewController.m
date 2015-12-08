@@ -12,62 +12,58 @@
 @implementation ForgotPasswordViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    self.textFieldFormHandler = [[TextFieldFormHandler alloc] initWithTextFields:@[self.emailTextField]
-                                                                    topContainer:self.view];
-    self.textFieldFormHandler.delegate = self;
+  [super viewDidLoad];
+  self.textFieldFormHandler = [[TextFieldFormHandler alloc] initWithTextFields:@[self.emailTextField]
+                                                                  topContainer:self.view];
+  self.textFieldFormHandler.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+  [super didReceiveMemoryWarning];
 }
 
 - (BOOL)validateUserData {
-    if (self.emailTextField.text.length) {
-        return YES;
-    }
-    [AlertDialogController showAlertWithMessage:@"Your email is required"
-                                         title:nil
-                                     presenter:self];
-    return NO;
+  if (self.emailTextField.text.length) {
+    return YES;
+  }
+  [AlertDialogController showAlertWithMessage:@"Your email is required"
+                                        title:nil
+                                    presenter:self];
+  return NO;
 }
 
 #pragma mark - TextFieldFormHandlerDelegate
 
 - (void)textFieldFormHandlerDoneEnteringData:(TextFieldFormHandler *)handler {
-    [self startPasswordRecoveryProccess];
+  [self startPasswordRecoveryProccess];
 }
 
 - (void)startPasswordRecoveryProccess {
-    if ([self validateUserData]) {
-        self.view.userInteractionEnabled = NO;
-
-        [PFUser requestPasswordResetForEmailInBackground:self.emailTextField.text block:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                [AlertDialogController showAlertWithMessage:@"We've sent you an email with further instructions"
-                                                      title:nil
-                                                  presenter:self
-                                                    handler:^{
-                                                        [self performSegueWithIdentifier:@"BackToLogin"
-                                                                                  sender:self];
-                                                    }];
-            }
-            else {
-                [AlertDialogController showAlertWithMessage:[error localizedDescription]
-                                                      title:nil
-                                                  presenter:self];
-                self.view.userInteractionEnabled = YES;
-            }
-        }];
-    }
+  if ([self validateUserData]) {
+    self.view.userInteractionEnabled = NO;
+    
+    [PFUser requestPasswordResetForEmailInBackground:self.emailTextField.text block:^(BOOL succeeded, NSError *error) {
+      if (succeeded) {
+        [AlertDialogController showAlertWithMessage:@"We've sent you an email with further instructions"
+          title:nil presenter:self
+          handler:^{
+            [self performSegueWithIdentifier:@"BackToLogin" sender:self];
+          }];
+      }
+      else {
+        [AlertDialogController showAlertWithMessage:[error localizedDescription] title:nil presenter:self];
+        self.view.userInteractionEnabled = YES;
+      }
+    }];
+  }
 }
 
 - (IBAction)sendButtonTouched:(id)sender {
-    [self startPasswordRecoveryProccess];
+  [self startPasswordRecoveryProccess];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+  return UIStatusBarStyleLightContent;
 }
 
 SINGLE_ORIENTATON_ON_IPHONE (Portrait)

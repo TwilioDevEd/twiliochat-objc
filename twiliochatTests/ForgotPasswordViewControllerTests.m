@@ -16,42 +16,42 @@
 @implementation ForgotPasswordViewControllerTests
 
 - (void)setUp {
-    [super setUp];
-    
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    ForgotPasswordViewController *viewController = (ForgotPasswordViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"ForgotPasswordViewController"];
-    [viewController loadView];
-    
-    self.viewControllerMock = OCMPartialMock(viewController);
+  [super setUp];
+  
+  UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+  ForgotPasswordViewController *viewController = (ForgotPasswordViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"ForgotPasswordViewController"];
+  [viewController loadView];
+  
+  self.viewControllerMock = OCMPartialMock(viewController);
 }
 
 - (void)tearDown {
-    [super tearDown];
+  [super tearDown];
 }
 
 - (void)testSendRecoveryEmail {
-    id mockPFUser = OCMClassMock([PFUser class]);
-    
-    NSString *email = @"email@domain.com";
-    [self.viewControllerMock emailTextField].text = email;
-    
-    OCMExpect([mockPFUser requestPasswordResetForEmailInBackground:email block:[OCMArg any]]);
-    
-    [[self.viewControllerMock sendButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
-    
-    OCMVerifyAll(mockPFUser);
+  id mockPFUser = OCMClassMock([PFUser class]);
+  
+  NSString *email = @"email@domain.com";
+  [self.viewControllerMock emailTextField].text = email;
+  
+  OCMExpect([mockPFUser requestPasswordResetForEmailInBackground:email block:[OCMArg any]]);
+  
+  [[self.viewControllerMock sendButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
+  
+  OCMVerifyAll(mockPFUser);
 }
 
 - (void)testInvalidEmailMessage {
-    id mockPFUser = OCMClassMock([PFUser class]);
-    
-    [self.viewControllerMock emailTextField].text = @"";
-    
-    [[mockPFUser reject] requestPasswordResetForEmailInBackground:[OCMArg any] block:[OCMArg any]];
-    
-    [[self.viewControllerMock sendButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
-    
-    OCMVerifyAll(mockPFUser);
+  id mockPFUser = OCMClassMock([PFUser class]);
+  
+  [self.viewControllerMock emailTextField].text = @"";
+  
+  [[mockPFUser reject] requestPasswordResetForEmailInBackground:[OCMArg any] block:[OCMArg any]];
+  
+  [[self.viewControllerMock sendButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
+  
+  OCMVerifyAll(mockPFUser);
 }
 
 @end

@@ -1,16 +1,16 @@
 #import <Foundation/Foundation.h>
 #import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 
-typedef enum {
-    MemberStatusJoined,
-    MemberStatusLeft
-} MemberStatus;
+typedef NS_ENUM(NSInteger, TWCMemberStatus) {
+  TWCMemberStatusJoined,
+  TWCMemberStatusLeft
+};
 
 @interface StatusEntry : NSObject
-+ (StatusEntry *)statusEntryWithMember:(TWMMember *)member status:(MemberStatus)status;
-- (instancetype)initWithMember:(TWMMember *)member status:(MemberStatus)status;
-@property (strong, nonatomic) NSString *sid;
++ (instancetype)statusEntryWithMember:(TWMMember *)member status:(TWCMemberStatus)status;
+- (instancetype)initWithMember:(TWMMember *)member status:(TWCMemberStatus)status;
+@property (copy, nonatomic) NSString *sid;
 @property (strong, nonatomic) TWMMember *member;
-@property (strong, nonatomic) NSString *timestamp;
-@property (nonatomic) MemberStatus status;
+@property (copy, nonatomic) NSString *timestamp;
+@property (nonatomic) TWCMemberStatus status;
 @end

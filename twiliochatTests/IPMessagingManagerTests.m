@@ -13,7 +13,7 @@
 @property (strong, nonatomic) id pfCloudMock;
 @property (strong, nonatomic) id pfUserMock;
 @property (strong, nonatomic) id clientMock;
-@property (strong, nonatomic) NSString *token;
+@property (copy, nonatomic) NSString *token;
 @end
 
 @implementation IPMessagingManagerTests
@@ -51,7 +51,7 @@
 }
 
 - (void)testFailedConnectClient {
-    NSError *error = [NSError errorWithDomain:@"" code:-1000 userInfo:nil];
+    NSError *error = [NSError errorWithDomain:@"" code:400 userInfo:nil];
     id cloudBlock = [OCMArg invokeBlockWithArgs:[OCMArg defaultValue], error, nil];
     OCMExpect([self.pfCloudMock callFunctionInBackground:@"token" withParameters:[OCMArg any] block:cloudBlock]);
     

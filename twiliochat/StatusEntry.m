@@ -1,21 +1,21 @@
 #import "StatusEntry.h"
 
 @implementation StatusEntry
-+ (StatusEntry *)statusEntryWithMember:(TWMMember *)member status:(MemberStatus)status {
-    return [[StatusEntry alloc] initWithMember:member status:status];
++ (instancetype)statusEntryWithMember:(TWMMember *)member status:(TWCMemberStatus)status {
+  return [[StatusEntry alloc] initWithMember:member status:status];
 }
 
-- (instancetype)initWithMember:(TWMMember *)member status:(MemberStatus)status {
-    self = [self init];
-    if (self)
-    {
-        self.member = member;
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
-        [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-        self.timestamp = [dateFormatter stringFromDate:[NSDate date]];
-        self.status = status;
-    }
-    return self;
+- (instancetype)initWithMember:(TWMMember *)member status:(TWCMemberStatus)status {
+  self = [self init];
+  if (self)
+  {
+    self.member = member;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+    self.timestamp = [dateFormatter stringFromDate:[NSDate date]];
+    self.status = status;
+  }
+  return self;
 }
 @end

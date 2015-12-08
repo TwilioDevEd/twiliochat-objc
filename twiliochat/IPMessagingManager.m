@@ -3,9 +3,14 @@
 #import "ChannelManager.h"
 
 @interface IPMessagingManager ()
-@property (nonatomic, strong) TwilioIPMessagingClient *client;
-@property (nonatomic) BOOL connected;
+@property (strong, nonatomic) TwilioIPMessagingClient *client;
+@property (nonatomic, getter=isConnected) BOOL connected;
 @end
+
+static NSString * const TWCLoginViewControllerName = @"LoginViewController";
+static NSString * const TWCMainViewControllerName = @"RevealViewController";
+
+static NSString * const TWCTokenKey = @"token";
 
 @implementation IPMessagingManager
 + (instancetype)sharedManager {
@@ -21,17 +26,17 @@
 
 - (void)presentRootViewController {
   if (!self.hasIdentity) {
-    [self presentViewControllerByName:@"LoginViewController"];
+    [self presentViewControllerByName:TWCLoginViewControllerName];
     return;
   }
-  if (!self.connected) {
+  if (!self.isConnected) {
     [self connectClientWithCompletion:^(BOOL success, NSError *error) {
-      NSString *viewController = success ? @"RevealViewController" : @"LoginViewController";
+      NSString *viewController = success ? TWCMainViewControllerName : TWCLoginViewControllerName;
       [self presentViewControllerByName:viewController];
     }];
     return;
   }
-  [self presentViewControllerByName:@"RevealViewController"];
+  [self presentViewControllerByName:TWCMainViewControllerName];
 }
 
 - (void)presentViewControllerByName:(NSString *)viewController {
@@ -142,10 +147,10 @@
   NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
   NSDictionary *parameters = @{@"device": uuid};
   
-  [PFCloud callFunctionInBackground:@"token"
+  [PFCloud callFunctionInBackground:TWCTokenKey
                      withParameters:parameters
                               block:^(NSDictionary *results, NSError *error) {
-                                NSString *token = [results objectForKey:@"token"];
+                                NSString *token = [results objectForKey:TWCTokenKey];
                                 BOOL errorCondition = error || !token;
                                 
                                 if (completion) completion(!errorCondition, token);

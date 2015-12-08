@@ -6,7 +6,7 @@
 }
 
 + (void)showAlertWithMessage:(NSString *)message title:(NSString *)title presenter:(UIViewController *)presenter handler:(void(^)(void))handler {
-  UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+  UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
                                                                  message:message
                                                           preferredStyle:UIAlertControllerStyleAlert];
   

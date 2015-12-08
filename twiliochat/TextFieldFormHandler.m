@@ -40,10 +40,10 @@
 
 - (void)initializeTextFields {
   NSInteger count = self.textFields.count;
-  [self.textFields enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+  [self.textFields enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     UITextField *textField = (UITextField *)obj;
     textField.delegate = self;
-    [self setTextField:textField returnKeyType:(idx < count - 1? UIReturnKeyNext : UIReturnKeyDone)];
+    [self setTextField:textField returnKeyType:(idx < count - 1) ? UIReturnKeyNext : UIReturnKeyDone];
   }];
 }
 
@@ -76,7 +76,7 @@
 
 - (void)setAnimationOffsetForTextField:(UITextField *)textField {
   CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-  CGFloat textFieldHeight = textField.frame.size.height;
+  CGFloat textFieldHeight = CGRectGetHeight(textField.frame);
   CGFloat textFieldY = [textField convertPoint:CGPointZero toView:self.topContainer].y;
   self.animationOffset = -screenHeight + textFieldY + textFieldHeight;
 }
@@ -149,7 +149,7 @@
   
   _lastTextField = lastTextField;
   
-  UITextField *textField = (_lastTextField? _lastTextField : self.textFields[self.textFields.count - 1]);
+  UITextField *textField = (_lastTextField ? _lastTextField : self.textFields[self.textFields.count - 1]);
   [self setTextField:textField returnKeyType:UIReturnKeyDone];
 }
 

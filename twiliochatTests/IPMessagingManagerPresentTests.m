@@ -78,7 +78,7 @@
     connectBlock = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){YES}), [OCMArg defaultValue], nil];
   }
   else {
-    NSError *error = [NSError errorWithDomain:@"" code:-1000 userInfo:nil];
+    NSError *error = [NSError errorWithDomain:@"" code:400 userInfo:nil];
     connectBlock = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){NO}), error, nil];
   }
   

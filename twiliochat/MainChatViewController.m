@@ -16,8 +16,11 @@
 
 @end
 
-static NSString *ChatCellIdentifier = @"ChatTableCell";
-static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
+static NSString * const TWCChatCellIdentifier = @"ChatTableCell";
+static NSString * const TWCChatStatusCellIdentifier = @"ChatStatusTableCell";
+
+static NSString * const TWCOpenGeneralChannelSegue = @"OpenGeneralChat";
+static NSInteger const TWCLabelTag = 200;
 
 @implementation MainChatViewController
 
@@ -40,13 +43,13 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
   self.shouldScrollToBottomAfterKeyboardShows = NO;
   self.inverted = YES;
   
-  UINib *cellNib = [UINib nibWithNibName:ChatCellIdentifier bundle:nil];
+  UINib *cellNib = [UINib nibWithNibName:TWCChatCellIdentifier bundle:nil];
   [self.tableView registerNib:cellNib
-       forCellReuseIdentifier:ChatCellIdentifier];
+       forCellReuseIdentifier:TWCChatCellIdentifier];
   
-  UINib *cellStatusNib = [UINib nibWithNibName:ChatStatusCellIdentifier bundle:nil];
+  UINib *cellStatusNib = [UINib nibWithNibName:TWCChatStatusCellIdentifier bundle:nil];
   [self.tableView registerNib:cellStatusNib
-       forCellReuseIdentifier:ChatStatusCellIdentifier];
+       forCellReuseIdentifier:TWCChatStatusCellIdentifier];
   
   self.textInputbar.autoHideRightButton = YES;
   self.textInputbar.maxCharCount = 256;
@@ -60,14 +63,13 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
                          forState:UIControlStateNormal];
   
   font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
-  [self.navigationController.navigationBar setTitleTextAttributes:
-   @{NSFontAttributeName:font}];
+  [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:font}];
   
   self.tableView.estimatedRowHeight = 70;
   self.tableView.rowHeight = UITableViewAutomaticDimension;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
-  if (!_channel)
+  if (!self.channel)
   {
     self.channel = [ChannelManager sharedManager].generalChannel;
   }
@@ -141,7 +143,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 - (ChatTableCell *)getChatCellForTableView:(UITableView *)tableView
                               forIndexPath:(NSIndexPath *)indexPath
                                    message:(TWMMessage *)message {
-  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ChatCellIdentifier forIndexPath:indexPath];
+  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TWCChatCellIdentifier forIndexPath:indexPath];
   
   ChatTableCell *chatCell = (ChatTableCell *)cell;
   chatCell.user = message.author;
@@ -154,12 +156,12 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 - (UITableViewCell *)getStatuCellForTableView:(UITableView *)tableView
                                  forIndexPath:(NSIndexPath *)indexPath
                                       message:(StatusEntry *)message {
-  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ChatStatusCellIdentifier forIndexPath:indexPath];
+  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TWCChatStatusCellIdentifier forIndexPath:indexPath];
   
-  UILabel *label = [cell viewWithTag:200];
+  UILabel *label = [cell viewWithTag:TWCLabelTag];
   label.text = [NSString stringWithFormat:@"User %@ has %@",
                 message.member.identity,
-                (message.status == MemberStatusJoined? @"joined" : @"left")];
+                (message.status == TWCMemberStatusJoined) ? @"joined" : @"left"];
   
   return cell;
 }
@@ -216,7 +218,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 - (void)leaveChannel {
   [self.channel leaveWithCompletion:^(TWMResult result) {
     if (result == TWMResultSuccess) {
-      [self.revealViewController.rearViewController performSegueWithIdentifier:@"OpenGeneralChat" sender:nil];
+      [self.revealViewController.rearViewController performSegueWithIdentifier:TWCOpenGeneralChannelSegue sender:nil];
     }
   }];
 }
@@ -235,7 +237,7 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
            channelDeleted:(TWMChannel *)channel {
   dispatch_async(dispatch_get_main_queue(), ^{
     if (channel == self.channel) {
-      [self.revealViewController.rearViewController performSegueWithIdentifier:@"OpenGeneralChat" sender:nil];
+      [self.revealViewController.rearViewController performSegueWithIdentifier:TWCOpenGeneralChannelSegue sender:nil];
     }
   });
 }
@@ -243,13 +245,13 @@ static NSString *ChatStatusCellIdentifier = @"ChatStatusTableCell";
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client
                   channel:(TWMChannel *)channel
              memberJoined:(TWMMember *)member {
-  [self addMessages:@[[StatusEntry statusEntryWithMember:member status:MemberStatusJoined]]];
+  [self addMessages:@[[StatusEntry statusEntryWithMember:member status:TWCMemberStatusJoined]]];
 }
 
 - (void)ipMessagingClient:(TwilioIPMessagingClient *)client
                   channel:(TWMChannel *)channel
                memberLeft:(TWMMember *)member {
-  [self addMessages:@[[StatusEntry statusEntryWithMember:member status:MemberStatusLeft]]];
+  [self addMessages:@[[StatusEntry statusEntryWithMember:member status:TWCMemberStatusLeft]]];
 }
 
 

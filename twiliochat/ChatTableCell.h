@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ChatTableCell : UITableViewCell
-@property(strong, nonatomic) NSString *user;
-@property(strong, nonatomic) NSString *message;
-@property(strong, nonatomic) NSString *date;
+@property(copy, nonatomic) NSString *user;
+@property(copy, nonatomic) NSString *message;
+@property(copy, nonatomic) NSString *date;
 @end

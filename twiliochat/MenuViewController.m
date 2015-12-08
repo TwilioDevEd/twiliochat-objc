@@ -16,6 +16,10 @@
 @property (strong, nonatomic) TWMChannel *recentlyAddedChannel;
 @end
 
+static NSString * const TWCOpenChannelSegue = @"OpenChat";
+static NSInteger const TWCRefreshControlXOffset = 120;
+
+
 @implementation MenuViewController
 
 #pragma mark Initialization
@@ -23,10 +27,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  CGRect tableFrame = self.tableView.frame;
-  
   UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home-bg"]];
-  [bgImage setFrame:tableFrame];
+  bgImage.frame = self.tableView.frame;
   self.tableView.backgroundView = bgImage;
   
   self.usernameLabel.text = [PFUser currentUser].username;
@@ -39,7 +41,7 @@
   self.refreshControl.tintColor = [UIColor whiteColor];
   
   CGRect frame = self.refreshControl.frame;
-  frame.origin.x -= 120;
+  frame.origin.x = CGRectGetMinX(frame) - TWCRefreshControlXOffset;
   self.refreshControl.frame = frame;
   
   [ChannelManager sharedManager].delegate = self;
@@ -92,8 +94,8 @@
   }
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  [self performSegueWithIdentifier:@"OpenChat" sender:indexPath];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  [self performSegueWithIdentifier:TWCOpenChannelSegue sender:indexPath];
 }
 
 #pragma mark - Internal methods
@@ -160,7 +162,7 @@
 #pragma mark - Logout
 
 - (void)promtpLogout {
-  UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
+  UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
                                                                  message:@"You are about to Logout."
                                                           preferredStyle:UIAlertControllerStyleAlert];
   
@@ -178,7 +180,7 @@
   [self presentViewController:alert animated:YES completion:nil];
 }
 
--(void) logOut {
+- (void)logOut {
   [[IPMessagingManager sharedManager] logout];
   [[IPMessagingManager sharedManager] presentRootViewController];
 }
@@ -196,7 +198,7 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  if ([segue.identifier isEqualToString:@"OpenChat"]) {
+  if ([segue.identifier isEqualToString:TWCOpenChannelSegue]) {
     NSIndexPath *indexPath = (NSIndexPath *)sender;
     
     TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];

@@ -17,12 +17,12 @@
                                             presenter:presenter handler:handler];
 }
 
--(void)showWithTitle:(NSString *)title
+- (void)showWithTitle:(NSString *)title
              message:(NSString *)message
          placeholder:(NSString *)placeholder
            presenter:(UIViewController *)presenter
              handler:(void (^)(NSString *))handler {
-  UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+  UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
                                                                  message:message
                                                           preferredStyle:UIAlertControllerStyleAlert];
   
@@ -33,7 +33,7 @@
   self.saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     [self removeTextFieldObserver];
     NSString *textFieldText = [[alert textFields][0] text];
-    if(handler) handler(textFieldText);
+    if (handler) handler(textFieldText);
   }];
   
   self.saveAction.enabled = NO;

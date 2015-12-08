@@ -6,6 +6,10 @@
 @property (weak, nonatomic) UILabel *dateLabel;
 @end
 
+static NSInteger const TWCUserLabelTag = 200;
+static NSInteger const TWCDateLabelTag = 201;
+static NSInteger const TWCMessageLabelTag = 202;
+
 @implementation ChatTableCell
 
 - (void)setUser:(NSString *)user {
@@ -33,9 +37,9 @@
 }
 
 - (void)awakeFromNib {
-  self.userLabel = (UILabel *)[self viewWithTag:200];
-  self.dateLabel = (UILabel *)[self viewWithTag:201];
-  self.messageLabel = (UILabel *)[self viewWithTag:202];
+  self.userLabel = (UILabel *)[self viewWithTag:TWCUserLabelTag];
+  self.dateLabel = (UILabel *)[self viewWithTag:TWCDateLabelTag];
+  self.messageLabel = (UILabel *)[self viewWithTag:TWCMessageLabelTag];
 }
 
 @end

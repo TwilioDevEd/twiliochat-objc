@@ -5,8 +5,10 @@
 @property (strong, nonatomic) TWMChannel *generalChannel;
 @end
 
-NSString *defaultChannelUniqueName = @"general";
-NSString *defaultChannelName = @"General Channel";
+static NSString * const TWCDefaultChannelUniqueName = @"general";
+static NSString * const TWCDefaultChannelName = @"General Channel";
+
+static NSString * const TWCFriendlyNameKey = @"friendlyName";
 
 @implementation ChannelManager
 
@@ -30,14 +32,14 @@ NSString *defaultChannelName = @"General Channel";
 
 - (void)joinGeneralChatRoomWithCompletion:(SucceedHandler)completion {
   [self populateChannelsWithCompletion:^(BOOL succeeded) {
-    self.generalChannel = [self.channelsList channelWithUniqueName:defaultChannelUniqueName];
+    self.generalChannel = [self.channelsList channelWithUniqueName:TWCDefaultChannelUniqueName];
     if (self.generalChannel) {
       [self joinGeneralChatRoomWithUniqueName:nil completion:completion];
     }
     else {
       [self createGeneralChatRoomWithCompletion:^(BOOL succeeded) {
         if (succeeded) {
-          [self joinGeneralChatRoomWithUniqueName:defaultChannelUniqueName completion:completion];
+          [self joinGeneralChatRoomWithUniqueName:TWCDefaultChannelUniqueName completion:completion];
           return;
         }
         if (completion) completion(NO);
@@ -59,7 +61,7 @@ NSString *defaultChannelName = @"General Channel";
 }
 
 - (void)createGeneralChatRoomWithCompletion:(SucceedHandler)completion {
-  [self.channelsList createChannelWithFriendlyName:defaultChannelName
+  [self.channelsList createChannelWithFriendlyName:TWCDefaultChannelName
                                               type:TWMChannelTypePublic
                                         completion:^(TWMResult result, TWMChannel *channel) {
                                           if (result == TWMResultSuccess) {
@@ -70,7 +72,7 @@ NSString *defaultChannelName = @"General Channel";
 }
 
 - (void)setGeneralChatRoomUniqueNameWithCompletion:(SucceedHandler)completion {
-  [self.generalChannel setUniqueName:defaultChannelUniqueName completion:^(TWMResult result) {
+  [self.generalChannel setUniqueName:TWCDefaultChannelUniqueName completion:^(TWMResult result) {
     if (completion) completion(result == TWMResultSuccess);
   }];
 }
@@ -119,7 +121,7 @@ NSString *defaultChannelName = @"General Channel";
 
 - (void)sortChannels {
   SEL sortSelector = @selector(localizedCaseInsensitiveCompare:);
-  NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"friendlyName"
+  NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:TWCFriendlyNameKey
                                                              ascending:YES
                                                               selector:sortSelector];
   [self.channels sortUsingDescriptors:@[descriptor]];
@@ -128,7 +130,7 @@ NSString *defaultChannelName = @"General Channel";
 # pragma mark Create channel
 
 - (void)createChannelWithName:(NSString *)name completion:(ChannelHandler)completion {
-  if ([name isEqualToString:defaultChannelName]) {
+  if ([name isEqualToString:TWCDefaultChannelName]) {
     if (completion) completion(NO, nil);
     return;
   }
@@ -139,18 +141,19 @@ NSString *defaultChannelName = @"General Channel";
       if (succeeded) {
         [self createChannelWithName:name completion:completion];
       }
-      else if(completion) {
+      else if (completion) {
         completion(succeeded, nil);
       }
     }];
     return;
   }
   
-  [self.channelsList createChannelWithFriendlyName:name
-                                              type:TWMChannelTypePublic
-                                        completion:^(TWMResult result, TWMChannel *channel) {
-                                          if (completion) completion(result == TWMResultSuccess, channel);
-                                        }];
+  [self.channelsList
+   createChannelWithFriendlyName:name
+   type:TWMChannelTypePublic
+   completion:^(TWMResult result, TWMChannel *channel) {
+     if (completion) completion(result == TWMResultSuccess, channel);
+   }];
 }
 
 # pragma mark TwilioIPMessagingClientDelegate

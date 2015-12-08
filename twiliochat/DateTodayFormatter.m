@@ -2,7 +2,7 @@
 
 @implementation DateTodayFormatter
 
-- (NSString*)stringFromDate:(NSDate *)date {
+- (NSString *)stringFromDate:(NSDate *)date {
   NSDate *messageDate = [self roundDateToDay:date];
   NSDate *todayDate = [self roundDateToDay:[NSDate date]];
   

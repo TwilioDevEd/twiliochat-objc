@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic) BOOL isSigningUp;
+@property (nonatomic, getter=isSigningUp) BOOL signingUp;
 @property (strong, nonatomic) TextFieldFormHandler *textFieldFormHandler;
 
 // Constraints
@@ -36,7 +36,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.isSigningUp = NO;
+  self.signingUp = NO;
   [self.activityIndicator stopAnimating];
   
   [self initializeConstraints];
@@ -71,22 +71,22 @@
   [self.createAccountButton setTitle:self.createAccountButtonTitle forState:UIControlStateNormal];
   [self.loginButton setTitle:self.loginButtonTitle forState:UIControlStateNormal];
   
-  self.textFieldFormHandler.lastTextField = self.isSigningUp? nil : self.passwordTextField;
+  self.textFieldFormHandler.lastTextField = self.isSigningUp ? nil : self.passwordTextField;
   
   [self.constraints enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     NSLayoutConstraint *constraint = (NSLayoutConstraint *)obj;
-    constraint.constant = self.isSigningUp? [(NSNumber *)self.constraintValues[idx] floatValue] : 0.f;
+    constraint.constant = self.isSigningUp ? [(NSNumber *)self.constraintValues[idx] floatValue] : 0.f;
   }];
   
   [self resetFirstResponderOnSignUpModeChange];
 }
 
 - (NSString *)createAccountButtonTitle {
-  return self.isSigningUp? @"Back to login" : @"Create account";
+  return self.isSigningUp ? @"Back to login" : @"Create account";
 }
 
 - (NSString *)loginButtonTitle {
-  return self.isSigningUp? @"Register" : @"Login";
+  return self.isSigningUp ? @"Register" : @"Login";
 }
 
 
@@ -132,7 +132,7 @@
 #pragma mark - Login
 
 - (void)toggleSignUpMode {
-  self.isSigningUp = !self.isSigningUp;
+  self.signingUp = !self.isSigningUp;
   [self refreshSignUpControls];
 }
 

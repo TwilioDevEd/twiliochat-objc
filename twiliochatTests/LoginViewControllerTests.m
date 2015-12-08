@@ -17,10 +17,10 @@
 @interface LoginViewControllerTests : XCTestCase
 @property (strong, nonatomic) id viewControllerMock;
 @property (strong, nonatomic) id messagingManagerMock;
-@property (strong, nonatomic) NSString *username;
-@property (strong, nonatomic) NSString *password;
-@property (strong, nonatomic) NSString *fullName;
-@property (strong, nonatomic) NSString *email;
+@property (copy, nonatomic) NSString *username;
+@property (copy, nonatomic) NSString *password;
+@property (copy, nonatomic) NSString *fullName;
+@property (copy, nonatomic) NSString *email;
 @end
 
 @implementation LoginViewControllerTests

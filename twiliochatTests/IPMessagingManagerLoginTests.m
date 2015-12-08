@@ -10,11 +10,11 @@
 @interface IPMessagingManagerLoginTests : XCTestCase
 @property (strong, nonatomic) id pfUserMock;
 @property (strong, nonatomic) id messagingManagerMock;
-@property (strong, nonatomic) NSString *username;
-@property (strong, nonatomic) NSString *password;
-@property (strong, nonatomic) NSString *fullName;
-@property (strong, nonatomic) NSString *email;
-@property (strong, nonatomic) NSString *token;
+@property (copy, nonatomic) NSString *username;
+@property (copy, nonatomic) NSString *password;
+@property (copy, nonatomic) NSString *fullName;
+@property (copy, nonatomic) NSString *email;
+@property (copy, nonatomic) NSString *token;
 @property (strong, nonatomic) NSError *error;
 @end
 
@@ -31,7 +31,7 @@
   self.fullName = @"Name";
   self.email = @"email@domain.com";
   
-  self.error = [NSError errorWithDomain:@"" code:-1000 userInfo:nil];
+  self.error = [NSError errorWithDomain:@"" code:400 userInfo:nil];
   
   self.token = @"test-token";
 }
@@ -90,7 +90,7 @@
   OCMExpect([self.pfUserMock setObject:self.fullName forKeyedSubscript:@"fullName"]);
   OCMExpect([self.pfUserMock setEmail:self.email]);
   
-  if(status) {
+  if (status) {
     [self prepareClientConnectStatus:clientStatus];
   }
 }
@@ -130,7 +130,7 @@
 - (void)prepareLoginWithSuccessStatus:(BOOL)status clientStatus:(BOOL)clientStatus {
   id loginBlock = nil;
   
-  if(status) {
+  if (status) {
     loginBlock = [OCMArg invokeBlockWithArgs:self.pfUserMock, [OCMArg defaultValue], nil];
     [self prepareClientConnectStatus:clientStatus];
   }

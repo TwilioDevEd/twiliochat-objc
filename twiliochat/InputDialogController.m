@@ -11,25 +11,24 @@
           placeholder:(NSString *)placeholder
             presenter:(UIViewController *)presenter
               handler:(void (^)(NSString *))handler {
-  [[[InputDialogController alloc] init] showWithTitle:title
-                                              message:message
-                                          placeholder:placeholder
-                                            presenter:presenter handler:handler];
+  [[[InputDialogController alloc] init]
+    showWithTitle:title message:message placeholder:placeholder presenter:presenter handler:handler];
 }
 
 - (void)showWithTitle:(NSString *)title
-             message:(NSString *)message
-         placeholder:(NSString *)placeholder
-           presenter:(UIViewController *)presenter
-             handler:(void (^)(NSString *))handler {
+              message:(NSString *)message
+          placeholder:(NSString *)placeholder
+            presenter:(UIViewController *)presenter
+              handler:(void (^)(NSString *))handler {
   UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                                                 message:message
-                                                          preferredStyle:UIAlertControllerStyleAlert];
-  
-  UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
-                                                        handler:^(UIAlertAction *action) {
-                                                          [self removeTextFieldObserver];
-                                                        }];
+    message:message preferredStyle:UIAlertControllerStyleAlert];
+
+  UIAlertAction *defaultAction = [UIAlertAction
+    actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+    handler:^(UIAlertAction *action) {
+      [self removeTextFieldObserver];
+    }];
+
   self.saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     [self removeTextFieldObserver];
     NSString *textFieldText = [[alert textFields][0] text];
@@ -40,10 +39,9 @@
   
   [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
     textField.placeholder = placeholder;
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleTextFieldTextDidChangeNotification:)
-                                                 name:UITextFieldTextDidChangeNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter]
+      addObserver:self selector:@selector(handleTextFieldTextDidChangeNotification:)
+      name:UITextFieldTextDidChangeNotification object:nil];
   }];
   [alert addAction:defaultAction];
   [alert addAction:self.saveAction];

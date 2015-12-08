@@ -62,11 +62,10 @@ static NSString * const TWCTokenKey = @"token";
   return [PFUser currentUser] && [[PFUser currentUser] isAuthenticated];
 }
 
-- (void)registerWithUsername:(NSString *)username
-                    password:(NSString *)password
-                    fullName:(NSString *)fullName
-                       email:(NSString *)email
-                  completion:(StatusWithErrorHandler)completion {
+- (void)registerWithUsername:(NSString *)username password:(NSString *)password
+  fullName:(NSString *)fullName email:(NSString *)email
+  completion:(StatusWithErrorHandler)completion {
+
   PFUser *user = [PFUser user];
   user.username = username;
   user.password = password;
@@ -83,16 +82,16 @@ static NSString * const TWCTokenKey = @"token";
 }
 
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password
-               completion:(StatusWithErrorHandler)completion {
-  [PFUser logInWithUsernameInBackground:username
-                               password:password
-                                  block:^(PFUser *user, NSError *error) {
-                                    if (!error) {
-                                      [self connectClientWithCompletion:completion];
-                                      return;
-                                    }
-                                    if (completion) completion(!error, error);
-                                  }];
+  completion:(StatusWithErrorHandler)completion {
+
+  [PFUser logInWithUsernameInBackground:username password:password
+    block:^(PFUser *user, NSError *error) {
+      if (!error) {
+        [self connectClientWithCompletion:completion];
+        return;
+      }
+      if (completion) completion(!error, error);
+    }];
 }
 
 - (void)logout {
@@ -147,22 +146,18 @@ static NSString * const TWCTokenKey = @"token";
   NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
   NSDictionary *parameters = @{@"device": uuid};
   
-  [PFCloud callFunctionInBackground:TWCTokenKey
-                     withParameters:parameters
-                              block:^(NSDictionary *results, NSError *error) {
-                                NSString *token = [results objectForKey:TWCTokenKey];
-                                BOOL errorCondition = error || !token;
-                                
-                                if (completion) completion(!errorCondition, token);
-                              }];
-  
+  [PFCloud callFunctionInBackground:TWCTokenKey withParameters:parameters
+    block:^(NSDictionary *results, NSError *error) {
+      NSString *token = [results objectForKey:TWCTokenKey];
+      BOOL errorCondition = error || !token;
+      
+      if (completion) completion(!errorCondition, token);
+    }];
 }
 
 - (NSError *)errorWithDescription:(NSString *)description code:(NSInteger)code {
   NSDictionary *userInfo = @{NSLocalizedDescriptionKey: description};
-  NSError *error = [NSError errorWithDomain:@"app"
-                                       code:code
-                                   userInfo:userInfo];
+  NSError *error = [NSError errorWithDomain:@"app" code:code userInfo:userInfo];
   return error;
 }
 

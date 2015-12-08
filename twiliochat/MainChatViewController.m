@@ -57,21 +57,20 @@ static NSInteger const TWCLabelTag = 200;
   self.textInputbar.counterPosition = SLKCounterPositionTop;
   
   UIFont *font = [UIFont fontWithName:@"Avenir-Light" size:14];
-  [self.textView setFont:font];
+  self.textView.font = font;
   
   [self.rightButton setTitleColor:[UIColor colorWithRed:0.973 green:0.557 blue:0.502 alpha:1]
                          forState:UIControlStateNormal];
   
   font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
-  [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:font}];
+  self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:font};
 
   self.tableView.allowsSelection = NO;
   self.tableView.estimatedRowHeight = 70;
   self.tableView.rowHeight = UITableViewAutomaticDimension;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
-  if (!self.channel)
-  {
+  if (!self.channel) {
     self.channel = [ChannelManager sharedManager].generalChannel;
   }
 }
@@ -145,7 +144,7 @@ static NSInteger const TWCLabelTag = 200;
                               forIndexPath:(NSIndexPath *)indexPath
                                    message:(TWMMessage *)message {
   UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TWCChatCellIdentifier forIndexPath:indexPath];
-  
+
   ChatTableCell *chatCell = (ChatTableCell *)cell;
   chatCell.user = message.author;
   chatCell.date = [[[DateTodayFormatter alloc] init] stringFromDate:[NSDate dateWithISO8601String:message.timestamp]];
@@ -161,8 +160,7 @@ static NSInteger const TWCLabelTag = 200;
   
   UILabel *label = [cell viewWithTag:TWCLabelTag];
   label.text = [NSString stringWithFormat:@"User %@ has %@",
-                message.member.identity,
-                (message.status == TWCMemberStatusJoined) ? @"joined" : @"left"];
+     message.member.identity, (message.status == TWCMemberStatusJoined) ? @"joined" : @"left"];
   
   return cell;
 }
@@ -176,8 +174,7 @@ static NSInteger const TWCLabelTag = 200;
 #pragma mark Chat Service
 - (void)sendMessage: (NSString *)inputMessage {
   TWMMessage *message = [self.channel.messages createMessageWithBody:inputMessage];
-  [self.channel.messages sendMessage:message
-                          completion:nil];
+  [self.channel.messages sendMessage:message completion:nil];
 }
 
 
@@ -195,8 +192,8 @@ static NSInteger const TWCLabelTag = 200;
 
 
 - (void)sortMessages {
-  [self.messages sortUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"timestamp"
-                                                                    ascending:NO]]];
+  [self.messages sortUsingDescriptors:@[[[NSSortDescriptor alloc]
+    initWithKey:@"timestamp" ascending:NO]]];
 }
 
 - (void)scrollToBottomMessage {
@@ -207,8 +204,7 @@ static NSInteger const TWCLabelTag = 200;
   NSIndexPath *bottomMessageIndex = [NSIndexPath indexPathForRow:0
                                                        inSection:0];
   [self.tableView scrollToRowAtIndexPath:bottomMessageIndex
-                        atScrollPosition:UITableViewScrollPositionBottom
-                                animated:NO];
+    atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
 - (void)loadMessages {
@@ -219,7 +215,8 @@ static NSInteger const TWCLabelTag = 200;
 - (void)leaveChannel {
   [self.channel leaveWithCompletion:^(TWMResult result) {
     if (result == TWMResultSuccess) {
-      [self.revealViewController.rearViewController performSegueWithIdentifier:TWCOpenGeneralChannelSegue sender:nil];
+      [self.revealViewController.rearViewController
+        performSegueWithIdentifier:TWCOpenGeneralChannelSegue sender:nil];
     }
   }];
 }

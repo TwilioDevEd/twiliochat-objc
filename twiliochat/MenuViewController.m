@@ -163,19 +163,18 @@ static NSInteger const TWCRefreshControlXOffset = 120;
 
 - (void)promtpLogout {
   UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
-                                                                 message:@"You are about to Logout."
-                                                          preferredStyle:UIAlertControllerStyleAlert];
+    message:@"You are about to Logout." preferredStyle:UIAlertControllerStyleAlert];
   
-  UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"Cancel"
-                                                          style:UIAlertActionStyleCancel
-                                                        handler:nil];
+  UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+    style:UIAlertActionStyleCancel handler:nil];
+
   UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm"
-                                                          style:UIAlertActionStyleDefault
-                                                        handler:^(UIAlertAction *action) {
-                                                          [self logOut];
-                                                        }];
-  
-  [alert addAction:defaultAction];
+    style:UIAlertActionStyleDefault
+    handler:^(UIAlertAction *action) {
+      [self logOut];
+    }];
+
+  [alert addAction:cancelAction];
   [alert addAction:confirmAction];
   [self presentViewController:alert animated:YES completion:nil];
 }

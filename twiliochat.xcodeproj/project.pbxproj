@@ -36,7 +36,6 @@
 		87DB89EC1BFE398C00E3935B /* IPMessagingManagerPresentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DB89EB1BFE398C00E3935B /* IPMessagingManagerPresentTests.m */; };
 		87DB89EE1BFE75C100E3935B /* TwilioIPMessagingClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87DB89ED1BFE75C100E3935B /* TwilioIPMessagingClient.framework */; };
 		87DB89F11C03A94300E3935B /* NSDate+ISO8601Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DB89F01C03A94300E3935B /* NSDate+ISO8601Parser.m */; };
-		87DB89F41C03B81300E3935B /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DB89F31C03B81300E3935B /* StartViewController.m */; };
 		87EF60291C0902F400814B63 /* TextFieldFormHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EF60281C0902F400814B63 /* TextFieldFormHandler.m */; };
 		87F2CE6F1BFD2C390064D863 /* ChatTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */; };
 		87F2CE731BFD356F0064D863 /* ChatStatusTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE721BFD356F0064D863 /* ChatStatusTableCell.xib */; };
@@ -117,8 +116,6 @@
 		87DB89ED1BFE75C100E3935B /* TwilioIPMessagingClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwilioIPMessagingClient.framework; path = Pods/TwilioIPMessagingClient/TwilioIPMessagingClient.framework; sourceTree = "<group>"; };
 		87DB89EF1C03A94300E3935B /* NSDate+ISO8601Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ISO8601Parser.h"; sourceTree = "<group>"; };
 		87DB89F01C03A94300E3935B /* NSDate+ISO8601Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601Parser.m"; sourceTree = "<group>"; };
-		87DB89F21C03B81300E3935B /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
-		87DB89F31C03B81300E3935B /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
 		87EF60271C0902F400814B63 /* TextFieldFormHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldFormHandler.h; sourceTree = "<group>"; };
 		87EF60281C0902F400814B63 /* TextFieldFormHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TextFieldFormHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableCell.xib; sourceTree = "<group>"; };
@@ -190,8 +187,6 @@
 				59BD03151BF68C1E00A4AA88 /* MainChatViewController.m */,
 				87A486001BFB5E9500E4BE8F /* ChatTableCell.h */,
 				87A486011BFB5E9500E4BE8F /* ChatTableCell.m */,
-				87DB89F21C03B81300E3935B /* StartViewController.h */,
-				87DB89F31C03B81300E3935B /* StartViewController.m */,
 				870855401C061C05006E38F5 /* StatusEntry.h */,
 				870855411C061C05006E38F5 /* StatusEntry.m */,
 			);
@@ -623,7 +618,6 @@
 				870855421C061C05006E38F5 /* StatusEntry.m in Sources */,
 				87DB89F11C03A94300E3935B /* NSDate+ISO8601Parser.m in Sources */,
 				59F208F01C03920800CC2392 /* AlertDialogController.m in Sources */,
-				87DB89F41C03B81300E3935B /* StartViewController.m in Sources */,
 				8762FB941C0F348600A1A035 /* DateTodayFormatter.m in Sources */,
 				7DC302AB1C04B631000765ED /* ForgotPasswordViewController.m in Sources */,
 				7DAC272C1C053D08006CEA49 /* ChannelManager.m in Sources */,

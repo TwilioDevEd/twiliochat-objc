@@ -24,13 +24,11 @@
 }
 
 - (void)initializeObjervers {
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(keyboardWillShow:)
-                                               name:UIKeyboardWillShowNotification
-                                             object:nil];
-  
-  UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                         action:@selector(backgroundTap:)];
+  [[NSNotificationCenter defaultCenter]
+    addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+
+  UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]
+    initWithTarget:self action:@selector(backgroundTap:)];
   [self.topContainer addGestureRecognizer:tapGestureRecognizer];
 }
 

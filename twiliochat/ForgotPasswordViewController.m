@@ -45,17 +45,13 @@
     [PFUser requestPasswordResetForEmailInBackground:self.emailTextField.text block:^(BOOL succeeded, NSError *error) {
       if (succeeded) {
         [AlertDialogController showAlertWithMessage:@"We've sent you an email with further instructions"
-                                              title:nil
-                                          presenter:self
-                                            handler:^{
-                                              [self performSegueWithIdentifier:@"BackToLogin"
-                                                                        sender:self];
-                                            }];
+          title:nil presenter:self
+          handler:^{
+            [self performSegueWithIdentifier:@"BackToLogin" sender:self];
+          }];
       }
       else {
-        [AlertDialogController showAlertWithMessage:[error localizedDescription]
-                                              title:nil
-                                          presenter:self];
+        [AlertDialogController showAlertWithMessage:[error localizedDescription] title:nil presenter:self];
         self.view.userInteractionEnabled = YES;
       }
     }];

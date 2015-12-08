@@ -45,11 +45,12 @@
 }
 
 - (void)initializeTextFields {
-  self.textFieldFormHandler = [[TextFieldFormHandler alloc] initWithTextFields:@[self.usernameTextField,
-                                                                                 self.passwordTextField,
-                                                                                 self.fullNameTextField,
-                                                                                 self.emailTextField]
-                                                                  topContainer:self.view];
+  self.textFieldFormHandler = [[TextFieldFormHandler alloc]
+                               initWithTextFields:@[self.usernameTextField,
+                                                    self.passwordTextField,
+                                                    self.fullNameTextField,
+                                                    self.emailTextField]
+                               topContainer:self.view];
   self.textFieldFormHandler.delegate = self;
 }
 
@@ -152,22 +153,20 @@
 
 - (void)registerUser {
   IPMessagingManager *manager = [IPMessagingManager sharedManager];
-  [manager registerWithUsername:self.usernameTextField.text
-                       password:self.passwordTextField.text
-                       fullName:self.fullNameTextField.text
-                          email:self.emailTextField.text
-                     completion:^(BOOL succeeded, NSError *error) {
-                       [self handleResponse:succeeded error:error];
-                     }];
+
+  [manager registerWithUsername:self.usernameTextField.text password:self.passwordTextField.text
+    fullName:self.fullNameTextField.text email:self.emailTextField.text
+    completion:^(BOOL succeeded, NSError *error) {
+     [self handleResponse:succeeded error:error];
+    }];
 }
 
 - (void)loginUser {
   IPMessagingManager *manager = [IPMessagingManager sharedManager];
-  [manager loginWithUsername:self.usernameTextField.text
-                    password:self.passwordTextField.text
-                  completion:^(BOOL succeeded, NSError *error) {
-                    [self handleResponse:succeeded error:error];
-                  }];
+  [manager loginWithUsername:self.usernameTextField.text password:self.passwordTextField.text
+    completion:^(BOOL succeeded, NSError *error) {
+      [self handleResponse:succeeded error:error];
+    }];
 }
 
 - (void)handleResponse:(BOOL)succeeded error:(NSError *)error {

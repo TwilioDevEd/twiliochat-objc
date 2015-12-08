@@ -22,7 +22,7 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 }
 
 - (instancetype)init {
-  
+
   self.channels = [[NSMutableOrderedSet alloc] init];
   [IPMessagingManager sharedManager].client.delegate = self;
   return self;
@@ -61,14 +61,13 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 }
 
 - (void)createGeneralChatRoomWithCompletion:(SucceedHandler)completion {
-  [self.channelsList createChannelWithFriendlyName:TWCDefaultChannelName
-                                              type:TWMChannelTypePublic
-                                        completion:^(TWMResult result, TWMChannel *channel) {
-                                          if (result == TWMResultSuccess) {
-                                            self.generalChannel = channel;
-                                          }
-                                          if (completion) completion(result == TWMResultSuccess);
-                                        }];
+  [self.channelsList createChannelWithFriendlyName:TWCDefaultChannelName type:TWMChannelTypePublic
+    completion:^(TWMResult result, TWMChannel *channel) {
+      if (result == TWMResultSuccess) {
+        self.generalChannel = channel;
+      }
+      if (completion) completion(result == TWMResultSuccess);
+    }];
 }
 
 - (void)setGeneralChatRoomUniqueNameWithCompletion:(SucceedHandler)completion {
@@ -81,7 +80,7 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 
 - (void)populateChannelsWithCompletion:(SucceedHandler)completion {
   self.channels = nil;
-  
+
   [self loadChannelListWithCompletion:^(BOOL succeeded, TWMChannels *channelsList) {
     if (!succeeded) {
       self.channelsList = nil;
@@ -106,7 +105,7 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 
 - (void)loadChannelListWithCompletion:(ChannelsListHandler)completion {
   self.channelsList = nil;
-  
+
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     [[IPMessagingManager sharedManager].client channelsListWithCompletion:^(TWMResult result, TWMChannels *channelsList) {
       if (result == TWMResultSuccess) {
@@ -134,7 +133,7 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
     if (completion) completion(NO, nil);
     return;
   }
-  
+
   if (!self.channelsList)
   {
     [self loadChannelListWithCompletion:^(BOOL succeeded, TWMChannels *channelsList) {
@@ -147,13 +146,13 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
     }];
     return;
   }
-  
+
   [self.channelsList
-   createChannelWithFriendlyName:name
-   type:TWMChannelTypePublic
-   completion:^(TWMResult result, TWMChannel *channel) {
-     if (completion) completion(result == TWMResultSuccess, channel);
-   }];
+    createChannelWithFriendlyName:name
+    type:TWMChannelTypePublic
+    completion:^(TWMResult result, TWMChannel *channel) {
+      if (completion) completion(result == TWMResultSuccess, channel);
+    }];
 }
 
 # pragma mark TwilioIPMessagingClientDelegate

@@ -7,6 +7,7 @@
 #import "ChannelManager.h"
 #import "StatusEntry.h"
 #import "DateTodayFormatter.h"
+#import "MenuViewController.h"
 
 @interface MainChatViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
@@ -215,6 +216,7 @@ static NSInteger const TWCLabelTag = 200;
 - (void)leaveChannel {
   [self.channel leaveWithCompletion:^(TWMResult result) {
     if (result == TWMResultSuccess) {
+      [(MenuViewController *)self.revealViewController.rearViewController deselectSelectedChannel];
       [self.revealViewController.rearViewController
         performSegueWithIdentifier:TWCOpenGeneralChannelSegue sender:nil];
     }

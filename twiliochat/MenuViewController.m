@@ -134,6 +134,14 @@ static NSInteger const TWCRefreshControlXOffset = 120;
   }];
 }
 
+- (void)deselectSelectedChannel {
+  NSIndexPath *selectedRow = [self.tableView indexPathForSelectedRow];
+
+  if (selectedRow) {
+    [self.tableView deselectRowAtIndexPath:selectedRow animated:YES];
+  }
+}
+
 #pragma mark - Channel
 
 - (void)createNewChannelDialog {

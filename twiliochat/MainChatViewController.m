@@ -91,6 +91,7 @@ static NSInteger const TWCLabelTag = 200;
 - (void)setChannel:(TWMChannel *)channel {
   _channel = channel;
   self.title = self.channel.friendlyName;
+  self.channel.delegate = self;
   
   if (self.channel == [ChannelManager sharedManager].generalChannel) {
     self.navigationItem.rightBarButtonItem = nil;
@@ -105,13 +106,9 @@ static NSInteger const TWCLabelTag = 200;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     self.textInputbarHidden = YES;
     [self.channel joinWithCompletion:^(TWMResult result) {
-      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self loadMessages];
-        dispatch_async(dispatch_get_main_queue(), ^{
-          self.channel.delegate = self;
-          [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-          [self setTextInputbarHidden:NO animated:YES];
-        });
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [self setTextInputbarHidden:NO animated:YES];
       });
     }];
   }
@@ -144,11 +141,14 @@ static NSInteger const TWCLabelTag = 200;
 - (ChatTableCell *)getChatCellForTableView:(UITableView *)tableView
                               forIndexPath:(NSIndexPath *)indexPath
                                    message:(TWMMessage *)message {
-  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TWCChatCellIdentifier forIndexPath:indexPath];
+  UITableViewCell *cell = [self.tableView
+    dequeueReusableCellWithIdentifier:TWCChatCellIdentifier forIndexPath:indexPath];
 
   ChatTableCell *chatCell = (ChatTableCell *)cell;
   chatCell.user = message.author;
-  chatCell.date = [[[DateTodayFormatter alloc] init] stringFromDate:[NSDate dateWithISO8601String:message.timestamp]];
+  chatCell.date = [[[DateTodayFormatter alloc] init]
+    stringFromDate:[NSDate dateWithISO8601String:message.timestamp]];
+
   chatCell.message = message.body;
   
   return chatCell;
@@ -157,7 +157,8 @@ static NSInteger const TWCLabelTag = 200;
 - (UITableViewCell *)getStatuCellForTableView:(UITableView *)tableView
                                  forIndexPath:(NSIndexPath *)indexPath
                                       message:(StatusEntry *)message {
-  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TWCChatStatusCellIdentifier forIndexPath:indexPath];
+  UITableViewCell *cell = [self.tableView
+    dequeueReusableCellWithIdentifier:TWCChatStatusCellIdentifier forIndexPath:indexPath];
   
   UILabel *label = [cell viewWithTag:TWCLabelTag];
   label.text = [NSString stringWithFormat:@"User %@ has %@",
@@ -237,7 +238,8 @@ static NSInteger const TWCLabelTag = 200;
            channelDeleted:(TWMChannel *)channel {
   dispatch_async(dispatch_get_main_queue(), ^{
     if (channel == self.channel) {
-      [self.revealViewController.rearViewController performSegueWithIdentifier:TWCOpenGeneralChannelSegue sender:nil];
+      [self.revealViewController.rearViewController
+        performSegueWithIdentifier:TWCOpenGeneralChannelSegue sender:nil];
     }
   });
 }
@@ -252,6 +254,14 @@ static NSInteger const TWCLabelTag = 200;
                   channel:(TWMChannel *)channel
                memberLeft:(TWMMember *)member {
   [self addMessages:@[[StatusEntry statusEntryWithMember:member status:TWCMemberStatusLeft]]];
+}
+
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client
+     channelHistoryLoaded:(TWMChannel *)channel {
+  [self loadMessages];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self.tableView reloadData];
+  });
 }
 
 

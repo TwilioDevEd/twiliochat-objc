@@ -34,7 +34,6 @@
 		87B6AC3D1BF51D6600E55FE2 /* LoginViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC3C1BF51D6600E55FE2 /* LoginViewControllerTests.m */; };
 		87B6AC481BF51D6600E55FE2 /* twiliochatUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC471BF51D6600E55FE2 /* twiliochatUITests.m */; };
 		87DB89EC1BFE398C00E3935B /* IPMessagingManagerPresentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DB89EB1BFE398C00E3935B /* IPMessagingManagerPresentTests.m */; };
-		87DB89EE1BFE75C100E3935B /* TwilioIPMessagingClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87DB89ED1BFE75C100E3935B /* TwilioIPMessagingClient.framework */; };
 		87DB89F11C03A94300E3935B /* NSDate+ISO8601Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DB89F01C03A94300E3935B /* NSDate+ISO8601Parser.m */; };
 		87EF60291C0902F400814B63 /* TextFieldFormHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EF60281C0902F400814B63 /* TextFieldFormHandler.m */; };
 		87F2CE6F1BFD2C390064D863 /* ChatTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */; };
@@ -113,7 +112,6 @@
 		87B6AC471BF51D6600E55FE2 /* twiliochatUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = twiliochatUITests.m; sourceTree = "<group>"; };
 		87B6AC491BF51D6600E55FE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87DB89EB1BFE398C00E3935B /* IPMessagingManagerPresentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMessagingManagerPresentTests.m; sourceTree = "<group>"; };
-		87DB89ED1BFE75C100E3935B /* TwilioIPMessagingClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwilioIPMessagingClient.framework; path = Pods/TwilioIPMessagingClient/TwilioIPMessagingClient.framework; sourceTree = "<group>"; };
 		87DB89EF1C03A94300E3935B /* NSDate+ISO8601Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ISO8601Parser.h"; sourceTree = "<group>"; };
 		87DB89F01C03A94300E3935B /* NSDate+ISO8601Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601Parser.m"; sourceTree = "<group>"; };
 		87EF60271C0902F400814B63 /* TextFieldFormHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldFormHandler.h; sourceTree = "<group>"; };
@@ -130,7 +128,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87DB89EE1BFE75C100E3935B /* TwilioIPMessagingClient.framework in Frameworks */,
 				1280D1A926807A523E8A2697 /* libPods-twiliochat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,7 +331,6 @@
 		C5118FA72F42FF62E470C90A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				87DB89ED1BFE75C100E3935B /* TwilioIPMessagingClient.framework */,
 				7834F26AFB8ED02DD8AF41DF /* libPods-twiliochat.a */,
 				8270D2027DDF16AF9AADE12D /* libPods-twiliochatTests.a */,
 				0EE6C21A5FA4BAC2BD3FFCDA /* libPods-twiliochatUITests.a */,
@@ -769,10 +765,7 @@
 			baseConfigurationReference = 652E063D172A0ECAD377861F /* Pods-twiliochat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/TwilioIPMessagingClient",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = twiliochat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -786,10 +779,7 @@
 			baseConfigurationReference = 413E6B0A06E863D82FE7B36B /* Pods-twiliochat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/TwilioIPMessagingClient",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = twiliochat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

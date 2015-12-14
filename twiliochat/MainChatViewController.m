@@ -141,11 +141,14 @@ static NSInteger const TWCLabelTag = 200;
 - (ChatTableCell *)getChatCellForTableView:(UITableView *)tableView
                               forIndexPath:(NSIndexPath *)indexPath
                                    message:(TWMMessage *)message {
-  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TWCChatCellIdentifier forIndexPath:indexPath];
+  UITableViewCell *cell = [self.tableView
+    dequeueReusableCellWithIdentifier:TWCChatCellIdentifier forIndexPath:indexPath];
 
   ChatTableCell *chatCell = (ChatTableCell *)cell;
   chatCell.user = message.author;
-  chatCell.date = [[[DateTodayFormatter alloc] init] stringFromDate:[NSDate dateWithISO8601String:message.timestamp]];
+  chatCell.date = [[[DateTodayFormatter alloc] init]
+    stringFromDate:[NSDate dateWithISO8601String:message.timestamp]];
+
   chatCell.message = message.body;
   
   return chatCell;
@@ -154,7 +157,8 @@ static NSInteger const TWCLabelTag = 200;
 - (UITableViewCell *)getStatuCellForTableView:(UITableView *)tableView
                                  forIndexPath:(NSIndexPath *)indexPath
                                       message:(StatusEntry *)message {
-  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TWCChatStatusCellIdentifier forIndexPath:indexPath];
+  UITableViewCell *cell = [self.tableView
+    dequeueReusableCellWithIdentifier:TWCChatStatusCellIdentifier forIndexPath:indexPath];
   
   UILabel *label = [cell viewWithTag:TWCLabelTag];
   label.text = [NSString stringWithFormat:@"User %@ has %@",
@@ -234,7 +238,8 @@ static NSInteger const TWCLabelTag = 200;
            channelDeleted:(TWMChannel *)channel {
   dispatch_async(dispatch_get_main_queue(), ^{
     if (channel == self.channel) {
-      [self.revealViewController.rearViewController performSegueWithIdentifier:TWCOpenGeneralChannelSegue sender:nil];
+      [self.revealViewController.rearViewController
+        performSegueWithIdentifier:TWCOpenGeneralChannelSegue sender:nil];
     }
   });
 }

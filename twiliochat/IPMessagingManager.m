@@ -1,6 +1,6 @@
-#import <Parse/Parse.h>
 #import "IPMessagingManager.h"
 #import "ChannelManager.h"
+#import "SessionManager.h"
 
 @interface IPMessagingManager ()
 @property (strong, nonatomic) TwilioIPMessagingClient *client;
@@ -25,7 +25,7 @@ static NSString * const TWCTokenKey = @"token";
 # pragma mark Present view controllers
 
 - (void)presentRootViewController {
-  if (!self.hasIdentity) {
+  if (!self.isLoggedIn) {
     [self presentViewControllerByName:TWCLoginViewControllerName];
     return;
   }
@@ -58,44 +58,25 @@ static NSString * const TWCTokenKey = @"token";
 
 # pragma mark User and session management
 
-- (BOOL)hasIdentity {
-  return [PFUser currentUser] && [[PFUser currentUser] isAuthenticated];
+- (BOOL)isLoggedIn {
+  return [SessionManager isLoggedIn];
 }
 
-- (void)registerWithUsername:(NSString *)username password:(NSString *)password
-  fullName:(NSString *)fullName email:(NSString *)email
-  completion:(StatusWithErrorHandler)completion {
+- (void)loginWithUsername:(NSString *)username
+    completion:(StatusWithErrorHandler)completion {
 
-  PFUser *user = [PFUser user];
-  user.username = username;
-  user.password = password;
-  user.email = email;
-  user[@"fullName"] = fullName;
-  
-  [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    if (succeeded) {
-      [self connectClientWithCompletion:completion];
-      return;
-    }
-    if (completion) completion(succeeded, error);
-  }];
-}
-
-- (void)loginWithUsername:(NSString *)username password:(NSString *)password
-  completion:(StatusWithErrorHandler)completion {
-
-  [PFUser logInWithUsernameInBackground:username password:password
+  /*[PFUser logInWithUsernameInBackground:username password:password
     block:^(PFUser *user, NSError *error) {
       if (!error) {
         [self connectClientWithCompletion:completion];
         return;
       }
       if (completion) completion(!error, error);
-    }];
+    }];*/
 }
 
 - (void)logout {
-  [PFUser logOut];
+  [SessionManager logout];
   self.connected = NO;
   
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -146,13 +127,13 @@ static NSString * const TWCTokenKey = @"token";
   NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
   NSDictionary *parameters = @{@"device": uuid};
   
-  [PFCloud callFunctionInBackground:TWCTokenKey withParameters:parameters
+  /*[PFCloud callFunctionInBackground:TWCTokenKey withParameters:parameters
     block:^(NSDictionary *results, NSError *error) {
       NSString *token = [results objectForKey:TWCTokenKey];
       BOOL errorCondition = error || !token;
       
       if (completion) completion(!errorCondition, token);
-    }];
+    }];*/
 }
 
 - (NSError *)errorWithDescription:(NSString *)description code:(NSInteger)code {
@@ -181,7 +162,7 @@ static NSString * const TWCTokenKey = @"token";
 #pragma mark Internal helpers
 
 - (NSString *)userIdentity {
-  return [[PFUser currentUser] username];
+  return [SessionManager getUsername];
 }
 
 @end

@@ -1,4 +1,3 @@
-#import <Parse/Parse.h>
 #import "AppDelegate.h"
 #import "IPMessagingManager.h"
 @import Foundation;
@@ -9,21 +8,8 @@
 @end
 
 @implementation AppDelegate
-
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  [Parse enableLocalDatastore];
-  
   NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Keys" ofType:@"plist"]];
-  NSString *parseApplicationId = [dictionary objectForKey:@"ParseApplicationId"];
-  NSString *parseClientKey = [dictionary objectForKey:@"ParseClientKey"];
-  
-  [Parse setApplicationId:parseApplicationId
-                clientKey:parseClientKey];
-  
-  PFACL *defaultACL = [PFACL ACL];
-  [defaultACL setPublicReadAccess:YES];
-  [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
   
   [[IPMessagingManager sharedManager] presentLaunchScreen];
   [[IPMessagingManager sharedManager] presentRootViewController];

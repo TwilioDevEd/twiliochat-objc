@@ -1,4 +1,3 @@
-#import <Parse/Parse.h>
 #import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
 #import "MainChatViewController.h"
 #import "ChatTableCell.h"

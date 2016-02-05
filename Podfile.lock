@@ -1,16 +1,28 @@
 PODS:
-  - Bolts/Tasks (1.6.0)
-  - OCMock (3.2)
-  - Parse (1.12.0):
-    - Bolts/Tasks (~> 1.5)
+  - AFNetworking (3.0.4):
+    - AFNetworking/NSURLSession (= 3.0.4)
+    - AFNetworking/Reachability (= 3.0.4)
+    - AFNetworking/Security (= 3.0.4)
+    - AFNetworking/Serialization (= 3.0.4)
+    - AFNetworking/UIKit (= 3.0.4)
+  - AFNetworking/NSURLSession (3.0.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.0.4)
+  - AFNetworking/Security (3.0.4)
+  - AFNetworking/Serialization (3.0.4)
+  - AFNetworking/UIKit (3.0.4):
+    - AFNetworking/NSURLSession
+  - OCMock (3.2.2)
   - SlackTextViewController (1.9)
   - SWRevealViewController (2.3.0)
   - TwilioCommon (0.1.10)
   - TwilioIPMessagingClient (0.13.5)
 
 DEPENDENCIES:
+  - AFNetworking (~> 3.0)
   - OCMock (~> 3.2)
-  - Parse (~> 1.9)
   - SlackTextViewController (~> 1.7)
   - SWRevealViewController (~> 2.3)
   - TwilioCommon (from `https://media.twiliocdn.com/sdk/rtc/ios/common/v0.1/TwilioCommon.podspec`)
@@ -23,9 +35,8 @@ EXTERNAL SOURCES:
     :podspec: https://media.twiliocdn.com/sdk/rtc/ios/ip-messaging/v0.13/TwilioIPMessagingClient.podspec
 
 SPEC CHECKSUMS:
-  Bolts: f52a250053bb517ca874523c3913776359ab3def
-  OCMock: 28def049ef47f996b515a8eeea958be7ccab2dbb
-  Parse: de2c52a9a1421b91ae7594ab8ce191afd184f19b
+  AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  OCMock: 18c9b7e67d4c2770e95bb77a9cc1ae0c91fe3835
   SlackTextViewController: d51503f7be846cb9976a273499dc90f2445e9447
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   TwilioCommon: 0c1b601770d3431453a979e8a0794313e99f9317

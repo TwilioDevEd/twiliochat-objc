@@ -54,38 +54,8 @@
   [self.messagingManagerMock stopMocking];
 }
 
-- (void)testRegisterUser {
-  id handler = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){YES}), [OCMArg defaultValue], nil];
-  OCMExpect([self.messagingManagerMock registerWithUsername:self.username
-                                                   password:self.password
-                                                   fullName:self.fullName
-                                                      email:self.email
-                                                 completion:handler]);
-  OCMExpect([self.messagingManagerMock presentRootViewController]);
-  
-  [[self.viewControllerMock createAccountButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
-  [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
-  
-  OCMVerifyAll(self.messagingManagerMock);
-}
-
 - (void)testEmptyUsernameError {
   [self.viewControllerMock usernameTextField].text = @"";
-  [self runUpEmptyFieldTest];
-}
-
-- (void)testEmptyPasswordError {
-  [self.viewControllerMock passwordTextField].text = @"";
-  [self runUpEmptyFieldTest];
-}
-
-- (void)testEmptyFullNameError {
-  [self.viewControllerMock fullNameTextField].text = @"";
-  [self runUpEmptyFieldTest];
-}
-
-- (void)testEmptyEmailError {
-  [self.viewControllerMock emailTextField].text = @"";
   [self runUpEmptyFieldTest];
 }
 
@@ -93,7 +63,6 @@
   OCMExpect([self.viewControllerMock showError:@"All fields are required"]);
   
   
-  [[self.viewControllerMock createAccountButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
   [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
   
   OCMVerifyAll(self.messagingManagerMock);

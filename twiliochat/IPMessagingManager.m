@@ -1,6 +1,7 @@
 #import "IPMessagingManager.h"
 #import "ChannelManager.h"
 #import "SessionManager.h"
+#import "TokenRequestHandler.h"
 
 @interface IPMessagingManager ()
 @property (strong, nonatomic) TwilioIPMessagingClient *client;
@@ -118,15 +119,14 @@ static NSString * const TWCTokenKey = @"token";
 
 - (void)requestTokenWithCompletion:(StatusWithTokenHandler)completion {
   NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
-  NSDictionary *parameters = @{@"device": uuid, @"username": [SessionManager getUsername]};
-  
-  /*[PFCloud callFunctionInBackground:TWCTokenKey withParameters:parameters
-    block:^(NSDictionary *results, NSError *error) {
-      NSString *token = [results objectForKey:TWCTokenKey];
-      BOOL errorCondition = error || !token;
-      
-      if (completion) completion(!errorCondition, token);
-    }];*/
+  NSDictionary *parameters = @{@"device": uuid, @"identity": [SessionManager getUsername]};
+
+  [TokenRequestHandler fetchTokenWithParams:parameters completion:^(NSDictionary *results, NSError *error) {
+    NSString *token = [results objectForKey:TWCTokenKey];
+    BOOL errorCondition = error || !token;
+
+    if (completion) completion(!errorCondition, token);
+  }];
 }
 
 - (NSError *)errorWithDescription:(NSString *)description code:(NSInteger)code {

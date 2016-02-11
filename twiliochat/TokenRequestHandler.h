@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
 
 @interface TokenRequestHandler : NSObject
-+ (void)fetchTokenWithParams:(NSDictionary *)params;
++ (void)fetchTokenWithParams:(NSDictionary *)params
+                  completion:(void(^)(NSDictionary *results, NSError *error))completion;
 @end

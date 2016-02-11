@@ -18,12 +18,9 @@
 		59F5EDAA1C652E3700CE7D32 /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F5EDA91C652E3700CE7D32 /* SessionManager.m */; };
 		59F5EDAE1C653CA400CE7D32 /* TokenRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F5EDAD1C653CA400CE7D32 /* TokenRequestHandler.m */; };
 		7D8DCB141BFED14F009B1B6D /* IPMessagingManagerLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */; };
-		7D8DCB161BFF467A009B1B6D /* IPMessagingManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DCB151BFF467A009B1B6D /* IPMessagingManagerTests.m */; };
 		7DAC272C1C053D08006CEA49 /* ChannelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAC272B1C053D08006CEA49 /* ChannelManager.m */; };
 		870855421C061C05006E38F5 /* StatusEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 870855411C061C05006E38F5 /* StatusEntry.m */; };
-		870855471C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870855461C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m */; };
 		8750C85E1BF530330015CBE1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85D1BF530330015CBE1 /* Keys.plist */; };
-		8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85F1BF5307E0015CBE1 /* Keys.example.plist */; };
 		8762FB941C0F348600A1A035 /* DateTodayFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8762FB931C0F348600A1A035 /* DateTodayFormatter.m */; };
 		87A486021BFB5E9500E4BE8F /* ChatTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A486011BFB5E9500E4BE8F /* ChatTableCell.m */; };
 		87B6AC241BF51D6600E55FE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC231BF51D6600E55FE2 /* main.m */; };
@@ -85,15 +82,12 @@
 		652E063D172A0ECAD377861F /* Pods-twiliochat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochat/Pods-twiliochat.debug.xcconfig"; sourceTree = "<group>"; };
 		7834F26AFB8ED02DD8AF41DF /* libPods-twiliochat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twiliochat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMessagingManagerLoginTests.m; sourceTree = "<group>"; };
-		7D8DCB151BFF467A009B1B6D /* IPMessagingManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMessagingManagerTests.m; sourceTree = "<group>"; };
 		7DAC272A1C053D08006CEA49 /* ChannelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ChannelManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		7DAC272B1C053D08006CEA49 /* ChannelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChannelManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8270D2027DDF16AF9AADE12D /* libPods-twiliochatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twiliochatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		870855401C061C05006E38F5 /* StatusEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusEntry.h; sourceTree = "<group>"; };
 		870855411C061C05006E38F5 /* StatusEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusEntry.m; sourceTree = "<group>"; };
-		870855461C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewControllerTests.m; sourceTree = "<group>"; };
 		8750C85D1BF530330015CBE1 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
-		8750C85F1BF5307E0015CBE1 /* Keys.example.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.example.plist; sourceTree = "<group>"; };
 		8762FB921C0F348600A1A035 /* DateTodayFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTodayFormatter.h; sourceTree = "<group>"; };
 		8762FB931C0F348600A1A035 /* DateTodayFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTodayFormatter.m; sourceTree = "<group>"; };
 		87A486001BFB5E9500E4BE8F /* ChatTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableCell.h; sourceTree = "<group>"; };
@@ -249,7 +243,6 @@
 		8750C8611BF5315E0015CBE1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8750C85F1BF5307E0015CBE1 /* Keys.example.plist */,
 				8750C85D1BF530330015CBE1 /* Keys.plist */,
 			);
 			name = Resources;
@@ -314,10 +307,8 @@
 			isa = PBXGroup;
 			children = (
 				87B6AC3C1BF51D6600E55FE2 /* LoginViewControllerTests.m */,
-				7D8DCB151BFF467A009B1B6D /* IPMessagingManagerTests.m */,
 				7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */,
 				87DB89EB1BFE398C00E3935B /* IPMessagingManagerPresentTests.m */,
-				870855461C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m */,
 				AD9906D41C0EB1A800913A52 /* DateTodayFormatterTests.m */,
 				87B6AC3E1BF51D6600E55FE2 /* Info.plist */,
 			);
@@ -456,7 +447,6 @@
 			files = (
 				8750C85E1BF530330015CBE1 /* Keys.plist in Resources */,
 				87B6AC321BF51D6600E55FE2 /* LaunchScreen.storyboard in Resources */,
-				8750C8601BF5307E0015CBE1 /* Keys.example.plist in Resources */,
 				87B6AC2F1BF51D6600E55FE2 /* Assets.xcassets in Resources */,
 				87F2CE6F1BFD2C390064D863 /* ChatTableCell.xib in Resources */,
 				87F2CE731BFD356F0064D863 /* ChatStatusTableCell.xib in Resources */,
@@ -633,11 +623,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				87DB89EC1BFE398C00E3935B /* IPMessagingManagerPresentTests.m in Sources */,
-				7D8DCB161BFF467A009B1B6D /* IPMessagingManagerTests.m in Sources */,
 				AD9906D51C0EB1A800913A52 /* DateTodayFormatterTests.m in Sources */,
 				7D8DCB141BFED14F009B1B6D /* IPMessagingManagerLoginTests.m in Sources */,
 				87B6AC3D1BF51D6600E55FE2 /* LoginViewControllerTests.m in Sources */,
-				870855471C065C9E006E38F5 /* ForgotPasswordViewControllerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

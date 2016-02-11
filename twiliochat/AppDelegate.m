@@ -9,8 +9,6 @@
 
 @implementation AppDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Keys" ofType:@"plist"]];
-  
   [[IPMessagingManager sharedManager] presentLaunchScreen];
   [[IPMessagingManager sharedManager] presentRootViewController];
   

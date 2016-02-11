@@ -11,7 +11,7 @@ static NSString * const IsLoggedInKey = @"loggedIn";
 }
 
 + (void)logout {
-  [[NSUserDefaults standardUserDefaults] setNilValueForKey:UsernameKey];
+  [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:UsernameKey];
   [[NSUserDefaults standardUserDefaults] setBool:NO forKey:IsLoggedInKey];
   [[NSUserDefaults standardUserDefaults] synchronize];
 }

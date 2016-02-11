@@ -64,15 +64,8 @@ static NSString * const TWCTokenKey = @"token";
 
 - (void)loginWithUsername:(NSString *)username
     completion:(StatusWithErrorHandler)completion {
-
-  /*[PFUser logInWithUsernameInBackground:username password:password
-    block:^(PFUser *user, NSError *error) {
-      if (!error) {
-        [self connectClientWithCompletion:completion];
-        return;
-      }
-      if (completion) completion(!error, error);
-    }];*/
+  [SessionManager loginWithUsername:username];
+  [self connectClientWithCompletion:completion];
 }
 
 - (void)logout {
@@ -125,7 +118,7 @@ static NSString * const TWCTokenKey = @"token";
 
 - (void)requestTokenWithCompletion:(StatusWithTokenHandler)completion {
   NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
-  NSDictionary *parameters = @{@"device": uuid};
+  NSDictionary *parameters = @{@"device": uuid, @"username": [SessionManager getUsername]};
   
   /*[PFCloud callFunctionInBackground:TWCTokenKey withParameters:parameters
     block:^(NSDictionary *results, NSError *error) {

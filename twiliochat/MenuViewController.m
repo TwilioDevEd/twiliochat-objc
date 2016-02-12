@@ -1,4 +1,3 @@
-#import <Parse/Parse.h>
 #import <SWRevealViewController/SWRevealViewController.h>
 #import "MenuViewController.h"
 #import "MenuTableCell.h"
@@ -7,6 +6,7 @@
 #import "IPMessagingManager.h"
 #import "AlertDialogController.h"
 #import "ChannelManager.h"
+#import "SessionManager.h"
 
 @interface MenuViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
@@ -31,7 +31,7 @@ static NSInteger const TWCRefreshControlXOffset = 120;
   bgImage.frame = self.tableView.frame;
   self.tableView.backgroundView = bgImage;
   
-  self.usernameLabel.text = [PFUser currentUser].username;
+  self.usernameLabel.text = [SessionManager getUsername];
   
   self.refreshControl = [[UIRefreshControl alloc] init];
   [self.tableView addSubview:self.refreshControl];

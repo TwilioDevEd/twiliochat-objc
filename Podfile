@@ -4,7 +4,7 @@ platform :ios, '8.4'
 # use_frameworks!
 
 target 'twiliochat' do
-  pod 'Parse', '~> 1.9'
+  pod 'AFNetworking', '~> 3.0'
   pod 'SWRevealViewController', '~> 2.3'
   pod 'SlackTextViewController', '~> 1.7'
   pod 'TwilioIPMessagingClient', :podspec => 'https://media.twiliocdn.com/sdk/rtc/ios/ip-messaging/v0.13/TwilioIPMessagingClient.podspec'

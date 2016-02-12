@@ -1,7 +1,8 @@
 #import <XCTest/XCTest.h>
-#import <Parse/Parse.h>
 #import <OCMock/OCMock.h>
 #import "IPMessagingManager.h"
+#import "TokenRequestHandler.h"
+#import "SessionManager.h"
 #import "AppDelegate.h"
 
 @interface IPMessagingManager (Test)
@@ -9,8 +10,8 @@
 @end
 
 @interface IPMessagingManagerPresentTests : XCTestCase
-@property (strong, nonatomic) id pfCloudMock;
-@property (strong, nonatomic) id pfUserMock;
+@property (strong, nonatomic) id tokenRequestMock;
+@property (strong, nonatomic) id sessionManagerMock;
 @property (strong, nonatomic) id storyboardMock;
 @property (strong, nonatomic) id windowMock;
 @property (strong, nonatomic) id viewControllerMock;
@@ -24,8 +25,8 @@
 - (void)setUp {
   [super setUp];
   
-  self.pfCloudMock = OCMClassMock([PFCloud class]);
-  self.pfUserMock = OCMClassMock([PFUser class]);
+  self.tokenRequestMock = OCMClassMock([TokenRequestHandler class]);
+  self.sessionManagerMock = OCMClassMock([SessionManager class]);
   self.appMock = OCMClassMock([UIApplication class]);
   self.appDelegateMock = OCMClassMock([AppDelegate class]);
   self.windowMock = OCMClassMock([UIWindow class]);
@@ -42,8 +43,8 @@
 
 - (void)tearDown {
   [super tearDown];
-  [self.pfCloudMock stopMocking];
-  [self.pfUserMock stopMocking];
+  [self.tokenRequestMock stopMocking];
+  [self.sessionManagerMock stopMocking];
   [self.windowMock stopMocking];
   [self.appDelegateMock stopMocking];
   [self.appMock stopMocking];
@@ -52,25 +53,25 @@
 }
 
 - (void)testLoggedInFlow {
-  [self presentWithUser:self.pfUserMock
-    expectingIdentifier:@"RevealViewController"
-          connectStatus:YES];
+  [self presentWithUserLoggedIn:YES
+            expectingIdentifier:@"RevealViewController"
+                  connectStatus:YES];
 }
 
 - (void)testNotLoggedInFlow {
-  [self presentWithUser:nil
-    expectingIdentifier:@"LoginViewController"
-          connectStatus:YES];
+  [self presentWithUserLoggedIn:NO
+            expectingIdentifier:@"LoginViewController"
+                  connectStatus:YES];
 }
 
 - (void)testLoggedInWithErrorFlow {
-  [self presentWithUser:self.pfUserMock
-    expectingIdentifier:@"LoginViewController"
-          connectStatus:NO];
+  [self presentWithUserLoggedIn:YES
+            expectingIdentifier:@"LoginViewController"
+                  connectStatus:NO];
 }
 
-- (void)presentWithUser:(id)user expectingIdentifier:(NSString *)identifier connectStatus:(BOOL)status {
-  OCMStub([self.pfUserMock currentUser]).andReturn(user);
+- (void)presentWithUserLoggedIn:(BOOL)loggedIn expectingIdentifier:(NSString *)identifier connectStatus:(BOOL)status {
+  OCMStub([self.sessionManagerMock isLoggedIn]).andReturn(loggedIn);
   
   id connectBlock = nil;
   
@@ -82,9 +83,8 @@
     connectBlock = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){NO}), error, nil];
   }
   
-  if (user) {
+  if (loggedIn) {
     OCMExpect([self.messagingManagerMock connectClientWithCompletion:connectBlock]);
-    OCMExpect([self.pfUserMock isAuthenticated]).andReturn(YES);
   }
   
   OCMExpect([self.storyboardMock instantiateViewControllerWithIdentifier:[OCMArg any]]).andReturn(self.viewControllerMock);

@@ -6,9 +6,6 @@
       Ready to implement a chat application using Twilio IP Messaging Client?
       Here is how it works at a high level:
 
-      1. We use [Parse](//www.parse.com/) to handle session management and user
-      registration in our app. 
-
       1. [Twilio IP Messaging](//www.twilio.com/ip-messaging) is the core product
       we'll be using to handle all the chat functionality.
 
@@ -17,7 +14,7 @@
       all your Twilio account information. The IP Messaging Client uses this token
       to connect with the API
 
-      1. [Twilio Common](//media.twiliocdn.com/sdk/rtc/ios/common/releases/0.1.7.b23-4ca8945/docs/)
+      1. [Twilio Common](//media.twiliocdn.com/sdk/rtc/android/common/releases/0.1.10.b62-b0c2c3f/docs)
       is the part of the SDK than handles access tokens and even refreshes them upon token
       expiration.
 
@@ -31,23 +28,26 @@
       * [Twilio IP Messaging Client Reference](//media.twiliocdn.com/sdk/rtc/ios/ip-messaging/releases/0.13.3.b181-17abeb8/docs/)
       * [Twilio Common Reference](//media.twiliocdn.com/sdk/rtc/ios/common/releases/0.1.7.b23-4ca8945/docs/)
 
-  .step(data-title='Initializing the Client', data-file='twiliochat/IPMessagingManager.m', data-highlight='109-156')
+  .step(data-title='Initializing the Client', data-file='twiliochat/IPMessagingManager.m', data-highlight='84-130')
     :markdown
       ## Initializing the IP Messaging Client
 
       The only thing you need to create a client, is an access token. This token
-      holds information about your Twilio account and IP Messaging API keys. You
-      can find an example application written in node that demonstrates how to
-      generate the token [here](//github.com/TwilioDevEd/twiliochat).
+      holds information about your Twilio account and IP Messaging API keys. We have created a web
+      version of Twilio chat in different languages. You can use any of these to generate the token:
 
-      We use [Parse cloud code
-      webhooks](//parse.com/docs/cloudcode/guide#cloud-code-advanced-cloud-code-webhooks)
+      * [PHP - Laravel](//github.com/TwilioDevEd/twiliochat-laravel)
+      * [C# - .NET MVC](//github.com/TwilioDevEd/twiliochat-csharp)
+      * [Java - Servlets](//github.com/TwilioDevEd/twiliochat-servlets)
+      * [JS - Node](//github.com/TwilioDevEd/twiliochat-node)
+
+      We use [AFNetworking](//github.com/AFNetworking/AFNetworking)
       to make a request to our server and get the access token.
 
       ---
 
       **See Also:**
-      * [Parse cloud code webhooks](//parse.com/docs/cloudcode/guide#cloud-code-advanced-cloud-code-webhooks)
+      * [AFNetworking Data Task](//github.com/AFNetworking/AFNetworking#creating-a-data-task)
 
   .step(data-title='Getting the Channel List', data-file='twiliochat/ChannelManager.m', data-highlight='81-119')
     :markdown
@@ -63,6 +63,26 @@
       finishes successfully, call the method `allObjects` on the same object, to
       get an array of channels.
 
+  .step(data-title='Listen to Client Events',
+        data-file='twiliochat/ChannelManager.m',
+        data-highlight='160-179')
+    :markdown
+      ## Listen to Client Events
+
+      The IP Messaging Client will trigger events such as `channelAdded` or `channelDeleted`.
+      In our application, given the event that a channel is deleted or created, we'll reload the
+      channel list in the reveal controller. If a channel is deleted and we were currently joined to that
+      channel, the application will automatically join the general channel.
+
+      `ChannelManager` is our `TwilioIPMessagingClientDelegate`. In this class we
+      implement the delegate methods, but we also allow another class to be a delegate of ChannelManager,
+      so this class can listen to the events too (MainChatViewController) in this case
+
+      ---
+
+      **See Also:**
+      * [TwilioIPMessagingClientDelegate Protocol Reference](//media.twiliocdn.com/sdk/rtc/ios/ip-messaging/releases/0.13.5.b191-9dfea4a/docs/Protocols/TwilioIPMessagingClientDelegate.html)
+
   .step(data-title='Join the General Channel', data-file='twiliochat/ChannelManager.m', data-highlight='33-77')
     :markdown
       ## Join the General Channel
@@ -77,7 +97,7 @@
       so you can start listening to events such as `messageAdded` or `memberJoined`.
       We'll show you how to do this in the next step.
 
-  .step(data-title='Listen to Channel Events', data-file='twiliochat/MainChatViewController.m', data-highlight='228-265')
+  .step(data-title='Listen to Channel Events', data-file='twiliochat/MainChatViewController.m', data-highlight='228-234, 246-264')
     :markdown
       ## Listen to Channel Events
 
@@ -85,7 +105,7 @@
       we implemented the following methods that listen to channel events:
 
       * `messageAdded`: When someone sends a message to the channel you are connected to.
-      * `channelDeleted`: When someone deletes a channel.
+      * `channelHistoryLoaded`: When all the messages from one channel have been loaded.
       * `memberJoined`: When someone joins the channel.
       * `memberLeft`: When someone leaves the channel.
       
@@ -110,7 +130,7 @@
       We use an input dialog so the user can type the name of the new channel.
       The only restriction here, is that the user can't create a channel called
       "General Channel". Other than that, creating a channel is as simple as calling
-      `createChannelWithFriendlyName`
+      `createChannelWithFriendlyName` on the `channelList`.
 
   .step(data-title='Deleting a Channel', data-file='twiliochat/MenuViewController.m', data-highlight='83-95')
     :markdown

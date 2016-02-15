@@ -33,7 +33,7 @@ Objective-C implementation of Twilio Chat
    ```
    This file contains the `TokenRequestUrl` key. The default values is `http://localhost:8000/token`. This
    address refers to the host machine loopback interface when running this application
-   in the iOS emulator. You must change this value to match the address of your server running
+   in the iOS simulator. You must change this value to match the address of your server running
    the token generation application. We are using the [PHP - Laravel](https://github.com/TwilioDevEd/twiliochat-laravel)
    version in this case, that's why we use port 8000.
 

@@ -22,100 +22,67 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 }
 
 - (instancetype)init {
-
   self.channels = [[NSMutableOrderedSet alloc] init];
-  [IPMessagingManager sharedManager].client.delegate = self;
   return self;
 }
 
 #pragma mark General channel
 
 - (void)joinGeneralChatRoomWithCompletion:(SucceedHandler)completion {
-  [self populateChannelsWithCompletion:^(BOOL succeeded) {
-    self.generalChannel = [self.channelsList channelWithUniqueName:TWCDefaultChannelUniqueName];
-    if (self.generalChannel) {
-      [self joinGeneralChatRoomWithUniqueName:nil completion:completion];
-    }
-    else {
-      [self createGeneralChatRoomWithCompletion:^(BOOL succeeded) {
-        if (succeeded) {
-          [self joinGeneralChatRoomWithUniqueName:TWCDefaultChannelUniqueName completion:completion];
-          return;
-        }
-        if (completion) completion(NO);
-      }];
-    }
-  }];
+  self.generalChannel = [self.channelsList channelWithUniqueName:TWCDefaultChannelUniqueName];
+  if (self.generalChannel) {
+    [self joinGeneralChatRoomWithUniqueName:nil completion:completion];
+  }
+  else {
+    [self createGeneralChatRoomWithCompletion:^(BOOL succeeded) {
+      if (succeeded) {
+        [self joinGeneralChatRoomWithUniqueName:TWCDefaultChannelUniqueName completion:completion];
+        return;
+      }
+      if (completion) completion(NO);
+    }];
+  };
 }
 
 - (void)joinGeneralChatRoomWithUniqueName:(NSString *)uniqueName completion:(SucceedHandler)completion {
-  [self.generalChannel joinWithCompletion:^(TWMResult result) {
-    if (result == TWMResultSuccess) {
+  [self.generalChannel joinWithCompletion:^(TWMResult *result) {
+    if ([result isSuccessful]) {
       if (uniqueName) {
         [self setGeneralChatRoomUniqueNameWithCompletion:completion];
         return;
       }
     }
-    if (completion) completion(result == TWMResultSuccess);
+    if (completion) completion([result isSuccessful]);
   }];
 }
 
 - (void)createGeneralChatRoomWithCompletion:(SucceedHandler)completion {
-  [self.channelsList createChannelWithFriendlyName:TWCDefaultChannelName type:TWMChannelTypePublic
-    completion:^(TWMResult result, TWMChannel *channel) {
-      if (result == TWMResultSuccess) {
+  NSDictionary *options = [NSDictionary
+    dictionaryWithObjectsAndKeys:TWCDefaultChannelName, TWMChannelOptionFriendlyName, TWMChannelTypePublic, TWMChannelOptionType, nil];
+  [self.channelsList createChannelWithOptions:options
+    completion:^(TWMResult *result, TWMChannel *channel) {
+      if ([result isSuccessful]) {
         self.generalChannel = channel;
       }
-      if (completion) completion(result == TWMResultSuccess);
+      if (completion) completion([result isSuccessful]);
     }];
 }
 
 - (void)setGeneralChatRoomUniqueNameWithCompletion:(SucceedHandler)completion {
-  [self.generalChannel setUniqueName:TWCDefaultChannelUniqueName completion:^(TWMResult result) {
-    if (completion) completion(result == TWMResultSuccess);
+  [self.generalChannel setUniqueName:TWCDefaultChannelUniqueName completion:^(TWMResult *result) {
+    if (completion) completion([result isSuccessful]);
   }];
 }
 
 #pragma mark Populate channels
 
-- (void)populateChannelsWithCompletion:(SucceedHandler)completion {
-  self.channels = nil;
-
-  [self loadChannelListWithCompletion:^(BOOL succeeded, TWMChannels *channelsList) {
-    if (!succeeded) {
-      self.channelsList = nil;
-      self.channels = nil;
-      if (completion) completion(succeeded);
-      return;
-    }
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-      [self.channelsList loadChannelsWithCompletion:^(TWMResult result) {
-        if (result == TWMResultSuccess) {
-          self.channels = [[NSMutableOrderedSet alloc] init];
-          [self.channels addObjectsFromArray:[self.channelsList allObjects]];
-          [self sortChannels];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-          if (completion) completion(succeeded);
-        });
-      }];
-    });
-  }];
-}
-
-- (void)loadChannelListWithCompletion:(ChannelsListHandler)completion {
-  self.channelsList = nil;
-
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    [[IPMessagingManager sharedManager].client channelsListWithCompletion:^(TWMResult result, TWMChannels *channelsList) {
-      if (result == TWMResultSuccess) {
-        self.channelsList = channelsList;
-      }
-      dispatch_async(dispatch_get_main_queue(), ^{
-        if (completion) completion(result == TWMResultSuccess, self.channelsList);
-      });
-    }];
-  });
+- (void)populateChannels {
+  self.channels = [[NSMutableOrderedSet alloc] init];
+  [self.channels addObjectsFromArray:[self.channelsList allObjects]];
+  [self sortChannels];
+  if (self.delegate) {
+    [self.delegate reloadChannelList];
+  }
 }
 
 - (void)sortChannels {
@@ -134,24 +101,12 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
     return;
   }
 
-  if (!self.channelsList)
-  {
-    [self loadChannelListWithCompletion:^(BOOL succeeded, TWMChannels *channelsList) {
-      if (succeeded) {
-        [self createChannelWithName:name completion:completion];
-      }
-      else if (completion) {
-        completion(succeeded, nil);
-      }
-    }];
-    return;
-  }
-
+  NSDictionary *options = [NSDictionary
+                           dictionaryWithObjectsAndKeys:name, TWMChannelOptionFriendlyName, TWMChannelTypePublic, TWMChannelOptionType, nil];
   [self.channelsList
-    createChannelWithFriendlyName:name
-    type:TWMChannelTypePublic
-    completion:^(TWMResult result, TWMChannel *channel) {
-      if (completion) completion(result == TWMResultSuccess, channel);
+    createChannelWithOptions:options
+    completion:^(TWMResult *result, TWMChannel *channel) {
+      if (completion) completion([result isSuccessful], channel);
     }];
 }
 
@@ -176,6 +131,9 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
     [[ChannelManager sharedManager].channels removeObject:channel];
     [self.delegate ipMessagingClient:client channelDeleted:channel];
   });
+}
+
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client synchronizationStatusChanged:(TWMClientSynchronizationStatus)status {
 }
 
 @end

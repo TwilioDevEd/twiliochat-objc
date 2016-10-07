@@ -1,3 +1,5 @@
+source 'https://github.com/CocoaPods/Specs'
+source 'https://github.com/twilio/cocoapod-specs'
 # Uncomment this line to define a global platform for your project
 platform :ios, '8.4'
 # Uncomment this line if you're using Swift
@@ -7,8 +9,8 @@ target 'twiliochat' do
   pod 'AFNetworking', '~> 3.0'
   pod 'SWRevealViewController', '~> 2.3'
   pod 'SlackTextViewController', '~> 1.7'
-  pod 'TwilioIPMessagingClient', :podspec => 'https://media.twiliocdn.com/sdk/rtc/ios/ip-messaging/v0.13/TwilioIPMessagingClient.podspec'
-  pod 'TwilioCommon', :podspec => 'https://media.twiliocdn.com/sdk/ios/common/v0.2/TwilioCommon.podspec'
+  pod 'TwilioIPMessagingClient', '~> 0.13.7'
+  pod 'TwilioCommon', '~> 0.2.2'
 end
 
 target 'twiliochatTests' do

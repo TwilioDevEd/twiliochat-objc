@@ -59,7 +59,6 @@
   id handler = [OCMArg invokeBlockWithArgs:OCMOCK_VALUE((BOOL){YES}), [OCMArg defaultValue], nil];
   OCMExpect([self.messagingManagerMock loginWithUsername:self.username
                                               completion:handler]);
-  OCMExpect([self.messagingManagerMock presentRootViewController]);
   
   [[self.viewControllerMock loginButton] sendActionsForControlEvents:UIControlEventTouchUpInside];
   

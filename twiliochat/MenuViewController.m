@@ -45,7 +45,7 @@ static NSInteger const TWCRefreshControlXOffset = 120;
   self.refreshControl.frame = frame;
   
   [ChannelManager sharedManager].delegate = self;
-  [self populateChannels];
+  [self reloadChannelList];
 }
 
 #pragma mark - Table view data source
@@ -83,8 +83,8 @@ static NSInteger const TWCRefreshControlXOffset = 120;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   if (editingStyle == UITableViewCellEditingStyleDelete) {
     TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
-    [channel destroyWithCompletion:^(TWMResult result) {
-      if (result == TWMResultSuccess) {
+    [channel destroyWithCompletion:^(TWMResult *result) {
+      if ([result isSuccessful]) {
         [tableView reloadData];
       }
       else {
@@ -117,21 +117,14 @@ static NSInteger const TWCRefreshControlXOffset = 120;
   return menuCell;
 }
 
-- (void)refreshChannels {
-  [self.refreshControl beginRefreshing];
-  [self populateChannels];
+- (void)reloadChannelList {
+  [self.tableView reloadData];
+  [self.refreshControl endRefreshing];
 }
 
-- (void)populateChannels {
-  [[ChannelManager sharedManager] populateChannelsWithCompletion:^(BOOL succeeded) {
-    if (!succeeded) {
-      [AlertDialogController showAlertWithMessage:@"Failed to load channels"
-                                            title:@"IP Messaging Demo"
-                                        presenter:self];
-    }
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
-  }];
+- (void)refreshChannels {
+  [self.refreshControl beginRefreshing];
+  [self reloadChannelList];
 }
 
 - (void)deselectSelectedChannel {

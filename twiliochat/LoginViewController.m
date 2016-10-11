@@ -68,10 +68,7 @@
 
 - (void)handleResponse:(BOOL)succeeded error:(NSError *)error {
   [self.activityIndicator stopAnimating];
-  if (succeeded) {
-    [[IPMessagingManager sharedManager] presentRootViewController];
-  }
-  else {
+  if (!succeeded) {
     [self showError:[error localizedDescription]];
     [self.activityIndicator stopAnimating];
   }

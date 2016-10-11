@@ -98,18 +98,27 @@ static NSInteger const TWCLabelTag = 200;
   
   if (self.channel.status == TWMChannelStatusJoined)
   {
-    [self loadMessages];
     self.channel.delegate = self;
   }
   else {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     self.textInputbarHidden = YES;
-    [self.channel joinWithCompletion:^(TWMResult result) {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [self.channel joinWithCompletion:^(TWMResult* result) {
       dispatch_async(dispatch_get_main_queue(), ^{
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [self setTextInputbarHidden:NO animated:YES];
       });
     }];
+  }
+  if (self.channel.synchronizationStatus != TWMChannelSynchronizationStatusAll) {
+    [self.channel synchronizeWithCompletion:^(TWMResult *result) {
+      if ([result isSuccessful]) {
+        NSLog(@"%@", @"Synchronization started. Delegate method will load messages");
+      }
+    }];
+  }
+  else {
+    [self loadMessages];
   }
 }
 
@@ -161,7 +170,7 @@ static NSInteger const TWCLabelTag = 200;
   
   UILabel *label = [cell viewWithTag:TWCLabelTag];
   label.text = [NSString stringWithFormat:@"User %@ has %@",
-     message.member.identity, (message.status == TWCMemberStatusJoined) ? @"joined" : @"left"];
+     message.member.userInfo.identity, (message.status == TWCMemberStatusJoined) ? @"joined" : @"left"];
   
   return cell;
 }
@@ -210,12 +219,14 @@ static NSInteger const TWCLabelTag = 200;
 
 - (void)loadMessages {
   [self.messages removeAllObjects];
-  [self addMessages:self.channel.messages.allObjects];
+  if (self.channel.synchronizationStatus == TWMChannelSynchronizationStatusAll) {
+    [self addMessages:self.channel.messages.allObjects];
+  }
 }
 
 - (void)leaveChannel {
-  [self.channel leaveWithCompletion:^(TWMResult result) {
-    if (result == TWMResultSuccess) {
+  [self.channel leaveWithCompletion:^(TWMResult* result) {
+    if ([result isSuccessful]) {
       [(MenuViewController *)self.revealViewController.rearViewController deselectSelectedChannel];
       [self.revealViewController.rearViewController
         performSegueWithIdentifier:TWCOpenGeneralChannelSegue sender:nil];
@@ -255,14 +266,14 @@ static NSInteger const TWCLabelTag = 200;
   [self addMessages:@[[StatusEntry statusEntryWithMember:member status:TWCMemberStatusLeft]]];
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client
-     channelHistoryLoaded:(TWMChannel *)channel {
-  [self loadMessages];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [self.tableView reloadData];
-  });
+- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel synchronizationStatusChanged:(TWMChannelSynchronizationStatus)status {
+  if (status == TWMChannelSynchronizationStatusAll) {
+    [self loadMessages];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self.tableView reloadData];
+    });
+  }
 }
-
 
 #pragma mark - Actions
 

@@ -40,6 +40,7 @@ static NSInteger const TWCMessageLabelTag = 202;
   self.userLabel = (UILabel *)[self viewWithTag:TWCUserLabelTag];
   self.dateLabel = (UILabel *)[self viewWithTag:TWCDateLabelTag];
   self.messageLabel = (UILabel *)[self viewWithTag:TWCMessageLabelTag];
+  [super awakeFromNib];
 }
 
 @end

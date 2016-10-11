@@ -53,6 +53,3 @@ Objective-C implementation of Twilio Chat
    TokenRequestUrl -> http://<your_subdomain>.ngrok.io/token
    ```
    No need to specify the port in this url, as ngrok will forward the request to the specified port.
-
-***Note:*** The current version of the app uses a fixed version of Twilio SDK (included in the
-repository). This version only work for arm devices as the SDK includes some native code.

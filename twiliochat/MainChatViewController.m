@@ -95,19 +95,12 @@ static NSInteger const TWCLabelTag = 200;
   if (self.channel == [ChannelManager sharedManager].generalChannel) {
     self.navigationItem.rightBarButtonItem = nil;
   }
-  
-  if (self.channel.status == TWMChannelStatusJoined)
-  {
-    self.channel.delegate = self;
-  }
-  else {
-    self.textInputbarHidden = YES;
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+  [self setViewOnHold:YES];
+
+  if (self.channel.status != TWMChannelStatusJoined) {
     [self.channel joinWithCompletion:^(TWMResult* result) {
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        [self setTextInputbarHidden:NO animated:YES];
-      });
+      NSLog(@"%@", @"Channel Joined");
     }];
   }
   if (self.channel.synchronizationStatus != TWMChannelSynchronizationStatusAll) {
@@ -119,7 +112,14 @@ static NSInteger const TWCLabelTag = 200;
   }
   else {
     [self loadMessages];
+    [self setViewOnHold:NO];
   }
+}
+
+// Disable user input and show activity indicator
+- (void)setViewOnHold:(BOOL)onHold {
+  self.textInputbarHidden = onHold;
+  [UIApplication sharedApplication].networkActivityIndicatorVisible = onHold;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -271,6 +271,7 @@ static NSInteger const TWCLabelTag = 200;
     [self loadMessages];
     dispatch_async(dispatch_get_main_queue(), ^{
       [self.tableView reloadData];
+      [self setViewOnHold:NO];
     });
   }
 }

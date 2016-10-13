@@ -10,11 +10,11 @@
       we'll be using to handle all the chat functionality.
 
       1. We use a server side app to generate [user access
-      tokens](//www.twilio.com/docs/api/ip-messaging/guides/identity) which contains
+      tokens](//www.twilio.com/docs/api/ip-messaging/guides/identity#server-create-an-access-token) which contains
       all your Twilio account information. The IP Messaging Client uses this token
       to connect with the API
 
-      1. [Twilio Common](//media.twiliocdn.com/sdk/ios/common/releases/0.2.0/docs/)
+      1. [Twilio Common](//media.twiliocdn.com/sdk/ios/common/v0.3/docs/)
       is the part of the SDK than handles access tokens and even refreshes them upon token
       expiration.
 
@@ -25,10 +25,10 @@
       * [iOS QuickStart](//www.twilio.com/docs/api/ip-messaging/guides/quickstart-ios)
       * [Channels and Messages](//www.twilio.com/docs/api/ip-messaging/guides/channels)
       * [User Identity & Access Tokens](//www.twilio.com/docs/api/ip-messaging/guides/channels)
-      * [Twilio IP Messaging Client Reference](//media.twiliocdn.com/sdk/rtc/ios/ip-messaging/releases/0.13.5.b191-9dfea4a/docs/)
-      * [Twilio Common Reference](//media.twiliocdn.com/sdk/ios/common/releases/0.2.0/docs/)
+      * [Twilio IP Messaging Client Reference](//media.twiliocdn.com/sdk/ios/ip-messaging/v0.15/docs/)
+      * [Twilio Common Reference](//media.twiliocdn.com/sdk/ios/common/v0.3/docs/)
 
-  .step(data-title='Initializing the Client', data-file='twiliochat/IPMessagingManager.m', data-highlight='84-130')
+  .step(data-title='Initializing the Client', data-file='twiliochat/IPMessagingManager.m', data-highlight='86-119')
     :markdown
       ## Initializing the IP Messaging Client
 
@@ -49,23 +49,43 @@
       **See Also:**
       * [AFNetworking Data Task](//github.com/AFNetworking/AFNetworking#creating-a-data-task)
 
-  .step(data-title='Getting the Channel List', data-file='twiliochat/ChannelManager.m', data-highlight='81-119')
+  .step(data-title='Synchronizing the Client',
+        data-file='twiliochat/IPMessagingManager.m',
+        data-highlight='177-187',
+        data-mode="swift")
+    :markdown
+      ## Synchronizing the IP Messaging Client
+
+      In the previous step we initialized the
+      [IP Messaging client](//media.twiliocdn.com/sdk/ios/ip-messaging/releases/0.15.1/docs/Classes/TwilioIPMessagingClient.html)
+      with an [access manager](//media.twiliocdn.com/sdk/ios/common/releases/0.3.3/docs/Classes/TwilioAccessManager.html)
+      and set the client's delegate to the shared instance of our `IPMessagingManager`.
+
+      The `synchronizationStatusChanged`
+      [delegate](//media.twiliocdn.com/sdk/ios/ip-messaging/releases/0.15.1/docs/Protocols/TwilioIPMessagingClientDelegate.html)
+      method will allow us to know when the client has loaded all the required information.
+      You can change the default initialization values for the client using a
+      [TwilioIPMessagingClientProperties](//media.twiliocdn.com/sdk/ios/ip-messaging/releases/0.15.1/docs/Classes/TwilioIPMessagingClientProperties.html)
+      instance as the `options` parameter in the previews step.
+
+      We need the client to be synchronized before trying to get the channel list (next step).
+      Otherwise, calling [client.channelsList](//media.twiliocdn.com/sdk/ios/ip-messaging/releases/0.15.1/docs/Classes/TwilioIPMessagingClient.html#//api/name/channelsList)
+      will return `nil`.
+
+  .step(data-title='Getting the Channel List', data-file='twiliochat/ChannelManager.m', data-highlight='79-94')
     :markdown
       ## Getting the Channel List
 
       Our `ChannelManager` class takes care of everything related to channels.
-      The first thing we need to do when the class is initialized, is to store
-      a list of channels of type `TWMChannelList` that we get by calling the method `channelsListWithCompletion`
-      from the IP Messaging Client.
-
-      Once we have a `TWMChannelList` object, we can fetch the actual channels using the
-      `channelsList's` method `loadChannelsWithCompletion`. When the operation
-      finishes successfully, in order to get an array of channels, call
-      the method `allObjects` on the same object.
+      In the previous step, we waited for the client to synchronize channel information,
+      and assigned an instance of
+      [TWMChannelList](//media.twiliocdn.com/sdk/ios/ip-messaging/releases/0.15.1/docs/Classes/TWMChannels.html)
+      to our `ChannelManager`. Now we must get an actual array of channels using
+      the `allObjects` method.
 
   .step(data-title='Listen to Client Events',
         data-file='twiliochat/ChannelManager.m',
-        data-highlight='160-179')
+        data-highlight='115-137')
     :markdown
       ## Listen to Client Events
 
@@ -74,16 +94,16 @@
       channel list in the reveal controller. If a channel is deleted and we were currently joined to that
       channel, the application will automatically join the general channel.
 
-      `ChannelManager` is our `TwilioIPMessagingClientDelegate`. In this class we
-      implement the delegate methods, but we also allow `MainChatViewController`
+      `ChannelManager` is a `TwilioIPMessagingClientDelegate`. In this class we
+      implement the delegate methods, but we also allow `MenuViewController`
       class to be a delegate of ChannelManager, so it can listen to client events too.
 
       ---
 
       **See Also:**
-      * [TwilioIPMessagingClientDelegate Protocol Reference](//media.twiliocdn.com/sdk/rtc/ios/ip-messaging/releases/0.13.5.b191-9dfea4a/docs/Protocols/TwilioIPMessagingClientDelegate.html)
+      * [TwilioIPMessagingClientDelegate Protocol Reference](//media.twiliocdn.com/sdk/ios/ip-messaging/releases/0.15.1/docs/Classes/TwilioIPMessagingClient.html#//api/name/channelsList)
 
-  .step(data-title='Join the General Channel', data-file='twiliochat/ChannelManager.m', data-highlight='33-77')
+  .step(data-title='Join the General Channel', data-file='twiliochat/ChannelManager.m', data-highlight='31-75')
     :markdown
       ## Join the General Channel
 
@@ -97,7 +117,7 @@
       so you can start listening to events such as `messageAdded` or `memberJoined`.
       We'll show you how to do this in the next step.
 
-  .step(data-title='Listen to Channel Events', data-file='twiliochat/MainChatViewController.m', data-highlight='228-234, 246-264')
+  .step(data-title='Listen to Channel Events', data-file='twiliochat/MainChatViewController.m', data-highlight='239-277')
     :markdown
       ## Listen to Channel Events
 
@@ -108,11 +128,12 @@
       * `channelHistoryLoaded`: When all the messages from one channel have been loaded.
       * `memberJoined`: When someone joins the channel.
       * `memberLeft`: When someone leaves the channel.
-      
+      * `synchronizationStatusChanged`: When channel synchronization status changes.
+
       As you may have noticed, each one of these methods include useful objects
       as parameters. One example is the actual message that was added to the channel.
 
-  .step(data-title='Joining Other Channels', data-file='twiliochat/MainChatViewController.m', data-highlight='90-115')
+  .step(data-title='Joining Other Channels', data-file='twiliochat/MainChatViewController.m', data-highlight='90-117')
     :markdown
       ## Joining Other Channels
 
@@ -123,21 +144,21 @@
       on the `MainChatViewController`. The `setChannel` method takes care of joining
       to the selected channel and loading the messages.
 
-  .step(data-title='Creating a Channel', data-file='twiliochat/ChannelManager.m', data-highlight='131-156')
+  .step(data-title='Creating a Channel', data-file='twiliochat/ChannelManager.m', data-highlight='98-111')
     :markdown
       ## Creating a Channel
 
       We use an input dialog so the user can type the name of the new channel.
       The only restriction here is that the user can't create a channel called
       "General Channel". Other than that, creating a channel is as simple as calling
-      `createChannelWithFriendlyName` on the `channelList`.
+      `createChannelWithOptions` and passing a dictionary with the new channel information.
 
   .step(data-title='Deleting a Channel', data-file='twiliochat/MenuViewController.m', data-highlight='83-95')
     :markdown
       ## Deleting a Channel
 
       Deleting a channel is easier than creating one. We'll use the `UITableView`
-      hability to delete a cell. Once you have figured out what channel is meant
+      ability to delete a cell. Once you have figured out what channel is meant
       to be deleted (from the selected cell index path), deleting it is as simple
       as calling the channel's method `destroyWithCompletion`.
 
@@ -146,7 +167,19 @@
       ## Where to Next?
 
       That's it! We've just implemented a simple chat application in objective-c.
+      If you are am iOS developer working with Twilio, you might want
+      to check out these other projects:
 
-      Thanks for checking out this tutorial! If you have any feedback
-      to share with us, we'd love to hear it.
-      [Contact support](//www.twilio.com/help/contact) to let us know what you think.
+      [**Client Quickstart**](//github.com/TwilioDevEd/client-quickstart-objc)
+
+      Twilio Client for iOS Quickstart using Swift
+
+      [**Notifications Quickstart**](//github.com/TwilioDevEd/notifications-quickstart-objc)
+
+      Twilio Notifications for iOS Quickstart using Swift
+
+      ## Did this help?
+
+      Thanks for checking this tutorial out! If you have any feedback to share with us,
+      we'd love to hear it. [Contact the Twilio Developer Education Team](mailto:deved-oss@twilio.com)
+      to let us know what you think.

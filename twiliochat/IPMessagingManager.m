@@ -74,7 +74,7 @@ static NSString * const TWCTokenKey = @"token";
 - (void)logout {
   [SessionManager logout];
   self.connected = NO;
-  
+
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     [self.client shutdown];
     self.client = nil;
@@ -87,7 +87,7 @@ static NSString * const TWCTokenKey = @"token";
   if (self.client) {
     [self logout];
   }
-  
+
   [self requestTokenWithCompletion:^(BOOL succeeded, NSString *token) {
     if (succeeded) {
       [self initializeClientWithToken:token];
@@ -106,6 +106,18 @@ static NSString * const TWCTokenKey = @"token";
   self.connected = YES;
 }
 
+- (void)requestTokenWithCompletion:(StatusWithTokenHandler)completion {
+  NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
+  NSDictionary *parameters = @{@"device": uuid, @"identity": [SessionManager getUsername]};
+
+  [TokenRequestHandler fetchTokenWithParams:parameters completion:^(NSDictionary *results, NSError *error) {
+    NSString *token = [results objectForKey:TWCTokenKey];
+    BOOL errorCondition = error || !token;
+
+    if (completion) completion(!errorCondition, token);
+  }];
+}
+
 - (void)loadGeneralChatRoomWithCompletion:(StatusWithErrorHandler)completion {
   [[ChannelManager sharedManager] joinGeneralChatRoomWithCompletion:^(BOOL succeeded) {
     if (succeeded)
@@ -116,18 +128,6 @@ static NSString * const TWCTokenKey = @"token";
       NSError *error = [self errorWithDescription:@"Could not join General channel" code:300];
       if (completion) completion(succeeded, error);
     }
-  }];
-}
-
-- (void)requestTokenWithCompletion:(StatusWithTokenHandler)completion {
-  NSString *uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
-  NSDictionary *parameters = @{@"device": uuid, @"identity": [SessionManager getUsername]};
-
-  [TokenRequestHandler fetchTokenWithParams:parameters completion:^(NSDictionary *results, NSError *error) {
-    NSString *token = [results objectForKey:TWCTokenKey];
-    BOOL errorCondition = error || !token;
-
-    if (completion) completion(!errorCondition, token);
   }];
 }
 

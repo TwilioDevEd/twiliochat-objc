@@ -341,12 +341,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87B6AC4C1BF51D6600E55FE2 /* Build configuration list for PBXNativeTarget "twiliochat" */;
 			buildPhases = (
-				077E70BE18FBBB6FBFFA1974 /* Check Pods Manifest.lock */,
+				077E70BE18FBBB6FBFFA1974 /* [CP] Check Pods Manifest.lock */,
 				87B6AC1B1BF51D6600E55FE2 /* Sources */,
 				87B6AC1C1BF51D6600E55FE2 /* Frameworks */,
 				87B6AC1D1BF51D6600E55FE2 /* Resources */,
-				8E8301D39D6A1CD14165BF23 /* Embed Pods Frameworks */,
-				3A1F5C58D098F483F8A0CF32 /* Copy Pods Resources */,
+				8E8301D39D6A1CD14165BF23 /* [CP] Embed Pods Frameworks */,
+				3A1F5C58D098F483F8A0CF32 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -361,12 +361,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87B6AC4F1BF51D6600E55FE2 /* Build configuration list for PBXNativeTarget "twiliochatTests" */;
 			buildPhases = (
-				B5BDA9214774C96866599A64 /* Check Pods Manifest.lock */,
+				B5BDA9214774C96866599A64 /* [CP] Check Pods Manifest.lock */,
 				87B6AC341BF51D6600E55FE2 /* Sources */,
 				87B6AC351BF51D6600E55FE2 /* Frameworks */,
 				87B6AC361BF51D6600E55FE2 /* Resources */,
-				3F46E4496381BE4502D64C8E /* Embed Pods Frameworks */,
-				020B9A5ED53D445063CEABD4 /* Copy Pods Resources */,
+				3F46E4496381BE4502D64C8E /* [CP] Embed Pods Frameworks */,
+				020B9A5ED53D445063CEABD4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -382,11 +382,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87B6AC521BF51D6600E55FE2 /* Build configuration list for PBXNativeTarget "twiliochatUITests" */;
 			buildPhases = (
-				0FE004819B67092EBF755BB3 /* Check Pods Manifest.lock */,
+				0FE004819B67092EBF755BB3 /* [CP] Check Pods Manifest.lock */,
 				87B6AC3F1BF51D6600E55FE2 /* Sources */,
 				87B6AC401BF51D6600E55FE2 /* Frameworks */,
 				87B6AC411BF51D6600E55FE2 /* Resources */,
-				4BDC22380476D3D459F372BB /* Copy Pods Resources */,
+				4BDC22380476D3D459F372BB /* [CP] Copy Pods Resources */,
+				9C2CCCCC53451F4EE6CA7004 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -404,7 +405,7 @@
 		87B6AC171BF51D6600E55FE2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Twilio;
 				TargetAttributes = {
 					87B6AC1E1BF51D6600E55FE2 = {
@@ -471,14 +472,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		020B9A5ED53D445063CEABD4 /* Copy Pods Resources */ = {
+		020B9A5ED53D445063CEABD4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -486,14 +487,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-twiliochatTests/Pods-twiliochatTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		077E70BE18FBBB6FBFFA1974 /* Check Pods Manifest.lock */ = {
+		077E70BE18FBBB6FBFFA1974 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,14 +502,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		0FE004819B67092EBF755BB3 /* Check Pods Manifest.lock */ = {
+		0FE004819B67092EBF755BB3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,14 +517,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		3A1F5C58D098F483F8A0CF32 /* Copy Pods Resources */ = {
+		3A1F5C58D098F483F8A0CF32 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -531,14 +532,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-twiliochat/Pods-twiliochat-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3F46E4496381BE4502D64C8E /* Embed Pods Frameworks */ = {
+		3F46E4496381BE4502D64C8E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,14 +547,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-twiliochatTests/Pods-twiliochatTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4BDC22380476D3D459F372BB /* Copy Pods Resources */ = {
+		4BDC22380476D3D459F372BB /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -561,14 +562,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-twiliochatUITests/Pods-twiliochatUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8E8301D39D6A1CD14165BF23 /* Embed Pods Frameworks */ = {
+		8E8301D39D6A1CD14165BF23 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -576,14 +577,29 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-twiliochat/Pods-twiliochat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B5BDA9214774C96866599A64 /* Check Pods Manifest.lock */ = {
+		9C2CCCCC53451F4EE6CA7004 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-twiliochatUITests/Pods-twiliochatUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5BDA9214774C96866599A64 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -685,8 +701,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -730,8 +748,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

@@ -55,7 +55,7 @@
 - (void)testLoggedInFlow {
   [self presentWithUserLoggedIn:YES
             expectingIdentifier:@"RevealViewController"
-                  connectStatus:YES];
+                  connectStatus:NO];
 }
 
 - (void)testNotLoggedInFlow {
@@ -86,9 +86,6 @@
   if (loggedIn) {
     OCMExpect([self.messagingManagerMock connectClientWithCompletion:connectBlock]);
   }
-  
-  OCMExpect([self.storyboardMock instantiateViewControllerWithIdentifier:[OCMArg any]]).andReturn(self.viewControllerMock);
-  OCMExpect([self.windowMock setRootViewController:self.viewControllerMock]);
   
   [self.messagingManagerMock presentRootViewController];
   OCMVerifyAll(self.storyboardMock);

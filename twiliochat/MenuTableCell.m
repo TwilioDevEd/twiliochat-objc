@@ -23,6 +23,7 @@
   self.label = (UILabel *)[self viewWithTag:200];
   self.label.highlightedTextColor = self.labelHighlightedTextColor;
   self.label.textColor = self.labelTextColor;
+  [super awakeFromNib];
 }
 
 - (UIColor *)selectedBackgroundColor {

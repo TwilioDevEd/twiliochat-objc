@@ -1,19 +1,19 @@
 #import <Foundation/Foundation.h>
-#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
+#import <TwilioChatClient/TwilioChatClient.h>
 #import "MenuViewController.h"
 
 typedef void (^SucceedHandler) (BOOL succeeded);
-typedef void (^ChannelsListHandler) (BOOL success, TWMChannels *);
-typedef void (^ChannelHandler) (BOOL success, TWMChannel *);
+typedef void (^ChannelsListHandler) (BOOL success, TCHChannels *);
+typedef void (^ChannelHandler) (BOOL success, TCHChannel *);
 
-@interface ChannelManager : NSObject <TwilioIPMessagingClientDelegate>
+@interface ChannelManager : NSObject <TwilioChatClientDelegate>
 + (instancetype)sharedManager;
 - (void)populateChannels;
 - (void)createChannelWithName:(NSString *)name completion:(ChannelHandler)completion;
 - (void)joinGeneralChatRoomWithCompletion:(SucceedHandler)completion;
-@property (strong, nonatomic) TWMChannels *channelsList;
+@property (strong, nonatomic) TCHChannels *channelsList;
 @property (strong, nonatomic) NSMutableOrderedSet *channels;
-@property (weak, nonatomic) MenuViewController<TwilioIPMessagingClientDelegate> *delegate;
-@property (strong, nonatomic, readonly) TWMChannel *generalChannel;
+@property (weak, nonatomic) MenuViewController<TwilioChatClientDelegate> *delegate;
+@property (strong, nonatomic, readonly) TCHChannel *generalChannel;
 
 @end

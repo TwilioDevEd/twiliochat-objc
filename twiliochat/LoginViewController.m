@@ -1,4 +1,4 @@
-#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
+#import <TwilioChatClient/TwilioChatClient.h>
 #import "LoginViewController.h"
 #import "MessagingManager.h"
 #import "AlertDialogController.h"

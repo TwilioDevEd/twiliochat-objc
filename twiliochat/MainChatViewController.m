@@ -1,4 +1,4 @@
-#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
+#import <TwilioChatClient/TwilioChatClient.h>
 #import "MainChatViewController.h"
 #import "ChatTableCell.h"
 #import "NSDate+ISO8601Parser.h"
@@ -87,7 +87,20 @@ static NSInteger const TWCLabelTag = 200;
   return _messages;
 }
 
-- (void)setChannel:(TWMChannel *)channel {
+- (void)setChannel:(TCHChannel *)channel {
+  if ([channel isKindOfClass:[TCHChannelDescriptor class]]) {
+    TCHChannelDescriptor *channelDescriptor = (TCHChannelDescriptor*)channel;
+    [channelDescriptor channelWithCompletion:^(TCHResult *success, TCHChannel *channel) {
+      if (success) {
+        [self actuallySetChannel:channel];
+      }
+    }];
+  } else {
+    [self actuallySetChannel:channel];
+  }
+}
+
+- (void)actuallySetChannel:(TCHChannel *)channel {
   _channel = channel;
   self.title = self.channel.friendlyName;
   self.channel.delegate = self;
@@ -95,16 +108,16 @@ static NSInteger const TWCLabelTag = 200;
   if (self.channel == [ChannelManager sharedManager].generalChannel) {
     self.navigationItem.rightBarButtonItem = nil;
   }
-
+  
   [self setViewOnHold:YES];
-
-  if (self.channel.status != TWMChannelStatusJoined) {
-    [self.channel joinWithCompletion:^(TWMResult* result) {
+  
+  if (self.channel.status != TCHChannelStatusJoined) {
+    [self.channel joinWithCompletion:^(TCHResult* result) {
       NSLog(@"%@", @"Channel Joined");
     }];
   }
-  if (self.channel.synchronizationStatus != TWMChannelSynchronizationStatusAll) {
-    [self.channel synchronizeWithCompletion:^(TWMResult *result) {
+  if (self.channel.synchronizationStatus != TCHChannelSynchronizationStatusAll) {
+    [self.channel synchronizeWithCompletion:^(TCHResult *result) {
       if ([result isSuccessful]) {
         NSLog(@"%@", @"Synchronization started. Delegate method will load messages");
       }
@@ -135,7 +148,7 @@ static NSInteger const TWCLabelTag = 200;
   
   id message = [self.messages objectAtIndex:indexPath.row];
   
-  if ([message isKindOfClass:[TWMMessage class]]) {
+  if ([message isKindOfClass:[TCHMessage class]]) {
     cell = [self getChatCellForTableView:tableView forIndexPath:indexPath message:message];
   }
   else {
@@ -148,7 +161,7 @@ static NSInteger const TWCLabelTag = 200;
 
 - (ChatTableCell *)getChatCellForTableView:(UITableView *)tableView
                               forIndexPath:(NSIndexPath *)indexPath
-                                   message:(TWMMessage *)message {
+                                   message:(TCHMessage *)message {
   UITableViewCell *cell = [self.tableView
     dequeueReusableCellWithIdentifier:TWCChatCellIdentifier forIndexPath:indexPath];
 
@@ -183,7 +196,7 @@ static NSInteger const TWCLabelTag = 200;
 
 #pragma mark Chat Service
 - (void)sendMessage: (NSString *)inputMessage {
-  TWMMessage *message = [self.channel.messages createMessageWithBody:inputMessage];
+  TCHMessage *message = [self.channel.messages createMessageWithBody:inputMessage];
   [self.channel.messages sendMessage:message completion:nil];
 }
 
@@ -219,13 +232,19 @@ static NSInteger const TWCLabelTag = 200;
 
 - (void)loadMessages {
   [self.messages removeAllObjects];
-  if (self.channel.synchronizationStatus == TWMChannelSynchronizationStatusAll) {
-    [self addMessages:self.channel.messages.allObjects];
+  if (self.channel.synchronizationStatus == TCHChannelSynchronizationStatusAll) {
+    [self.channel.messages
+     getLastMessagesWithCount:100
+     completion:^(TCHResult *result, NSArray *messages) {
+      if ([result isSuccessful]) {
+        [self addMessages: messages];
+      }
+    }];
   }
 }
 
 - (void)leaveChannel {
-  [self.channel leaveWithCompletion:^(TWMResult* result) {
+  [self.channel leaveWithCompletion:^(TCHResult* result) {
     if ([result isSuccessful]) {
       [(MenuViewController *)self.revealViewController.rearViewController deselectSelectedChannel];
       [self.revealViewController.rearViewController
@@ -236,16 +255,16 @@ static NSInteger const TWCLabelTag = 200;
 
 #pragma mark - TMMessageDelegate
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client
-                  channel:(TWMChannel *)channel
-             messageAdded:(TWMMessage *)message {
+- (void)chatClient:(TwilioChatClient *)client
+                  channel:(TCHChannel *)channel
+             messageAdded:(TCHMessage *)message {
   if (![self.messages containsObject:message]) {
     [self addMessages:@[message]];
   }
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client
-           channelDeleted:(TWMChannel *)channel {
+- (void)chatClient:(TwilioChatClient *)client
+           channelDeleted:(TCHChannel *)channel {
   dispatch_async(dispatch_get_main_queue(), ^{
     if (channel == self.channel) {
       [self.revealViewController.rearViewController
@@ -254,20 +273,20 @@ static NSInteger const TWCLabelTag = 200;
   });
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client
-                  channel:(TWMChannel *)channel
-             memberJoined:(TWMMember *)member {
+- (void)chatClient:(TwilioChatClient *)client
+                  channel:(TCHChannel *)channel
+             memberJoined:(TCHMember *)member {
   [self addMessages:@[[StatusEntry statusEntryWithMember:member status:TWCMemberStatusJoined]]];
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client
-                  channel:(TWMChannel *)channel
-               memberLeft:(TWMMember *)member {
+- (void)chatClient:(TwilioChatClient *)client
+                  channel:(TCHChannel *)channel
+               memberLeft:(TCHMember *)member {
   [self addMessages:@[[StatusEntry statusEntryWithMember:member status:TWCMemberStatusLeft]]];
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel synchronizationStatusChanged:(TWMChannelSynchronizationStatus)status {
-  if (status == TWMChannelSynchronizationStatusAll) {
+- (void)chatClient:(TwilioChatClient *)client channel:(TCHChannel *)channel synchronizationStatusChanged:(TCHChannelSynchronizationStatus)status {
+  if (status == TCHChannelSynchronizationStatusAll) {
     [self loadMessages];
     dispatch_async(dispatch_get_main_queue(), ^{
       [self.tableView reloadData];

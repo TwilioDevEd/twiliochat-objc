@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
+#import <TwilioChatClient/TwilioChatClient.h>
 
 typedef NS_ENUM(NSInteger, TWCMemberStatus) {
   TWCMemberStatusJoined,
@@ -7,10 +7,10 @@ typedef NS_ENUM(NSInteger, TWCMemberStatus) {
 };
 
 @interface StatusEntry : NSObject
-+ (instancetype)statusEntryWithMember:(TWMMember *)member status:(TWCMemberStatus)status;
-- (instancetype)initWithMember:(TWMMember *)member status:(TWCMemberStatus)status;
++ (instancetype)statusEntryWithMember:(TCHMember *)member status:(TWCMemberStatus)status;
+- (instancetype)initWithMember:(TCHMember *)member status:(TWCMemberStatus)status;
 @property (copy, nonatomic) NSString *sid;
-@property (strong, nonatomic) TWMMember *member;
+@property (strong, nonatomic) TCHMember *member;
 @property (copy, nonatomic) NSString *timestamp;
 @property (nonatomic) TWCMemberStatus status;
 @end

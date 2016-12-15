@@ -78,19 +78,47 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 
 - (void)populateChannels {
   self.channels = [[NSMutableOrderedSet alloc] init];
-  [self.channels addObjectsFromArray:[self.channelsList allObjects]];
-  [self sortChannels];
-  if (self.delegate) {
-    [self.delegate reloadChannelList];
-  }
+  [self.channelsList userChannelsWithCompletion:^(TCHResult *result,
+                                                  TCHChannelPaginator *channelPaginator) {
+    [self.channels addObjectsFromArray:[channelPaginator items]];
+    [self sortAndDedupeChannels];
+    if (self.delegate) {
+      [self.delegate reloadChannelList];
+    }
+  }];
+
+  [self.channelsList publicChannelsWithCompletion:^(TCHResult *result,
+                                                  TCHChannelDescriptorPaginator *channelDescPaginator) {
+    [self.channels addObjectsFromArray: [channelDescPaginator items]];
+    [self sortAndDedupeChannels];
+    if (self.delegate) {
+      [self.delegate reloadChannelList];
+    }
+  }];
 }
 
-- (void)sortChannels {
+- (void)sortAndDedupeChannels {
+  NSMutableDictionary *channelsDict = [[NSMutableDictionary alloc] init];
+  
+  for(TCHChannel *channel in self.channels) {
+    if (![channelsDict objectForKey: channel.sid] ||
+        ![[channelsDict objectForKey: channel.sid] isKindOfClass: [NSNull class]]) {
+      [channelsDict setObject:channel forKey:channel.sid];
+    }
+  }
+  
+  NSMutableOrderedSet *dedupedChannels = [NSMutableOrderedSet
+                                          orderedSetWithArray:[channelsDict allValues]];
+  
   SEL sortSelector = @selector(localizedCaseInsensitiveCompare:);
+  
   NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:TWCFriendlyNameKey
                                                              ascending:YES
                                                               selector:sortSelector];
-  [self.channels sortUsingDescriptors:@[descriptor]];
+  
+  [dedupedChannels sortUsingDescriptors:@[descriptor]];
+  
+  self.channels = dedupedChannels;
 }
 
 # pragma mark Create channel

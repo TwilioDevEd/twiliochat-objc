@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "LoginViewController.h"
-#import "IPMessagingManager.h"
+#import "MessagingManager.h"
 
 @interface LoginViewController (Test)
 @property (weak, nonatomic) UITextField *usernameTextField;
@@ -20,7 +20,7 @@
 - (void)setUp {
   [super setUp];
   
-  self.messagingManagerMock = OCMClassMock([IPMessagingManager class]);
+  self.messagingManagerMock = OCMClassMock([MessagingManager class]);
   OCMStub([self.messagingManagerMock sharedManager]).andReturn(self.messagingManagerMock);
   
   self.username = @"hello";

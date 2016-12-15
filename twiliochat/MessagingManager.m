@@ -1,10 +1,10 @@
-#import "IPMessagingManager.h"
+#import "MessagingManager.h"
 #import "ChannelManager.h"
 #import "SessionManager.h"
 #import "TokenRequestHandler.h"
 
-@interface IPMessagingManager ()
-@property (strong, nonatomic) TwilioIPMessagingClient *client;
+@interface MessagingManager ()
+@property (strong, nonatomic) TwilioChatClient *client;
 @property (nonatomic, getter=isConnected) BOOL connected;
 @end
 
@@ -13,9 +13,9 @@ static NSString * const TWCMainViewControllerName = @"RevealViewController";
 
 static NSString * const TWCTokenKey = @"token";
 
-@implementation IPMessagingManager
+@implementation MessagingManager
 + (instancetype)sharedManager {
-  static IPMessagingManager *sharedMyManager = nil;
+  static MessagingManager *sharedMyManager = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     sharedMyManager = [[self alloc] init];
@@ -36,10 +36,13 @@ static NSString * const TWCTokenKey = @"token";
     return;
   }
   if (!self.isConnected) {
-    [self connectClientWithCompletion:nil];
-    return;
+    [self connectClientWithCompletion:^(BOOL success, NSError *error) {
+      if (success) {
+        [self presentViewControllerByName:TWCMainViewControllerName];
+      }
+    }];
   }
-  [self presentViewControllerByName:TWCMainViewControllerName];
+
 }
 
 - (void)presentViewControllerByName:(NSString *)viewController {
@@ -68,7 +71,12 @@ static NSString * const TWCTokenKey = @"token";
 - (void)loginWithUsername:(NSString *)username
     completion:(StatusWithErrorHandler)completion {
   [SessionManager loginWithUsername:username];
-  [self connectClientWithCompletion:completion];
+  [self connectClientWithCompletion:^(BOOL success, NSError *error) {
+    if (success) {
+      [self presentViewControllerByName:TWCMainViewControllerName];
+    }
+    completion(success, error);
+  }];
 }
 
 - (void)logout {
@@ -91,6 +99,7 @@ static NSString * const TWCTokenKey = @"token";
   [self requestTokenWithCompletion:^(BOOL succeeded, NSString *token) {
     if (succeeded) {
       [self initializeClientWithToken:token];
+      if (completion) completion(succeeded, nil);
     }
     else {
       NSError *error = [self errorWithDescription:@"Could not get access token" code:301];
@@ -100,8 +109,7 @@ static NSString * const TWCTokenKey = @"token";
 }
 
 - (void)initializeClientWithToken:(NSString *)token {
-  TwilioAccessManager *accessManager = [TwilioAccessManager accessManagerWithToken:token delegate: self];
-  self.client = [TwilioIPMessagingClient ipMessagingClientWithAccessManager:accessManager properties:nil delegate:self];
+  self.client = [TwilioChatClient chatClientWithToken:token properties:nil delegate:self];
   [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
   self.connected = YES;
 }
@@ -160,22 +168,22 @@ static NSString * const TWCTokenKey = @"token";
   return [SessionManager getUsername];
 }
 
-#pragma mark TwilioIPMessagingClientDelegate
+#pragma mark TwilioChatClientDelegate
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelAdded:(TWMChannel *)channel {
-  [self.delegate ipMessagingClient:client channelAdded:channel];
+- (void)chatClient:(TwilioChatClient *)client channelAdded:(TCHChannel *)channel {
+  [self.delegate chatClient:client channelAdded:channel];
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelChanged:(TWMChannel *)channel {
-  [self.delegate ipMessagingClient:client channelChanged:channel];
+- (void)chatClient:(TwilioChatClient *)client channelChanged:(TCHChannel *)channel {
+  [self.delegate chatClient:client channelChanged:channel];
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelDeleted:(TWMChannel *)channel {
-  [self.delegate ipMessagingClient:client channelDeleted:channel];
+- (void)chatClient:(TwilioChatClient *)client channelDeleted:(TCHChannel *)channel {
+  [self.delegate chatClient:client channelDeleted:channel];
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client synchronizationStatusChanged:(TWMClientSynchronizationStatus)status {
-  if (status == TWMClientSynchronizationStatusCompleted) {
+- (void)chatClient:(TwilioChatClient *)client synchronizationStatusChanged:(TCHClientSynchronizationStatus)status {
+  if (status == TCHClientSynchronizationStatusCompleted) {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [ChannelManager sharedManager].channelsList = client.channelsList;
     [[ChannelManager sharedManager] populateChannels];
@@ -183,7 +191,7 @@ static NSString * const TWCTokenKey = @"token";
       if (success) [self presentRootViewController];
     }];
   }
-  [self.delegate ipMessagingClient:client synchronizationStatusChanged:status];
+  [self.delegate chatClient:client synchronizationStatusChanged:status];
 }
 
 @end

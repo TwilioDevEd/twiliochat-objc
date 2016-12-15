@@ -7,10 +7,10 @@ platform :ios, '8.4'
 
 target 'twiliochat' do
   pod 'AFNetworking', '~> 3.0'
-  pod 'SWRevealViewController', '~> 2.3'
   pod 'SlackTextViewController', '~> 1.7'
-  pod 'TwilioIPMessagingClient', '~> 0.15.1'
-  pod 'TwilioCommon', '~> 0.3.3'
+  pod 'SWRevealViewController', '~> 2.3'
+  pod 'TwilioAccessManager', '~> 0.1.1'
+  pod 'TwilioChatClient', '~> 0.16.0'
 end
 
 target 'twiliochatTests' do

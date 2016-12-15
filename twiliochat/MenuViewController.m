@@ -142,7 +142,11 @@ static NSInteger const TWCRefreshControlXOffset = 120;
                                message:@"Enter a name for this channel."
                            placeholder:@"Name"
                              presenter:self handler:^(NSString *text) {
-                               [[ChannelManager sharedManager] createChannelWithName:text completion:nil];
+                               [[ChannelManager sharedManager] createChannelWithName:text completion:^(BOOL success, TCHChannel *channel) {
+                                 if (success) {
+                                   [self refreshChannels];
+                                 }
+                               }];
                              }];
 }
 

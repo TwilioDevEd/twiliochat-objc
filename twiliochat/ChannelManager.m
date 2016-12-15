@@ -105,7 +105,9 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
                            dictionaryWithObjectsAndKeys:name, TWMChannelOptionFriendlyName, TWMChannelTypePublic, TWMChannelOptionType, nil];
   [self.channelsList
     createChannelWithOptions:options
-    completion:^(TWMResult *result, TWMChannel *channel) {
+    completion:^(TCHResult *result, TCHChannel *channel) {
+      [self.channels addObject:channel];
+      [self sortAndDedupeChannels];
       if (completion) completion([result isSuccessful], channel);
     }];
 }

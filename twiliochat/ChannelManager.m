@@ -155,6 +155,8 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
   [self.channelsList
     createChannelWithOptions:options
     completion:^(TCHResult *result, TCHChannel *channel) {
+      [self.channels addObject:channel];
+      [self sortAndDedupeChannels];
       if (completion) completion([result isSuccessful], channel);
     }];
 }

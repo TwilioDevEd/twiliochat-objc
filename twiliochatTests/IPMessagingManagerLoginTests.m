@@ -1,13 +1,13 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
-#import "IPMessagingManager.h"
+#import "MessagingManager.h"
 #import "SessionManager.h"
 
-@interface IPMessagingManager (Test)
+@interface MessagingManager (Test)
 - (void)connectClientWithCompletion:(void(^)(BOOL succeeded, NSError *error))handler;
 @end
 
-@interface IPMessagingManagerLoginTests : XCTestCase
+@interface MessagingManagerLoginTests : XCTestCase
 @property (strong, nonatomic) id messagingManagerMock;
 @property (strong, nonatomic) id sessionManagerMock;
 @property (copy, nonatomic) NSString *username;
@@ -15,12 +15,12 @@
 @property (strong, nonatomic) NSError *error;
 @end
 
-@implementation IPMessagingManagerLoginTests
+@implementation MessagingManagerLoginTests
 
 - (void)setUp {
   [super setUp];
   
-  self.messagingManagerMock = OCMPartialMock([IPMessagingManager sharedManager]);
+  self.messagingManagerMock = OCMPartialMock([MessagingManager sharedManager]);
   self.sessionManagerMock = self.sessionManagerMock = OCMClassMock([SessionManager class]);
 
   self.username = @"hello";

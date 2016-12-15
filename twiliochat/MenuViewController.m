@@ -3,7 +3,7 @@
 #import "MenuTableCell.h"
 #import "InputDialogController.h"
 #import "MainChatViewController.h"
-#import "IPMessagingManager.h"
+#import "MessagingManager.h"
 #import "AlertDialogController.h"
 #import "ChannelManager.h"
 #import "SessionManager.h"
@@ -181,8 +181,8 @@ static NSInteger const TWCRefreshControlXOffset = 120;
 }
 
 - (void)logOut {
-  [[IPMessagingManager sharedManager] logout];
-  [[IPMessagingManager sharedManager] presentRootViewController];
+  [[MessagingManager sharedManager] logout];
+  [[MessagingManager sharedManager] presentRootViewController];
 }
 
 #pragma mark Actions

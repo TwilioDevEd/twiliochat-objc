@@ -3,7 +3,7 @@
 #import "MenuTableCell.h"
 #import "InputDialogController.h"
 #import "MainChatViewController.h"
-#import "IPMessagingManager.h"
+#import "MessagingManager.h"
 #import "AlertDialogController.h"
 #import "ChannelManager.h"
 #import "SessionManager.h"
@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 
-@property (strong, nonatomic) TWMChannel *recentlyAddedChannel;
+@property (strong, nonatomic) TCHChannel *recentlyAddedChannel;
 @end
 
 static NSString * const TWCOpenChannelSegue = @"OpenChat";
@@ -75,15 +75,15 @@ static NSInteger const TWCRefreshControlXOffset = 120;
 #pragma mark - Table view delegate
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-  TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+  TCHChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
   return channel != [ChannelManager sharedManager].generalChannel;
 }
 
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   if (editingStyle == UITableViewCellEditingStyleDelete) {
-    TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
-    [channel destroyWithCompletion:^(TWMResult *result) {
+    TCHChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+    [channel destroyWithCompletion:^(TCHResult *result) {
       if ([result isSuccessful]) {
         [tableView reloadData];
       }
@@ -107,7 +107,7 @@ static NSInteger const TWCRefreshControlXOffset = 120;
 - (UITableViewCell *)channelCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
   MenuTableCell *menuCell = (MenuTableCell *)[tableView dequeueReusableCellWithIdentifier:@"channelCell" forIndexPath:indexPath];
   
-  TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+  TCHChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
   NSString *friendlyName = channel.friendlyName;
   if (channel.friendlyName.length == 0) {
     friendlyName = @"(no friendly name)";
@@ -142,21 +142,25 @@ static NSInteger const TWCRefreshControlXOffset = 120;
                                message:@"Enter a name for this channel."
                            placeholder:@"Name"
                              presenter:self handler:^(NSString *text) {
-                               [[ChannelManager sharedManager] createChannelWithName:text completion:nil];
+                               [[ChannelManager sharedManager] createChannelWithName:text completion:^(BOOL success, TCHChannel *channel) {
+                                 if (success) {
+                                   [self refreshChannels];
+                                 }
+                               }];
                              }];
 }
 
-#pragma mark - TwilioIPMessagingClientDelegate delegate
+#pragma mark - TwilioChatClientDelegate delegate
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelAdded:(TWMChannel *)channel {
+- (void)chatClient:(TwilioChatClient *)client channelAdded:(TCHChannel *)channel {
   [self.tableView reloadData];
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelChanged:(TWMChannel *)channel {
+- (void)chatClient:(TwilioChatClient *)client channelChanged:(TCHChannel *)channel {
   [self.tableView reloadData];
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelDeleted:(TWMChannel *)channel {
+- (void)chatClient:(TwilioChatClient *)client channelDeleted:(TCHChannel *)channel {
   [self.tableView reloadData];
 }
 
@@ -181,8 +185,8 @@ static NSInteger const TWCRefreshControlXOffset = 120;
 }
 
 - (void)logOut {
-  [[IPMessagingManager sharedManager] logout];
-  [[IPMessagingManager sharedManager] presentRootViewController];
+  [[MessagingManager sharedManager] logout];
+  [[MessagingManager sharedManager] presentRootViewController];
 }
 
 #pragma mark Actions
@@ -201,7 +205,7 @@ static NSInteger const TWCRefreshControlXOffset = 120;
   if ([segue.identifier isEqualToString:TWCOpenChannelSegue]) {
     NSIndexPath *indexPath = (NSIndexPath *)sender;
     
-    TWMChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
+    TCHChannel *channel = [[ChannelManager sharedManager].channels objectAtIndex:indexPath.row];
     UINavigationController *navigationController = [segue destinationViewController];
     MainChatViewController *chatViewController = (MainChatViewController *)[navigationController visibleViewController];
     chatViewController.channel = channel;

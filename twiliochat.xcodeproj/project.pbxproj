@@ -13,11 +13,11 @@
 		593F447B1BFA7D6A00B57504 /* InputDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 593F447A1BFA7D6A00B57504 /* InputDialogController.m */; };
 		59BD03161BF68C1E00A4AA88 /* MainChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD03151BF68C1E00A4AA88 /* MainChatViewController.m */; };
 		59BD031D1BF6936000A4AA88 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD031C1BF6936000A4AA88 /* MenuViewController.m */; };
-		59BD03211BFA296900A4AA88 /* IPMessagingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD03201BFA296900A4AA88 /* IPMessagingManager.m */; };
+		59BD03211BFA296900A4AA88 /* MessagingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD03201BFA296900A4AA88 /* MessagingManager.m */; };
 		59F208F01C03920800CC2392 /* AlertDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F208EF1C03920800CC2392 /* AlertDialogController.m */; };
 		59F5EDAA1C652E3700CE7D32 /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F5EDA91C652E3700CE7D32 /* SessionManager.m */; };
 		59F5EDAE1C653CA400CE7D32 /* TokenRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F5EDAD1C653CA400CE7D32 /* TokenRequestHandler.m */; };
-		7D8DCB141BFED14F009B1B6D /* IPMessagingManagerLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */; };
+		7D8DCB141BFED14F009B1B6D /* MessagingManagerLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DCB131BFED14F009B1B6D /* MessagingManagerLoginTests.m */; };
 		7DAC272C1C053D08006CEA49 /* ChannelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAC272B1C053D08006CEA49 /* ChannelManager.m */; };
 		870855421C061C05006E38F5 /* StatusEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 870855411C061C05006E38F5 /* StatusEntry.m */; };
 		8750C85E1BF530330015CBE1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8750C85D1BF530330015CBE1 /* Keys.plist */; };
@@ -31,7 +31,7 @@
 		87B6AC321BF51D6600E55FE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B6AC301BF51D6600E55FE2 /* LaunchScreen.storyboard */; };
 		87B6AC3D1BF51D6600E55FE2 /* LoginViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC3C1BF51D6600E55FE2 /* LoginViewControllerTests.m */; };
 		87B6AC481BF51D6600E55FE2 /* twiliochatUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6AC471BF51D6600E55FE2 /* twiliochatUITests.m */; };
-		87DB89EC1BFE398C00E3935B /* IPMessagingManagerPresentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DB89EB1BFE398C00E3935B /* IPMessagingManagerPresentTests.m */; };
+		87DB89EC1BFE398C00E3935B /* MessagingManagerPresentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DB89EB1BFE398C00E3935B /* MessagingManagerPresentTests.m */; };
 		87DB89F11C03A94300E3935B /* NSDate+ISO8601Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DB89F01C03A94300E3935B /* NSDate+ISO8601Parser.m */; };
 		87EF60291C0902F400814B63 /* TextFieldFormHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EF60281C0902F400814B63 /* TextFieldFormHandler.m */; };
 		87F2CE6F1BFD2C390064D863 /* ChatTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F2CE6E1BFD2C390064D863 /* ChatTableCell.xib */; };
@@ -71,8 +71,8 @@
 		59BD03151BF68C1E00A4AA88 /* MainChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MainChatViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		59BD031B1BF6936000A4AA88 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		59BD031C1BF6936000A4AA88 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MenuViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		59BD031F1BFA296900A4AA88 /* IPMessagingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPMessagingManager.h; sourceTree = "<group>"; };
-		59BD03201BFA296900A4AA88 /* IPMessagingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IPMessagingManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		59BD031F1BFA296900A4AA88 /* MessagingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagingManager.h; sourceTree = "<group>"; };
+		59BD03201BFA296900A4AA88 /* MessagingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MessagingManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		59F208EE1C03920800CC2392 /* AlertDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertDialogController.h; sourceTree = "<group>"; };
 		59F208EF1C03920800CC2392 /* AlertDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertDialogController.m; sourceTree = "<group>"; };
 		59F5EDA81C652E3700CE7D32 /* SessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionManager.h; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 		59F5EDAD1C653CA400CE7D32 /* TokenRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenRequestHandler.m; sourceTree = "<group>"; };
 		652E063D172A0ECAD377861F /* Pods-twiliochat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiliochat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-twiliochat/Pods-twiliochat.debug.xcconfig"; sourceTree = "<group>"; };
 		7834F26AFB8ED02DD8AF41DF /* libPods-twiliochat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twiliochat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMessagingManagerLoginTests.m; sourceTree = "<group>"; };
+		7D8DCB131BFED14F009B1B6D /* MessagingManagerLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagingManagerLoginTests.m; sourceTree = "<group>"; };
 		7DAC272A1C053D08006CEA49 /* ChannelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ChannelManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		7DAC272B1C053D08006CEA49 /* ChannelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChannelManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8270D2027DDF16AF9AADE12D /* libPods-twiliochatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twiliochatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,7 +108,7 @@
 		87B6AC431BF51D6600E55FE2 /* twiliochatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = twiliochatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B6AC471BF51D6600E55FE2 /* twiliochatUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = twiliochatUITests.m; sourceTree = "<group>"; };
 		87B6AC491BF51D6600E55FE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87DB89EB1BFE398C00E3935B /* IPMessagingManagerPresentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMessagingManagerPresentTests.m; sourceTree = "<group>"; };
+		87DB89EB1BFE398C00E3935B /* MessagingManagerPresentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagingManagerPresentTests.m; sourceTree = "<group>"; };
 		87DB89EF1C03A94300E3935B /* NSDate+ISO8601Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ISO8601Parser.h"; sourceTree = "<group>"; };
 		87DB89F01C03A94300E3935B /* NSDate+ISO8601Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601Parser.m"; sourceTree = "<group>"; };
 		87EF60271C0902F400814B63 /* TextFieldFormHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldFormHandler.h; sourceTree = "<group>"; };
@@ -203,8 +203,8 @@
 		59BD031E1BFA28DF00A4AA88 /* messaging */ = {
 			isa = PBXGroup;
 			children = (
-				59BD031F1BFA296900A4AA88 /* IPMessagingManager.h */,
-				59BD03201BFA296900A4AA88 /* IPMessagingManager.m */,
+				59BD031F1BFA296900A4AA88 /* MessagingManager.h */,
+				59BD03201BFA296900A4AA88 /* MessagingManager.m */,
 			);
 			name = messaging;
 			sourceTree = "<group>";
@@ -307,8 +307,8 @@
 			isa = PBXGroup;
 			children = (
 				87B6AC3C1BF51D6600E55FE2 /* LoginViewControllerTests.m */,
-				7D8DCB131BFED14F009B1B6D /* IPMessagingManagerLoginTests.m */,
-				87DB89EB1BFE398C00E3935B /* IPMessagingManagerPresentTests.m */,
+				7D8DCB131BFED14F009B1B6D /* MessagingManagerLoginTests.m */,
+				87DB89EB1BFE398C00E3935B /* MessagingManagerPresentTests.m */,
 				AD9906D41C0EB1A800913A52 /* DateTodayFormatterTests.m */,
 				87B6AC3E1BF51D6600E55FE2 /* Info.plist */,
 			);
@@ -499,7 +499,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		0FE004819B67092EBF755BB3 /* [CP] Check Pods Manifest.lock */ = {
@@ -514,7 +514,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		3A1F5C58D098F483F8A0CF32 /* [CP] Copy Pods Resources */ = {
@@ -604,7 +604,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -619,7 +619,7 @@
 				87B6AC241BF51D6600E55FE2 /* main.m in Sources */,
 				59BD03161BF68C1E00A4AA88 /* MainChatViewController.m in Sources */,
 				87EF60291C0902F400814B63 /* TextFieldFormHandler.m in Sources */,
-				59BD03211BFA296900A4AA88 /* IPMessagingManager.m in Sources */,
+				59BD03211BFA296900A4AA88 /* MessagingManager.m in Sources */,
 				59BD031D1BF6936000A4AA88 /* MenuViewController.m in Sources */,
 				593F447B1BFA7D6A00B57504 /* InputDialogController.m in Sources */,
 				870855421C061C05006E38F5 /* StatusEntry.m in Sources */,
@@ -638,9 +638,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87DB89EC1BFE398C00E3935B /* IPMessagingManagerPresentTests.m in Sources */,
+				87DB89EC1BFE398C00E3935B /* MessagingManagerPresentTests.m in Sources */,
 				AD9906D51C0EB1A800913A52 /* DateTodayFormatterTests.m in Sources */,
-				7D8DCB141BFED14F009B1B6D /* IPMessagingManagerLoginTests.m in Sources */,
+				7D8DCB141BFED14F009B1B6D /* MessagingManagerLoginTests.m in Sources */,
 				87B6AC3D1BF51D6600E55FE2 /* LoginViewControllerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

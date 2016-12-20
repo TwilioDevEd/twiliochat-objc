@@ -1,15 +1,15 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
-#import "IPMessagingManager.h"
+#import "MessagingManager.h"
 #import "TokenRequestHandler.h"
 #import "SessionManager.h"
 #import "AppDelegate.h"
 
-@interface IPMessagingManager (Test)
+@interface MessagingManager (Test)
 - (void)connectClientWithCompletion:(void(^)(BOOL succeeded, NSError *error))handler;
 @end
 
-@interface IPMessagingManagerPresentTests : XCTestCase
+@interface MessagingManagerPresentTests : XCTestCase
 @property (strong, nonatomic) id tokenRequestMock;
 @property (strong, nonatomic) id sessionManagerMock;
 @property (strong, nonatomic) id storyboardMock;
@@ -20,7 +20,7 @@
 @property (strong, nonatomic) id appMock;
 @end
 
-@implementation IPMessagingManagerPresentTests
+@implementation MessagingManagerPresentTests
 
 - (void)setUp {
   [super setUp];
@@ -33,7 +33,7 @@
   self.storyboardMock = OCMClassMock([UIStoryboard class]);
   
   self.viewControllerMock = [[NSObject alloc] init];
-  self.messagingManagerMock = OCMPartialMock([IPMessagingManager sharedManager]);
+  self.messagingManagerMock = OCMPartialMock([MessagingManager sharedManager]);
   
   OCMStub([self.appMock sharedApplication]).andReturn(self.appMock);
   OCMStub([self.appMock delegate]).andReturn(self.appDelegateMock);

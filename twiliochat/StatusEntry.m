@@ -1,11 +1,11 @@
 #import "StatusEntry.h"
 
 @implementation StatusEntry
-+ (instancetype)statusEntryWithMember:(TWMMember *)member status:(TWCMemberStatus)status {
++ (instancetype)statusEntryWithMember:(TCHMember *)member status:(TWCMemberStatus)status {
   return [[StatusEntry alloc] initWithMember:member status:status];
 }
 
-- (instancetype)initWithMember:(TWMMember *)member status:(TWCMemberStatus)status {
+- (instancetype)initWithMember:(TCHMember *)member status:(TWCMemberStatus)status {
   self = [self init];
   if (self)
   {

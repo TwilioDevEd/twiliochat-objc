@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <SLKTextViewController.h>
-#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
+#import <TwilioChatClient/TwilioChatClient.h>
 
-@interface MainChatViewController : SLKTextViewController <TWMChannelDelegate>
-@property (strong, nonatomic) TWMChannel *channel;
+@interface MainChatViewController : SLKTextViewController <TCHChannelDelegate>
+@property (strong, nonatomic) TCHChannel *channel;
 @end

@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#import "IPMessagingManager.h"
+#import "MessagingManager.h"
 @import Foundation;
 
 
@@ -9,8 +9,8 @@
 
 @implementation AppDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  [[IPMessagingManager sharedManager] presentLaunchScreen];
-  [[IPMessagingManager sharedManager] presentRootViewController];
+  [[MessagingManager sharedManager] presentLaunchScreen];
+  [[MessagingManager sharedManager] presentRootViewController];
   
   return YES;
 }

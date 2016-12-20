@@ -1,6 +1,6 @@
-#import <TwilioIPMessagingClient/TwilioIPMessagingClient.h>
+#import <TwilioChatClient/TwilioChatClient.h>
 #import "LoginViewController.h"
-#import "IPMessagingManager.h"
+#import "MessagingManager.h"
 #import "AlertDialogController.h"
 #import "defines.h"
 
@@ -58,7 +58,7 @@
   if ([self validateUserData]) {
     self.view.userInteractionEnabled = NO;
     [self.activityIndicator startAnimating];
-    IPMessagingManager *manager = [IPMessagingManager sharedManager];
+    MessagingManager *manager = [MessagingManager sharedManager];
     [manager loginWithUsername:self.usernameTextField.text
                     completion:^(BOOL succeeded, NSError *error) {
                       [self handleResponse:succeeded error:error];

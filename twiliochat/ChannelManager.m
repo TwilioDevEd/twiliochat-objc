@@ -1,8 +1,10 @@
 #import "ChannelManager.h"
-#import "IPMessagingManager.h"
+#import "MessagingManager.h"
+
+#define _ Underscore
 
 @interface ChannelManager ()
-@property (strong, nonatomic) TWMChannel *generalChannel;
+@property (strong, nonatomic) TCHChannel *generalChannel;
 @end
 
 static NSString * const TWCDefaultChannelUniqueName = @"general";
@@ -29,23 +31,28 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 #pragma mark General channel
 
 - (void)joinGeneralChatRoomWithCompletion:(SucceedHandler)completion {
-  self.generalChannel = [self.channelsList channelWithUniqueName:TWCDefaultChannelUniqueName];
-  if (self.generalChannel) {
-    [self joinGeneralChatRoomWithUniqueName:nil completion:completion];
-  }
-  else {
-    [self createGeneralChatRoomWithCompletion:^(BOOL succeeded) {
-      if (succeeded) {
-        [self joinGeneralChatRoomWithUniqueName:TWCDefaultChannelUniqueName completion:completion];
-        return;
-      }
-      if (completion) completion(NO);
-    }];
-  };
+  [self.channelsList channelWithSidOrUniqueName:TWCDefaultChannelUniqueName completion:^(TCHResult *result, TCHChannel *channel) {
+    if ([result isSuccessful]) {
+      self.generalChannel = channel;
+    }
+
+    if (self.generalChannel) {
+      [self joinGeneralChatRoomWithUniqueName:nil completion:completion];
+    }
+    else {
+      [self createGeneralChatRoomWithCompletion:^(BOOL succeeded) {
+        if (succeeded) {
+          [self joinGeneralChatRoomWithUniqueName:TWCDefaultChannelUniqueName completion:completion];
+          return;
+        }
+        if (completion) completion(NO);
+      }];
+    };
+  }];
 }
 
 - (void)joinGeneralChatRoomWithUniqueName:(NSString *)uniqueName completion:(SucceedHandler)completion {
-  [self.generalChannel joinWithCompletion:^(TWMResult *result) {
+  [self.generalChannel joinWithCompletion:^(TCHResult *result) {
     if ([result isSuccessful]) {
       if (uniqueName) {
         [self setGeneralChatRoomUniqueNameWithCompletion:completion];
@@ -57,10 +64,17 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 }
 
 - (void)createGeneralChatRoomWithCompletion:(SucceedHandler)completion {
-  NSDictionary *options = [NSDictionary
-    dictionaryWithObjectsAndKeys:TWCDefaultChannelName, TWMChannelOptionFriendlyName, TWMChannelTypePublic, TWMChannelOptionType, nil];
+  NSDictionary *options = [
+                           NSDictionary
+                           dictionaryWithObjectsAndKeys:TWCDefaultChannelName,
+                           TCHChannelOptionFriendlyName,
+                           TCHChannelTypePublic,
+                           TCHChannelOptionType,
+                           nil
+                           ];
+
   [self.channelsList createChannelWithOptions:options
-    completion:^(TWMResult *result, TWMChannel *channel) {
+    completion:^(TCHResult *result, TCHChannel *channel) {
       if ([result isSuccessful]) {
         self.generalChannel = channel;
       }
@@ -69,7 +83,8 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 }
 
 - (void)setGeneralChatRoomUniqueNameWithCompletion:(SucceedHandler)completion {
-  [self.generalChannel setUniqueName:TWCDefaultChannelUniqueName completion:^(TWMResult *result) {
+  [self.generalChannel setUniqueName:TWCDefaultChannelUniqueName
+                          completion:^(TCHResult *result) {
     if (completion) completion([result isSuccessful]);
   }];
 }
@@ -78,19 +93,47 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 
 - (void)populateChannels {
   self.channels = [[NSMutableOrderedSet alloc] init];
-  [self.channels addObjectsFromArray:[self.channelsList allObjects]];
-  [self sortChannels];
-  if (self.delegate) {
-    [self.delegate reloadChannelList];
-  }
+  [self.channelsList userChannelsWithCompletion:^(TCHResult *result,
+                                                  TCHChannelPaginator *channelPaginator) {
+    [self.channels addObjectsFromArray:[channelPaginator items]];
+    [self sortAndDedupeChannels];
+    if (self.delegate) {
+      [self.delegate reloadChannelList];
+    }
+  }];
+
+  [self.channelsList publicChannelsWithCompletion:^(TCHResult *result,
+                                                  TCHChannelDescriptorPaginator *channelDescPaginator) {
+    [self.channels addObjectsFromArray: [channelDescPaginator items]];
+    [self sortAndDedupeChannels];
+    if (self.delegate) {
+      [self.delegate reloadChannelList];
+    }
+  }];
 }
 
-- (void)sortChannels {
+- (void)sortAndDedupeChannels {
+  NSMutableDictionary *channelsDict = [[NSMutableDictionary alloc] init];
+
+  for(TCHChannel *channel in self.channels) {
+    if (![channelsDict objectForKey: channel.sid] ||
+        ![[channelsDict objectForKey: channel.sid] isKindOfClass: [NSNull class]]) {
+      [channelsDict setObject:channel forKey:channel.sid];
+    }
+  }
+
+  NSMutableOrderedSet *dedupedChannels = [NSMutableOrderedSet
+                                          orderedSetWithArray:[channelsDict allValues]];
+
   SEL sortSelector = @selector(localizedCaseInsensitiveCompare:);
+
   NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:TWCFriendlyNameKey
                                                              ascending:YES
                                                               selector:sortSelector];
-  [self.channels sortUsingDescriptors:@[descriptor]];
+
+  [dedupedChannels sortUsingDescriptors:@[descriptor]];
+
+  self.channels = dedupedChannels;
 }
 
 # pragma mark Create channel
@@ -101,39 +144,47 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
     return;
   }
 
-  NSDictionary *options = [NSDictionary
-                           dictionaryWithObjectsAndKeys:name, TWMChannelOptionFriendlyName, TWMChannelTypePublic, TWMChannelOptionType, nil];
+  NSDictionary *options = [
+                           NSDictionary
+                           dictionaryWithObjectsAndKeys:name,
+                           TCHChannelOptionFriendlyName,
+                           TCHChannelTypePublic,
+                           TCHChannelOptionType,
+                           nil
+                           ];
   [self.channelsList
     createChannelWithOptions:options
-    completion:^(TWMResult *result, TWMChannel *channel) {
+    completion:^(TCHResult *result, TCHChannel *channel) {
+      [self.channels addObject:channel];
+      [self sortAndDedupeChannels];
       if (completion) completion([result isSuccessful], channel);
     }];
 }
 
-# pragma mark TwilioIPMessagingClientDelegate
+# pragma mark TwilioChatClientDelegate
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelAdded:(TWMChannel *)channel {
+- (void)chatClient:(TwilioChatClient *)client channelAdded:(TCHChannel *)channel{
   dispatch_async(dispatch_get_main_queue(), ^{
     [self.channels addObject:channel];
-    [self sortChannels];
-    [self.delegate ipMessagingClient:client channelAdded:channel];
+    [self sortAndDedupeChannels];
+    [self.delegate chatClient:client channelAdded:channel];
   });
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelChanged:(TWMChannel *)channel {
+- (void)chatClient:(TwilioChatClient *)client channelChanged:(TCHChannel *)channel {
   dispatch_async(dispatch_get_main_queue(), ^{
-    [self.delegate ipMessagingClient:client channelChanged:channel];
+    [self.delegate chatClient:client channelChanged:channel];
   });
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client channelDeleted:(TWMChannel *)channel {
+- (void)chatClient:(TwilioChatClient *)client channelDeleted:(TCHChannel *)channel {
   dispatch_async(dispatch_get_main_queue(), ^{
     [[ChannelManager sharedManager].channels removeObject:channel];
-    [self.delegate ipMessagingClient:client channelDeleted:channel];
+    [self.delegate chatClient:client channelDeleted:channel];
   });
 }
 
-- (void)ipMessagingClient:(TwilioIPMessagingClient *)client synchronizationStatusChanged:(TWMClientSynchronizationStatus)status {
+- (void)chatClient:(TwilioChatClient *)client synchronizationStatusChanged:(TCHClientSynchronizationStatus)status {
 }
 
 @end

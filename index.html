@@ -100,10 +100,10 @@ We&#39;ll show you how to do this in the next step.</p>
 <p>We registered <code>MainChatViewController</code> as the <code>TCHChannelDelegate</code>, and here
 we implemented the following methods that listen to channel events:</p>
 <ul>
-<li><code>messageAdded</code>: When someone sends a message to the channel you are connected to.</li>
-<li><code>channelHistoryLoaded</code>: When all the messages from one channel have been loaded.</li>
+<li><code>channelDeleted</code>: When someone deletes a channel.</li>
 <li><code>memberJoined</code>: When someone joins the channel.</li>
 <li><code>memberLeft</code>: When someone leaves the channel.</li>
+<li><code>messageAdded</code>: When someone sends a message to the channel you are connected to.</li>
 <li><code>synchronizationStatusChanged</code>: When channel synchronization status changes.</li>
 </ul>
 <p>As you may have noticed, each one of these methods include useful objects

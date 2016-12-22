@@ -124,10 +124,10 @@
       We registered `MainChatViewController` as the `TCHChannelDelegate`, and here
       we implemented the following methods that listen to channel events:
 
-      * `messageAdded`: When someone sends a message to the channel you are connected to.
-      * `channelHistoryLoaded`: When all the messages from one channel have been loaded.
+      * `channelDeleted`: When someone deletes a channel.
       * `memberJoined`: When someone joins the channel.
       * `memberLeft`: When someone leaves the channel.
+      * `messageAdded`: When someone sends a message to the channel you are connected to.
       * `synchronizationStatusChanged`: When channel synchronization status changes.
 
       As you may have noticed, each one of these methods include useful objects

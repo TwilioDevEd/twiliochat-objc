@@ -15,7 +15,7 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - OCMock (3.3.1)
-  - SlackTextViewController (1.9.5)
+  - SlackTextViewController (1.9.6)
   - SWRevealViewController (2.3.0)
   - TwilioAccessManager (1.1.2)
   - TwilioChatClient (2.3.3)
@@ -23,7 +23,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - OCMock (~> 3.2)
-  - SlackTextViewController (~> 1.9)
+  - SlackTextViewController (= 1.9.6)
   - SWRevealViewController (~> 2.3)
   - TwilioAccessManager (~> 1.1)
   - TwilioChatClient (~> 2.3)
@@ -40,11 +40,11 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   OCMock: f3f61e6eaa16038c30caa5798c5e49d3307b6f22
-  SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
+  SlackTextViewController: b854e62c1c156336bc4fd409c6ca79b5773e8f9d
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   TwilioAccessManager: f3b0d9edd2eb5a044e50ff78057ab13611a0baa1
   TwilioChatClient: 9e3562773da96cfd3f34b2112104ee76820f0ab3
 
-PODFILE CHECKSUM: 57c37f29cd0d50fa4c1a6386b8b7e762bc8ba6f6
+PODFILE CHECKSUM: 2ba12cd8dfee18d9437369424226344dbc12efa3
 
 COCOAPODS: 1.5.3

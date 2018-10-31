@@ -93,8 +93,7 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
 
 - (void)populateChannels {
   self.channels = [[NSMutableOrderedSet alloc] init];
-  [self.channelsList userChannelsWithCompletion:^(TCHResult *result,
-                                                  TCHChannelPaginator *channelPaginator) {
+    [self.channelsList userChannelDescriptorsWithCompletion:^(TCHResult * _Nonnull result, TCHChannelDescriptorPaginator * _Nullable channelPaginator) {
     [self.channels addObjectsFromArray:[channelPaginator items]];
     [self sortAndDedupeChannels];
     if (self.delegate) {
@@ -102,7 +101,7 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
     }
   }];
 
-  [self.channelsList publicChannelsWithCompletion:^(TCHResult *result,
+  [self.channelsList publicChannelDescriptorsWithCompletion:^(TCHResult *result,
                                                   TCHChannelDescriptorPaginator *channelDescPaginator) {
     [self.channels addObjectsFromArray: [channelDescPaginator items]];
     [self sortAndDedupeChannels];
@@ -171,9 +170,9 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
   });
 }
 
-- (void)chatClient:(TwilioChatClient *)client channelChanged:(TCHChannel *)channel {
+- (void)chatClient:(TwilioChatClient *)client channel:(nonnull TCHChannel *)channel updated:(TCHChannelUpdate)updated {
   dispatch_async(dispatch_get_main_queue(), ^{
-    [self.delegate chatClient:client channelChanged:channel];
+    [self.delegate chatClient:client channel:channel updated:updated];
   });
 }
 
@@ -184,7 +183,8 @@ static NSString * const TWCFriendlyNameKey = @"friendlyName";
   });
 }
 
-- (void)chatClient:(TwilioChatClient *)client synchronizationStatusChanged:(TCHClientSynchronizationStatus)status {
+- (void)chatClient:(TwilioChatClient *)client synchronizationStatusUpdated:(TCHClientSynchronizationStatus)status {
+    
 }
 
 @end

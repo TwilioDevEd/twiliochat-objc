@@ -116,14 +116,7 @@ static NSInteger const TWCLabelTag = 200;
       NSLog(@"%@", @"Channel Joined");
     }];
   }
-  if (self.channel.synchronizationStatus != TCHChannelSynchronizationStatusAll) {
-    [self.channel synchronizeWithCompletion:^(TCHResult *result) {
-      if ([result isSuccessful]) {
-        NSLog(@"%@", @"Synchronization started. Delegate method will load messages");
-      }
-    }];
-  }
-  else {
+  if (self.channel.synchronizationStatus == TCHChannelSynchronizationStatusAll) {
     [self loadMessages];
     [self setViewOnHold:NO];
   }
@@ -152,7 +145,7 @@ static NSInteger const TWCLabelTag = 200;
     cell = [self getChatCellForTableView:tableView forIndexPath:indexPath message:message];
   }
   else {
-    cell = [self getStatuCellForTableView:tableView forIndexPath:indexPath message:message];
+    cell = [self getStatusCellForTableView:tableView forIndexPath:indexPath message:message];
   }
   
   cell.transform = tableView.transform;
@@ -175,7 +168,7 @@ static NSInteger const TWCLabelTag = 200;
   return chatCell;
 }
 
-- (UITableViewCell *)getStatuCellForTableView:(UITableView *)tableView
+- (UITableViewCell *)getStatusCellForTableView:(UITableView *)tableView
                                  forIndexPath:(NSIndexPath *)indexPath
                                       message:(StatusEntry *)message {
   UITableViewCell *cell = [self.tableView
@@ -183,7 +176,7 @@ static NSInteger const TWCLabelTag = 200;
   
   UILabel *label = [cell viewWithTag:TWCLabelTag];
   label.text = [NSString stringWithFormat:@"User %@ has %@",
-     message.member.userInfo.identity, (message.status == TWCMemberStatusJoined) ? @"joined" : @"left"];
+     message.member.identity, (message.status == TWCMemberStatusJoined) ? @"joined" : @"left"];
   
   return cell;
 }
@@ -196,8 +189,9 @@ static NSInteger const TWCLabelTag = 200;
 
 #pragma mark Chat Service
 - (void)sendMessage: (NSString *)inputMessage {
-  TCHMessage *message = [self.channel.messages createMessageWithBody:inputMessage];
-  [self.channel.messages sendMessage:message completion:nil];
+    TCHMessageOptions *messageOptions = [[[TCHMessageOptions alloc] init] withBody:inputMessage];
+    [self.channel.messages sendMessageWithOptions:messageOptions
+                                       completion:nil];
 }
 
 

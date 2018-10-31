@@ -109,9 +109,18 @@ static NSString * const TWCTokenKey = @"token";
 }
 
 - (void)initializeClientWithToken:(NSString *)token {
-  self.client = [TwilioChatClient chatClientWithToken:token properties:nil delegate:self];
-  [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-  self.connected = YES;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+  [TwilioChatClient chatClientWithToken:token
+                               properties:nil
+                                 delegate:self
+                             completion:^(TCHResult * _Nonnull result, TwilioChatClient * _Nullable chatClient) {
+                                 if (result.isSuccessful) {
+                                     self.client = chatClient;
+                                     self.connected = YES;
+
+                                 }
+                             }];
 }
 
 - (void)requestTokenWithCompletion:(StatusWithTokenHandler)completion {
@@ -174,15 +183,11 @@ static NSString * const TWCTokenKey = @"token";
   [self.delegate chatClient:client channelAdded:channel];
 }
 
-- (void)chatClient:(TwilioChatClient *)client channelChanged:(TCHChannel *)channel {
-  [self.delegate chatClient:client channelChanged:channel];
-}
-
 - (void)chatClient:(TwilioChatClient *)client channelDeleted:(TCHChannel *)channel {
   [self.delegate chatClient:client channelDeleted:channel];
 }
 
-- (void)chatClient:(TwilioChatClient *)client synchronizationStatusChanged:(TCHClientSynchronizationStatus)status {
+- (void)chatClient:(TwilioChatClient *)client synchronizationStatusUpdated:(TCHClientSynchronizationStatus)status {
   if (status == TCHClientSynchronizationStatusCompleted) {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [ChannelManager sharedManager].channelsList = client.channelsList;
@@ -191,7 +196,7 @@ static NSString * const TWCTokenKey = @"token";
       if (success) [self presentRootViewController];
     }];
   }
-  [self.delegate chatClient:client synchronizationStatusChanged:status];
+  [self.delegate chatClient:client synchronizationStatusUpdated:status];
 }
 
 @end

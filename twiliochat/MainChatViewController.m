@@ -75,6 +75,13 @@ static NSInteger const TWCLabelTag = 200;
   }
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.textInputbar bringSubviewToFront:self.textInputbar.textView];
+    [self.textInputbar bringSubviewToFront:self.textInputbar.leftButton];
+    [self.textInputbar bringSubviewToFront:self.textInputbar.rightButton];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   [self scrollToBottomMessage];

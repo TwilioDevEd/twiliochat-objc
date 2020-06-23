@@ -38,7 +38,7 @@ static NSString * const TWCTokenKey = @"token";
   if (!self.isConnected) {
     [self connectClientWithCompletion:^(BOOL success, NSError *error) {
       if (success) {
-        [self presentViewControllerByName:TWCMainViewControllerName];
+          NSLog(@"Successfully connected chat client");
       }
     }];
   }
@@ -193,7 +193,9 @@ static NSString * const TWCTokenKey = @"token";
     [ChannelManager sharedManager].channelsList = client.channelsList;
     [[ChannelManager sharedManager] populateChannels];
     [self loadGeneralChatRoomWithCompletion:^(BOOL success, NSError *error) {
-      if (success) [self presentRootViewController];
+        if (success) {
+            [self presentViewControllerByName:TWCMainViewControllerName];
+        }
     }];
   }
   [self.delegate chatClient:client synchronizationStatusUpdated:status];

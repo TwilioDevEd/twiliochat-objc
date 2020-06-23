@@ -71,7 +71,16 @@ static NSInteger const TWCLabelTag = 200;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
   if (!self.channel) {
-    self.channel = [ChannelManager sharedManager].generalChannel;
+    id generalChannel = [ChannelManager sharedManager].generalChannel;
+      if (generalChannel) {
+          self.channel = generalChannel;
+      } else {
+          [[ChannelManager sharedManager] joinGeneralChatRoomWithCompletion:^(BOOL succeeded) {
+              if (succeeded) {
+                  self.channel = [ChannelManager sharedManager].generalChannel;
+              }
+          }];
+      }
   }
 }
 
@@ -121,6 +130,7 @@ static NSInteger const TWCLabelTag = 200;
   if (self.channel.status != TCHChannelStatusJoined) {
     [self.channel joinWithCompletion:^(TCHResult* result) {
       NSLog(@"%@", @"Channel Joined");
+      [self setViewOnHold:NO];
     }];
   }
   if (self.channel.synchronizationStatus == TCHChannelSynchronizationStatusAll) {

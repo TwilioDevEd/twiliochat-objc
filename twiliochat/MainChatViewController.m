@@ -130,6 +130,7 @@ static NSInteger const TWCLabelTag = 200;
   if (self.channel.status != TCHChannelStatusJoined) {
     [self.channel joinWithCompletion:^(TCHResult* result) {
       NSLog(@"%@", @"Channel Joined");
+      [self setViewOnHold:NO];
     }];
   }
   if (self.channel.synchronizationStatus == TCHChannelSynchronizationStatusAll) {

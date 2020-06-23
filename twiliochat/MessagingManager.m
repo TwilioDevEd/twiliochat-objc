@@ -154,27 +154,25 @@ static NSString * const TWCTokenKey = @"token";
   return error;
 }
 
-# pragma mark TwilioAccessManagerDelegate
-
-- (void)accessManagerTokenExpired:(TwilioAccessManager *)accessManager {
-  [self requestTokenWithCompletion:^(BOOL succeeded, NSString *token) {
-    if (succeeded) {
-      [accessManager updateToken:token];
-    }
-    else {
-      NSLog(@"Error while trying to get new access token");
-    }
-  }];
-}
-
-- (void)accessManager:(TwilioAccessManager *)accessManager error:(NSError *)error {
-  NSLog(@"Access manager error: %@", [error localizedDescription]);
-}
-
 #pragma mark Internal helpers
 
 - (NSString *)userIdentity {
   return [SessionManager getUsername];
+}
+
+- (void)refreshChatToken:(TwilioChatClient*)client {
+    [self requestTokenWithCompletion:^(BOOL succeeded, NSString *token) {
+      if (succeeded) {
+          [client updateToken:token completion:^(TCHResult * _Nonnull result) {
+              if (result.isSuccessful) {
+                  
+              }
+          }];
+      }
+      else {
+        NSLog(@"Error while trying to get new access token");
+      }
+    }];
 }
 
 #pragma mark TwilioChatClientDelegate
@@ -199,6 +197,14 @@ static NSString * const TWCTokenKey = @"token";
     }];
   }
   [self.delegate chatClient:client synchronizationStatusUpdated:status];
+}
+
+- (void)chatClientTokenWillExpire:(TwilioChatClient *)client {
+    [self refreshChatToken:client];
+}
+
+- (void)chatClientTokenExpired:(TwilioChatClient *)client {
+    [self refreshChatToken:client];
 }
 
 @end

@@ -11,6 +11,6 @@ typedef NS_ENUM(NSInteger, TWCMemberStatus) {
 - (instancetype)initWithMember:(TCHMember *)member status:(TWCMemberStatus)status;
 @property (copy, nonatomic) NSString *sid;
 @property (strong, nonatomic) TCHMember *member;
-@property (copy, nonatomic) NSString *timestamp;
+@property (copy, nonatomic) NSString *dateCreated;
 @property (nonatomic) TWCMemberStatus status;
 @end

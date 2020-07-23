@@ -178,7 +178,7 @@ static NSInteger const TWCLabelTag = 200;
   ChatTableCell *chatCell = (ChatTableCell *)cell;
   chatCell.user = message.author;
   chatCell.date = [[[DateTodayFormatter alloc] init]
-    stringFromDate:[NSDate dateWithISO8601String:message.timestamp]];
+                   stringFromDate:message.dateCreatedAsDate];
 
   chatCell.message = message.body;
   
@@ -227,7 +227,7 @@ static NSInteger const TWCLabelTag = 200;
 
 - (void)sortMessages {
   [self.messages sortUsingDescriptors:@[[[NSSortDescriptor alloc]
-    initWithKey:@"timestamp" ascending:NO]]];
+    initWithKey:@"dateCreated" ascending:NO]]];
 }
 
 - (void)scrollToBottomMessage {

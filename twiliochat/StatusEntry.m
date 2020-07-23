@@ -13,7 +13,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    self.timestamp = [dateFormatter stringFromDate:[NSDate date]];
+    self.dateCreated = [dateFormatter stringFromDate:[NSDate date]];
     self.status = status;
   }
   return self;
